@@ -1,0 +1,75 @@
+.browser
+    background-image: linear-gradient(to right top, #2e2d2d, #373737, #414141, #4b4b4b, #555555)
+
+    height: 70vh
+    width: 80%
+
+    border-radius: 1rem
+
+    transition: all 0.3s
+
+    &:hover
+        transform: scale(1.05)
+
+    &-header
+        background-color: #383838
+        height: 4rem
+        border-radius: 1rem 1rem 0 0
+
+        display: flex
+        align-items: center
+
+        padding: 1.5rem
+
+        width: 100%
+
+        position: relative
+        margin-bottom: 5rem
+
+        &__buttons
+            display: flex
+
+            .browser-header__button
+                width: 1.5rem
+                height: 1.5rem
+                border-radius: 50%
+                background-color: red
+
+                &:not(:last-child)
+                    margin-right: 0.5rem
+
+            .browser-button-red
+                background-color: #FA7470 !important
+
+            .browser-button-yellow
+                background-color: #FFFF7A
+
+            .browser-button-green
+                background-color: #A7E0A5
+
+        &__search
+            position: absolute
+            left: 50%
+            transform: translateX(-50%)
+
+            background-color: #555555
+            height: 60%
+            width: 60%
+            border-radius: 0.5rem
+
+            display: flex
+            justify-content: center
+            align-items: center
+
+            &_container
+                display: flex
+                justify-content: center
+                align-items: center
+                width: 70%
+
+            &_bar
+                background-image: linear-gradient(to right, #ececec, #d9d9d9, #c6c6c6, #b3b3b3, #a1a1a1)
+                height: 1rem
+                border-radius: 0.5rem
+                width: 65%
+                margin-left: 0.5rem

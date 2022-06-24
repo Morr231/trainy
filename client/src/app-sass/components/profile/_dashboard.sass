@@ -1,0 +1,49 @@
+@import 'react-calendar-heatmap/dist/styles.css'
+
+.react-calendar-heatmap .color-scale-1
+    fill: #d6e685
+
+.react-calendar-heatmap .color-scale-2
+    fill: #8cc665
+
+.react-calendar-heatmap .color-scale-3
+    fill: #44a340
+
+.react-calendar-heatmap .color-scale-4
+    fill: #1e6823
+
+.react-calendar-heatmap
+    height: 80%
+    position: relative
+
+.dashboard
+    width: 80%
+
+    margin: 5rem auto 0
+
+    &-header
+        margin-bottom: 1rem
+
+    &-calendar
+        height: 40vh
+
+        border: 1px solid rgba(232, 234, 238, 0.8)
+        border-radius: 1rem
+
+        padding: 3rem
+
+    &-grid
+        margin-top: 5rem
+
+        border: 1px solid rgba(232, 234, 238, 0.8)
+        border-radius: 1rem
+
+        padding: 3rem
+
+        &__header
+            margin-bottom: 3rem
+
+        &__main
+            display: grid
+            grid-template-columns: repeat(3, 1fr)
+            gap: 3rem

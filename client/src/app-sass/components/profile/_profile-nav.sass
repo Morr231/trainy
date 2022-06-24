@@ -1,0 +1,33 @@
+.profile-nav
+
+    width: 10.4rem
+
+    height: calc( 100vh - 9.8rem )
+
+    padding-top: 7.2rem
+
+    position: relative
+
+    border: 1px solid rgba(232, 234, 238, 0.8)
+    border-top: none
+
+    &__main
+        display: flex
+        flex-direction: column
+        align-items: center
+
+    &__icon, &__disconnect
+        font-size: 2.4rem
+        color: #CACED8
+
+    &__icon
+        margin-bottom: 4.8rem
+
+    &__disconnect
+        position: absolute
+        bottom: 7.2rem
+        left: 50%
+        transform: translateX(-50%)
+
+    .profile-icon__active
+        color: #083A50
