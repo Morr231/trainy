@@ -22,9 +22,11 @@ const DashboardCard = ({ topic, date, imageUrl, index, username }) => {
 
     const deleteText = async () => {
         const responce = await fetch(
-            `http://localhost:5000/text/delete/${index}`,
+            `${process.env.REACT_APP_IP}text/delete/${index}`,
             {
                 method: "DELETE",
+                mode: "cors",
+                credentials: "same-origin",
                 headers: {
                     autorization: localStorage.getItem("token"),
                 },

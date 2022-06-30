@@ -76,7 +76,7 @@ const WriteMain = React.memo(function MemoWriteMain({
 
         console.log(countDownEnd, textData);
 
-        const responce = await fetch("http://localhost:5000/text/save", {
+        const responce = await fetch(`${process.env.REACT_APP_IP}text/save`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

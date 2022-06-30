@@ -46,7 +46,13 @@ const Write = () => {
 
     useEffect(() => {
         const getRandomTopic = async () => {
-            const responce = await fetch("http://localhost:5000/randomTopic");
+            const responce = await fetch(
+                `${process.env.REACT_APP_IP}randomTopic`,
+                {
+                    mode: "cors",
+                    credentials: "same-origin",
+                }
+            );
             const result = await responce.json();
 
             const resultArray = [];

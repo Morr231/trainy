@@ -26,13 +26,17 @@ const Profile = () => {
 
     const dispatch = useDispatch();
 
-    console.log(document.cookie);
+    // console.log(document.cookie);
+
+    console.log(localStorage.getItem("token"));
 
     useEffect(() => {
         const getUserInfo = async () => {
             const responce = await fetch(
                 `${process.env.REACT_APP_IP}user/data`,
                 {
+                    mode: "cors",
+                    credentials: "same-origin",
                     headers: {
                         autorization: localStorage.getItem("token"),
                     },

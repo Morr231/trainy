@@ -26,6 +26,8 @@ const SignIn = ({ setSign }) => {
     const sendUserData = async (userData) => {
         const responce = await fetch(`${process.env.REACT_APP_IP}signIn`, {
             method: "POST",
+            mode: "cors",
+            credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
             },
