@@ -112,7 +112,7 @@ router.post("/save", (req, res) => {
                         averageWPM: averageWPM,
                         averageTime: averageTime,
                         averageWordCount: averageWordCount,
-                        dailyWordsCount: everydayWords,
+                        dailyWordCount: everydayWords,
                         dailyTime: everydayTime,
                     };
 

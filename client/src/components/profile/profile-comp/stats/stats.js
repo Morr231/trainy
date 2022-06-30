@@ -12,7 +12,7 @@ import {
 
 import StatsBlock from "./stats-comp/stats-block";
 
-// import Chart from "./stats-comp/stats-chart";
+import LineRendered from "./stats-comp/stats-chart";
 
 const Stats = ({ userInfo }) => {
     console.log(userInfo.statistics);
@@ -84,7 +84,26 @@ const Stats = ({ userInfo }) => {
                     />
                 </div>
 
-                {/* <Chart /> */}
+                <div className="stats-charts">
+                    <div className="stats-charts__el">
+                        <div className="stats-charts__header">
+                            Everyday time count
+                        </div>
+                        <LineRendered
+                            data={userInfo.statistics.dailyTime}
+                            name="dailyTime"
+                        />
+                    </div>
+                    <div className="stats-charts__el">
+                        <div className="stats-charts__header">
+                            Everyday word count
+                        </div>
+                        <LineRendered
+                            data={userInfo.statistics.dailyWordCount}
+                            name="dailyWordCount"
+                        />
+                    </div>
+                </div>
             </div>
         );
     } else {

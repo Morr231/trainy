@@ -1,58 +1,89 @@
-import { Line } from "react-chartjs-2";
+import {
+    AreaChart,
+    Area,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+} from "recharts";
 
-const UserData = [
+const dataTemp = [
     {
-        id: 1,
-        year: 2016,
-        userGain: 80000,
-        userLost: 823,
+        name: "Page A",
+        uv: 4000,
     },
     {
-        id: 2,
-        year: 2017,
-        userGain: 45677,
-        userLost: 345,
+        name: "Page B",
+        uv: 3000,
     },
     {
-        id: 3,
-        year: 2018,
-        userGain: 78888,
-        userLost: 555,
+        name: "Page C",
+        uv: 2000,
     },
     {
-        id: 4,
-        year: 2019,
-        userGain: 90000,
-        userLost: 4555,
+        name: "Page D",
+        uv: 2780,
     },
     {
-        id: 5,
-        year: 2020,
-        userGain: 4300,
-        userLost: 234,
+        name: "Page E",
+        uv: 1890,
+    },
+    {
+        name: "Page F",
+        uv: 2390,
+    },
+    {
+        name: "Page G",
+        uv: 3490,
     },
 ];
 
-const Chart = () => {
-    const lineChartData = {
-        labels: UserData.map((data) => data.year),
-        datasets: [
-            {
-                label: "Users Gained",
-                data: UserData.map((data) => data.userGain),
-                backgroundColor: [
-                    "rgba(75,192,192,1)",
-                    "#ecf0f1",
-                    "#50AF95",
-                    "#f3ba2f",
-                    "#2a71d0",
-                ],
-                borderColor: "black",
-                borderWidth: 2,
-            },
-        ],
-    };
+const LineRendered = ({ data, name }) => {
+    console.log(data);
 
-    return <Line data={lineChartData} />;
+    const tempData = data.map((el) => {
+        let elDate = new Date(el.date).toString().split(" ");
+        elDate = `${elDate[2]} ${elDate[1]} ${elDate[3]}`;
+
+        if (name === "dailyTime") {
+            return {
+                name: elDate,
+                count: el.timeSpend,
+            };
+        }
+        return {
+            name: elDate,
+            count: el.wordCount,
+        };
+    });
+
+    console.log("data", tempData);
+
+    return (
+        <AreaChart
+            width={450}
+            height={400}
+            data={tempData}
+            margin={{
+                top: 10,
+                right: 30,
+                left: 0,
+                bottom: 0,
+            }}
+        >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Area
+                type="monotone"
+                dataKey="count"
+                stroke="#8884d8"
+                fill="#8884d8"
+            />
+        </AreaChart>
+    );
 };
-export default Chart;
+
+export default LineRendered;

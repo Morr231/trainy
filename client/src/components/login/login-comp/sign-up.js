@@ -39,7 +39,7 @@ const SignUp = ({ setSign }) => {
 
         const result = await responce.json();
 
-        if (result) {
+        if (result.saved) {
             localStorage.setItem("token", result.token);
 
             setSigned(true);

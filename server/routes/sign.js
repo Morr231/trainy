@@ -19,12 +19,12 @@ router.post("/signUp", (req, res) => {
         if (!found) {
             const user = new UserModel({ ...req.body, texts: [] });
             user.save().then((item) => {
-                const token = generateAccessToken(found.username);
+                const token = generateAccessToken(req.body.username);
 
                 res.json({
                     saved: true,
                     token: `Bearer ${token}`,
-                    username: found.username,
+                    username: req.body.username,
                 });
                 console.log("data saved in DB");
             });
