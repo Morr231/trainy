@@ -1,13 +1,32 @@
 import { useState, useEffect } from "react";
 
-import ProfileHeader from "./profile-comp/profile-header";
+import { Routes, Route, useLocation } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { userInfoActions } from "../../store/autorization";
+
 import ProfileNav from "./profile-comp/profile-nav";
+import ProfileMain from "./profile-comp/profile-main";
 import Dashboard from "./profile-comp/dashboard";
+import Achieve from "./profile-comp/achieve";
+import Stats from "./profile-comp/stats/stats";
 import TopicCard from "./profile-comp/topic-card";
 
 const Profile = () => {
+    const location = useLocation();
+
+    let currPath = location.pathname.split("/");
+    currPath = currPath[currPath.length - 1];
+
     const [userInfo, setUserInfo] = useState({});
-    const [showTopicCard, setShowTopicCard] = useState(-1);
+
+    const cardDeleted = useSelector((state) => {
+        return state.deleteCard.deleted;
+    });
+
+    const dispatch = useDispatch();
+
+    console.log(document.cookie);
 
     useEffect(() => {
         const getUserInfo = async () => {
@@ -20,42 +39,40 @@ const Profile = () => {
             const result = await responce.json();
 
             setUserInfo(result.userInfo);
+            dispatch(
+                userInfoActions.setUserInfo({ userInfo: result.userInfo })
+            );
         };
 
         getUserInfo();
-    }, []);
-
-    console.log(userInfo);
-
-    if (userInfo.texts) {
-        console.log(showTopicCard);
-        // console.log(userInfo.texts.reverse()[showTopicCard].text);
-        // console.log(userInfo.texts.reverse()[showTopicCard].topic);
-    }
+    }, [cardDeleted]);
 
     return (
         <div className="profile">
-            <ProfileHeader />
-
             <div className="profile-container">
                 <ProfileNav userInfo={userInfo} />
-                {userInfo && showTopicCard === -1 ? (
-                    <Dashboard
-                        userInfo={userInfo}
-                        setShowTopicCard={setShowTopicCard}
+
+                {userInfo && currPath === userInfo.username && <ProfileMain />}
+
+                <Routes>
+                    <Route
+                        path="dashboard"
+                        element={<Dashboard userInfo={userInfo} />}
                     />
-                ) : (
-                    showTopicCard !== -1 && (
-                        <TopicCard
-                            text={
-                                userInfo.texts.reverse()[showTopicCard + 1].text
-                            }
-                            topic={
-                                userInfo.texts.reverse()[showTopicCard].topic
-                            }
-                        />
-                    )
-                )}
+                    <Route
+                        path=":topicId"
+                        element={<TopicCard userInfo={userInfo} />}
+                    />
+
+                    <Route
+                        path="statistics"
+                        element={<Stats userInfo={userInfo} />}
+                    />
+                    <Route
+                        path="achievements"
+                        element={<Achieve userInfo={userInfo} />}
+                    />
+                </Routes>
             </div>
         </div>
     );

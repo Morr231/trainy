@@ -9,7 +9,7 @@ import Cta from "./cta/cta";
 const Landing = () => {
     return (
         <div className="landing">
-            <Header />
+            {/* <Header /> */}
             {/* <div className="landing-upper"> */}
             <Welcome />
             {/* </div> */}

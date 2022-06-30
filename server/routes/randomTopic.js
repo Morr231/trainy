@@ -13,8 +13,6 @@ router.get("/randomTopic", (req, res) => {
     query.exec((err, found) => {
         if (err) return handleError(err);
 
-        console.log(Math.floor(Math.random() * found.length));
-
         const randomTopics = [];
 
         for (let i = 0; i < 5; i++) {

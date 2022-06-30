@@ -1,58 +1,58 @@
 .login-main
     width: 50%
 
-    &__sign_in_other
+    &__sign_other
         display: flex
         justify-content: space-between
         margin-bottom: 2.5rem
         width: 50%
 
-        .login-main__sign_in_google
+        &_el
+            color: rgba(0, 0, 0, 0.54)
 
+            border: none
+            border: 1px solid transparent
+            outline: none
+            background: #FFFFFF !important
+
+            font-size: 1.4rem
+
+            width: 50%
             display: flex
-            justify-content: center
+            justify-content: space-around
             align-items: center
 
-            width: 65%
-            height: 55px
-
-            background: #E9F1FF
-            border-radius: 9px
-
-            .google_img
-                width: 26px
-                height: 26px
-
-                margin-right: 26px
-
-            .sign_in_google
-
-                font-weight: normal
-                font-size: 16px
-
-                color: #4285F4
-
-        .login-main__sign_in_facebook
-            width: 60px
-            height: 55px
+            height: 5.5rem !important
 
             background: #F7F7F7
-            border-radius: 9px
+            border-radius: 0.9rem !important
 
-            display: flex
-            justify-content: center
-            align-items: center
+            box-shadow: none
+            box-shadow: rgb(0 0 0 / 24%) 0px 2px 2px 0px, rgb(0 0 0 / 24%) 0px 0px 1px 0px
+            transition: all 0.3s
 
-        .login-main__sign_in_apple
-            width: 60px
-            height: 55px
+            &:not(:last-child)
+                margin-right: 1.5rem
 
-            background: #F7F7F7
-            border-radius: 9px
+            &:hover
+                box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3) !important
 
-            display: flex
-            justify-content: center
-            align-items: center
+        .facebook_login
+            width: 12vw
+            padding: 1rem
+
+        &_img
+            width: 2.6rem
+            height: 2.6rem
+
+            margin-right: 1rem
+
+        &_text
+
+            font-weight: normal
+            font-size: 1.4rem
+
+            color: #4285F4
 
     &__container
         height: 100%
@@ -81,18 +81,20 @@
     &__form
         width: 100%
 
-        &_container
-            width: 50%
-            margin: 0 auto
-            display: flex
-            flex-direction: column
-            margin-bottom: 3.6rem
+        &_error
+            padding: 1rem
+            background-color: #FFDCE0
+            color: #D63B4C
+            text-align: center
+            font-size: 1.4rem
 
-            &:nth-child(3)
-                margin-top: 3.1rem
-                margin-bottom: 3.6rem
-                flex-direction: row
-                align-items: center
+        &_container, &_small_container
+            width: 50%
+            margin: 0 auto 2rem
+            display: flex
+
+        &_container
+            flex-direction: column
 
             &_forgot
                 width: 50%
@@ -102,14 +104,37 @@
                 justify-content: space-between
                 margin-bottom: 3.6rem
 
+        &_small_container_el
+            flex: 1
+            display: flex
+            flex-direction: column
+
+            &:not(:last-child)
+                margin-right: 1.5rem
+
         &_input
-            height: 3rem
+            height: 4rem
+            padding-left: 1.5rem
 
             background: #FFFFFF
-            border: 1px solid #CACACA
+            border: none
 
             box-shadow: 0.2rem 0.4rem 0.6rem rgba(79, 79, 79, 0.15)
             border-radius: 2px
+            border-bottom: 3px solid transparent
+
+            display: block
+            transition: all 0.3s
+
+            font-size: 1.4rem
+
+            &:focus
+                outline: none
+                border-bottom: 3px solid #55c57a
+                box-shadow: 0 1rem 2rem rgba(#000000,0.2)
+
+                &:invalid
+                    border-bottom: 3px solid #ff7730
 
         &_label
             font-size: 1.4rem

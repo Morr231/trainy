@@ -1,14 +1,21 @@
 import { useState } from "react";
 
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
+
 import SignIn from "./sign-in";
 import SignUp from "./sign-up";
 
-import google_img from "../login-img/google.png";
-import facebook_img from "../login-img/facebook.png";
-import apple_img from "../login-img/apple.png";
-
 const LoginMain = () => {
     const [sign, setSign] = useState(true);
+
+    const responseGoogle = (response) => {
+        console.log(response);
+    };
+
+    const responseFacebook = (response) => {
+        console.log(response);
+    };
 
     return (
         <div className="login-main">
@@ -20,31 +27,24 @@ const LoginMain = () => {
                     Get started absolutely free
                 </div>
 
-                <div className="login-main__sign_in_other">
-                    <div className="login-main__sign_in_google">
-                        <img
-                            src={google_img}
-                            alt="google"
-                            className="google_img"
-                        />
-                        <div className="sign_in_google">
-                            Sign in with google
-                        </div>
-                    </div>
-                    <div className="login-main__sign_in_facebook">
-                        <img
-                            src={facebook_img}
-                            alt="facebook"
-                            className="facebook_img"
-                        />
-                    </div>
-                    <div className="login-main__sign_in_apple">
-                        <img
-                            src={apple_img}
-                            alt="apple"
-                            className="apple_img"
-                        />
-                    </div>
+                <div className="login-main__sign_other">
+                    <GoogleLogin
+                        clientId={process.env.REACT_APP_GOOGLEID}
+                        buttonText="Sign in with google"
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
+                        cookiePolicy={"single_host_origin"}
+                        className="login-main__sign_other_el"
+                    />
+
+                    <FacebookLogin
+                        appId={process.env.REACT_APP_FACEBOOKID}
+                        fields="name,email,picture"
+                        callback={responseFacebook}
+                        cssClass="facebook_login login-main__sign_other_el"
+                        icon="fa-facebook"
+                        textButton="Sign in with facebook"
+                    />
                 </div>
 
                 {sign ? (

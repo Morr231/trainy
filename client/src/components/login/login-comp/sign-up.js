@@ -1,17 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useDispatch } from "react-redux";
+
+import { authActions } from "../../../store/autorization";
+
 const SignUp = ({ setSign }) => {
     const [signed, setSigned] = useState();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const signUp = (e) => {
         e.preventDefault();
+
+        dispatch(authActions.login());
 
         const userData = {
             username: e.target.username.value,
             email: e.target.email.value,
             password: e.target.password.value,
+            name: e.target.surname.value,
+            surname: e.target.surname.value,
         };
 
         sendUserData(userData);
@@ -29,6 +38,8 @@ const SignUp = ({ setSign }) => {
         const result = await responce.json();
 
         if (result) {
+            localStorage.setItem("token", result.token);
+
             setSigned(true);
             navigate(`/profile/${userData.username}`);
         } else {
@@ -38,6 +49,12 @@ const SignUp = ({ setSign }) => {
 
     return (
         <form className="login-main__form" onSubmit={signUp}>
+            {signed === false && (
+                <div className="login-main__form_container login-main__form_error">
+                    Incorrect username or password
+                </div>
+            )}
+
             <div className="login-main__form_container">
                 <label htmlFor="username" className="login-main__form_label">
                     Username
@@ -47,6 +64,7 @@ const SignUp = ({ setSign }) => {
                     id="username"
                     name="username"
                     className="login-main__form_input"
+                    required
                 />
             </div>
 
@@ -55,28 +73,56 @@ const SignUp = ({ setSign }) => {
                     Email
                 </label>
                 <input
-                    type="text"
+                    type="email"
                     id="email"
                     name="email"
                     className="login-main__form_input"
+                    required
                 />
             </div>
-
-            {signed === false && <div>Error in signing</div>}
 
             <div className="login-main__form_container">
                 <label htmlFor="password" className="login-main__form_label">
                     Password
                 </label>
                 <input
-                    type="text"
+                    type="password"
                     id="password"
                     name="password"
                     className="login-main__form_input"
+                    required
                 />
             </div>
 
-            <div className="login-main__form_container">
+            <div className="login-main__form_small_container">
+                <div className="login-main__form_small_container_el">
+                    <label htmlFor="name" className="login-main__form_label">
+                        Name
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        className="login-main__form_input"
+                    />
+                    required
+                </div>
+
+                <div className="login-main__form_small_container_el">
+                    <label htmlFor="surname" className="login-main__form_label">
+                        Surname
+                    </label>
+                    <input
+                        type="text"
+                        id="surname"
+                        name="surname"
+                        className="login-main__form_input"
+                        required
+                    />
+                </div>
+            </div>
+
+            <div className="login-main__form_small_container">
                 <input type="checkbox" id="consent" />
                 <label htmlFor="consent" className="login-consent-label">
                     Creating an account means you're okay with our Terms of

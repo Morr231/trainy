@@ -4,6 +4,7 @@ const WriteGenerator = ({
     setTopicNumber,
     setShowAll,
     setStartWriting,
+    startWriting,
 }) => {
     const handlePrevious = () => {
         if (topicNumber - 1 != -1) {
@@ -24,26 +25,30 @@ const WriteGenerator = ({
                 {randomTopic.length ? randomTopic[topicNumber] : "Generating"}
             </div>
             <div className="write-generator-buttons">
-                <button
-                    className="write-generator-button generator-button-switch"
-                    onClick={handlePrevious}
-                >
-                    Previous
-                </button>
+                {!startWriting && (
+                    <button
+                        className="write-generator-button generator-button-switch"
+                        onClick={handlePrevious}
+                    >
+                        Previous
+                    </button>
+                )}
                 <button
                     className="write-generator-button generator-button-choose"
                     onClick={() => setStartWriting(true)}
                 >
                     Take this topic
                 </button>
-                <button
-                    className="write-generator-button generator-button-switch"
-                    onClick={handleNext}
-                >
-                    Next
-                </button>
+                {!startWriting && (
+                    <button
+                        className="write-generator-button generator-button-switch"
+                        onClick={handleNext}
+                    >
+                        Next
+                    </button>
+                )}
             </div>
-            {topicNumber == 4 && (
+            {topicNumber == 4 && !startWriting && (
                 <div className="write-generator-buttons">
                     <button
                         className="write-generator-button generator-button-showAll"

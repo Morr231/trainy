@@ -1,6 +1,14 @@
 import CtaButton from "../../buttons/cta-button";
 
-const TopicCard = ({ topic, text }) => {
+const TopicCard = ({ userInfo }) => {
+    let topicId = window.location.pathname.split("/");
+    topicId = topicId[topicId.length - 1];
+
+    const textsIndex = userInfo.texts.length - topicId - 1;
+
+    const topic = userInfo.texts[textsIndex].topic;
+    const text = userInfo.texts[textsIndex].text;
+
     return (
         <div className="topic-card">
             <div className="topic-card-top">

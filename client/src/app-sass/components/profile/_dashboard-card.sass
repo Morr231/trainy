@@ -6,9 +6,38 @@
 
     cursor: pointer
 
+    position: relative
+
+    &:hover
+        .dashboard-card__icon_container
+            opacity: 1
+
+    &__icon_container
+        position: absolute
+        top: 3%
+        right: 3%
+        z-index: 10
+
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: red
+
+        width: 3rem
+        height: 3rem
+
+        border-radius: 50%
+
+        opacity: 0
+
+    &__delete
+        font-size: 1.6rem
+        color: white
+
     &__img_container
         background-color: grey
         height: 60%
+        width: 100%
         border-radius: 1rem
 
     &__info

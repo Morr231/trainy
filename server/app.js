@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const fs = require("fs");
+
+const Text = require("./schemas/text");
 
 const port = process.env.PORT || 5000;
 

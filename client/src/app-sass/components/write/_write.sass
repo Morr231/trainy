@@ -19,12 +19,38 @@
     &-timer
         text-align: center
         font-size: 2.4rem
-        margin-bottom: 3rem
 
     &-cover
         position: absolute
         width: 100%
-        height: 50vh
+        height: 55rem
         bottom: 0
         background-color: rgba(255, 255, 255, 0.3)
         z-index: 10
+
+    &-container
+        padding: 1.5rem
+
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+        border: 1px solid #181818
+        border-radius: 0.8rem
+
+        height: 10vh
+        width: 60%
+
+        margin: 0 auto 3rem
+
+        &__el
+            flex: 1
+            display: flex
+            justify-content: center
+            align-items: center
+
+        &-hide
+            font-size: 2.4rem
+
+        &-hided
+            justify-content: flex-start

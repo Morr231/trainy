@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-import Header from "../header/header";
 import WriteGenerator from "./write-comp/write-generator";
 import WriteMain from "./write-comp/write-main";
 import WriteAll from "./write-comp/write-all";
 
-import CtaButton from "../buttons/cta-button";
+import DefaultTimer from "./write-comp/timers/default-timer";
+import PomodoroTimer from "./write-comp/timers/pomodoro-timer";
 
 const Write = () => {
     const [randomTopic, setRandomTopic] = useState([]);
@@ -13,8 +14,14 @@ const Write = () => {
     const [showAll, setShowAll] = useState(false);
     const [startWriting, setStartWriting] = useState(false);
 
-    const [timer, setTimer] = useState(5);
+    const [timer, setTimer] = useState(3);
     const [countDown, setCountDown] = useState(0);
+    const [countDownEnd, setCountDownEnd] = useState(0);
+
+    const location = useLocation();
+
+    let currPath = location.pathname.split("/");
+    currPath = currPath[currPath.length - 1];
 
     let interval;
 
@@ -22,12 +29,15 @@ const Write = () => {
         if (timer !== 0) {
             setTimeout(() => setTimer(timer - 1), 1000);
         } else {
-            interval = setTimeout(() => setCountDown(countDown + 1), 1000);
+            if (countDownEnd === 0) {
+                interval = setTimeout(() => setCountDown(countDown + 1), 1000);
+            }
         }
     };
 
     const stopTimerCount = () => {
         clearTimeout(interval);
+        setCountDownEnd(countDown);
     };
 
     if (startWriting) {
@@ -39,7 +49,6 @@ const Write = () => {
             const responce = await fetch("http://localhost:5000/randomTopic");
             const result = await responce.json();
 
-            console.log(result);
             const resultArray = [];
 
             result.randomTopics.forEach((el) => {
@@ -69,12 +78,8 @@ const Write = () => {
         getRandomTopic();
     }, []);
 
-    console.log(showAll);
-
     return (
         <div className="write">
-            <div className="header-bg"></div>
-            <Header />
             {showAll ? (
                 <WriteAll />
             ) : (
@@ -84,34 +89,38 @@ const Write = () => {
                     setTopicNumber={setTopicNumber}
                     setShowAll={setShowAll}
                     setStartWriting={setStartWriting}
+                    startWriting={startWriting}
                 />
             )}
             {startWriting && (
                 <>
                     {timer ? (
                         <>
-                            <div className="write-timer">{timer}</div>
+                            <div
+                                className="write-timer"
+                                style={{ marginBottom: "3rem", height: "10vh" }}
+                            >
+                                {timer}
+                            </div>
                             <div className="write-cover"></div>
                         </>
+                    ) : currPath === "classic" ? (
+                        <DefaultTimer
+                            stopTimerCount={stopTimerCount}
+                            countDown={countDown}
+                        />
                     ) : (
-                        <div className="write-container">
-                            <div></div>
-                            <div className="write-timer">
-                                {Math.floor(countDown / 60 / 10)}
-                                {Math.floor((countDown / 60) % 10)}:
-                                {Math.floor((countDown % 60) / 10)}
-                                {Math.floor((countDown % 60) % 10)}
-                            </div>
-                            <CtaButton
-                                text="stop"
-                                buttonStyle="cta-button-solid"
-                                action={stopTimerCount}
+                        currPath === "pomodoro" && (
+                            <DefaultTimer
+                                stopTimerCount={stopTimerCount}
+                                countDown={countDown}
                             />
-                        </div>
+                        )
                     )}
                     <WriteMain
                         randomTopic={randomTopic}
                         topicNumber={topicNumber}
+                        countDownEnd={countDownEnd}
                     />
                 </>
             )}

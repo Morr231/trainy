@@ -12,14 +12,20 @@ function generateAccessToken(username) {
 }
 
 router.post("/signUp", (req, res) => {
-    const query = UserModel.find({ email: req.body.email });
+    const query = UserModel.findOne({ email: req.body.email });
     query.exec((err, found) => {
-        if (err) return handleError(err);
+        if (err) return HandleError(err);
 
-        if (!found.length) {
+        if (!found) {
             const user = new UserModel({ ...req.body, texts: [] });
             user.save().then((item) => {
-                res.json({ saved: true });
+                const token = generateAccessToken(found.username);
+
+                res.json({
+                    saved: true,
+                    token: `Bearer ${token}`,
+                    username: found.username,
+                });
                 console.log("data saved in DB");
             });
         } else {
@@ -29,17 +35,16 @@ router.post("/signUp", (req, res) => {
 });
 
 router.post("/signIn", (req, res) => {
-    const query = UserModel.find({ email: req.body.email });
+    const query = UserModel.findOne({ email: req.body.email });
     query.exec((err, found) => {
-        if (err) return handleError(err);
-
-        if (found.length) {
-            const token = generateAccessToken(found[0].username);
+        if (err) return HandleError(err);
+        if (found && found.password === req.body.password) {
+            const token = generateAccessToken(found.username);
 
             res.json({
                 found: true,
                 token: `Bearer ${token}`,
-                username: found[0].username,
+                username: found.username,
             });
         } else {
             res.json({ found: false });
