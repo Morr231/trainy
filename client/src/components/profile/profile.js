@@ -30,11 +30,14 @@ const Profile = () => {
 
     useEffect(() => {
         const getUserInfo = async () => {
-            const responce = await fetch(`http://localhost:5000/user/data`, {
-                headers: {
-                    autorization: localStorage.getItem("token"),
-                },
-            });
+            const responce = await fetch(
+                `${process.env.REACT_APP_IP}user/data`,
+                {
+                    headers: {
+                        autorization: localStorage.getItem("token"),
+                    },
+                }
+            );
 
             const result = await responce.json();
 

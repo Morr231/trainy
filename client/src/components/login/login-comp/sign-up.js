@@ -27,7 +27,7 @@ const SignUp = ({ setSign }) => {
     };
 
     const sendUserData = async (userData) => {
-        const responce = await fetch("http://localhost:5000/signUp", {
+        const responce = await fetch(`${process.env.REACT_APP_IP}signUp`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
