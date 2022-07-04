@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 
 import WriteGenerator from "./write-comp/write-generator";
 import WriteMain from "./write-comp/write-main";
 import WriteAll from "./write-comp/write-all";
 
-import DefaultTimer from "./write-comp/timers/default-timer";
-import PomodoroTimer from "./write-comp/timers/pomodoro-timer";
+import Timer from "./write-comp/timers/timer";
 
 import AchieveModal from "../modals/achieve-modal";
 
@@ -17,29 +15,15 @@ const Write = () => {
     const [startWriting, setStartWriting] = useState(false);
 
     const [timer, setTimer] = useState(3);
-    const [countDown, setCountDown] = useState(0);
-    const [countDownEnd, setCountDownEnd] = useState(0);
 
-    const location = useLocation();
-
-    let currPath = location.pathname.split("/");
-    currPath = currPath[currPath.length - 1];
-
-    let interval;
+    let timerInterval;
 
     const setTimerCount = () => {
         if (timer !== 0) {
-            setTimeout(() => setTimer(timer - 1), 1000);
+            timerInterval = setTimeout(() => setTimer(timer - 1), 1000);
         } else {
-            if (countDownEnd === 0) {
-                interval = setTimeout(() => setCountDown(countDown + 1), 1000);
-            }
+            clearInterval(timerInterval);
         }
-    };
-
-    const stopTimerCount = () => {
-        clearTimeout(interval);
-        setCountDownEnd(countDown);
     };
 
     if (startWriting) {
@@ -88,9 +72,9 @@ const Write = () => {
 
     return (
         <div className="write">
-            {timer === 0 && countDown >= 0.3 && countDown <= 3 && (
+            {/* {timer === 0 && countDown >= 0.3 && countDown <= 3 && (
                 <AchieveModal name="first essay" />
-            )}
+            )} */}
 
             {showAll ? (
                 <WriteAll />
@@ -116,23 +100,12 @@ const Write = () => {
                             </div>
                             <div className="write-cover"></div>
                         </>
-                    ) : currPath === "classic" ? (
-                        <DefaultTimer
-                            stopTimerCount={stopTimerCount}
-                            countDown={countDown}
-                        />
                     ) : (
-                        currPath === "pomodoro" && (
-                            <DefaultTimer
-                                stopTimerCount={stopTimerCount}
-                                countDown={countDown}
-                            />
-                        )
+                        <Timer />
                     )}
                     <WriteMain
                         randomTopic={randomTopic}
                         topicNumber={topicNumber}
-                        countDownEnd={countDownEnd}
                     />
                 </>
             )}

@@ -39,11 +39,11 @@ const SignIn = ({ setSign }) => {
         if (result.found) {
             localStorage.setItem("token", result.token);
 
-            const JWT = encodeURIComponent(result.token);
-
             const date = new Date();
 
-            document.cookie = `token=${JWT}; path=/; expires=${date.setDate(
+            document.cookie = `token=${
+                result.token
+            }; path=/; expires=${date.setDate(
                 date.getDate() + 1
             )}${date.toGMTString()}`;
 

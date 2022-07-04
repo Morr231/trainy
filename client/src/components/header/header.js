@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
+import getCookie from "../../helper/getCookie";
+import getUserInfo from "../../helper/getUserInfo";
+
 import HeaderDropdown from "./header-dropdown";
 import CtaButton from "../buttons/cta-button";
 
@@ -15,6 +18,20 @@ const Header = () => {
     const location = useLocation();
 
     const [showDropdown, setShowDropdown] = useState(false);
+
+    const [userInfo, setUserInfo] = useState({});
+
+    const userUpdated = useSelector((state) => {
+        return state.userUpdated.updated;
+    });
+
+    useEffect(() => {
+        if (userUpdated || !getCookie("userInfo")) {
+            getUserInfo({ setUserInfo: setUserInfo });
+        } else {
+            setUserInfo(JSON.parse(getCookie("userInfo")));
+        }
+    }, [userUpdated]);
 
     const isAuth = useSelector((state) => {
         return state.auth.isAuthed;
@@ -50,13 +67,13 @@ const Header = () => {
                                     {/* <div className="profile-header__user_notifications">
                         <FontAwesomeIcon icon={faBell} />
                     </div> */}
-                                    {/* {userInfo.imageUrl && (
+                                    {userInfo.imageUrl && (
                                         <img
                                             src={userInfo.imageUrl}
                                             alt="user image"
                                             className="header-dropdown__user_img"
                                         />
-                                    )} */}
+                                    )}
                                 </div>
                                 <FontAwesomeIcon
                                     className="header__user_icon"

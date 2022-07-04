@@ -1,47 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { timerTimeActions } from "../../../../store/timerTime";
 
-import CtaButton from "../../../buttons/cta-button";
+import setHourFormat from "../../../../helper/setHourFormat";
 
-const DefaultTimer = ({ countDown, stopTimerCount }) => {
-    const [hideContainer, setHideContainer] = useState(false);
+const DefaultTimer = ({ stopTimer }) => {
+    const [intervals, setIntervals] = useState([]);
 
-    return (
-        <div
-            className={`write-container ${
-                hideContainer && "write-container-hided"
-            }`}
-        >
-            <div className="write-container__el">
-                <FontAwesomeIcon
-                    icon={faEye}
-                    className="write-container-hide"
-                    onClick={() => setHideContainer(!hideContainer)}
-                />
-            </div>
-            {!hideContainer && (
-                <>
-                    <div className="write-container__el">
-                        <div className="write-timer">
-                            {Math.floor(countDown / 60 / 10)}
-                            {Math.floor((countDown / 60) % 10)}:
-                            {Math.floor((countDown % 60) / 10)}
-                            {Math.floor((countDown % 60) % 10)}
-                        </div>
-                    </div>
-                    <div className="write-container__el">
-                        <CtaButton
-                            text="stop"
-                            buttonStyle="solid"
-                            action={stopTimerCount}
-                        />
-                    </div>
-                </>
-            )}
-        </div>
-    );
+    const [countDown, setCountDown] = useState(0);
+    const dispatch = useDispatch();
+
+    let countDownInterval;
+
+    if (stopTimer) {
+        dispatch(timerTimeActions.updateTime(countDown));
+        clearTimeout(intervals[intervals.length - 1]);
+    }
+
+    useEffect(() => {
+        if (stopTimer) {
+            clearTimeout(countDownInterval);
+        } else {
+            countDownInterval = setTimeout(
+                () => setCountDown((p) => p + 1),
+                1000
+            );
+
+            setIntervals((prev) => {
+                if (prev.length >= 2) {
+                    return [prev[prev.length - 1], countDownInterval];
+                }
+                return [...prev, countDownInterval];
+            });
+        }
+
+        return () => clearTimeout(countDownInterval);
+    }, [countDown]);
+
+    return <div className="write-timer">{setHourFormat(countDown)}</div>;
 };
 
 export default DefaultTimer;

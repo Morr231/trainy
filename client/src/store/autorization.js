@@ -8,18 +8,6 @@ if (window.localStorage.getItem("token")) {
     initialState.isAuthed = true;
 }
 
-const userInfoSlice = createSlice({
-    name: "userInfo",
-    initialState: {
-        userInfo: {},
-    },
-    reducers: {
-        setUserInfo(state, action) {
-            state.userInfo = action.payload.userInfo;
-        },
-    },
-});
-
 const authSlice = createSlice({
     name: "auth",
     initialState: initialState,
@@ -34,7 +22,4 @@ const authSlice = createSlice({
 });
 
 export const authActions = authSlice.actions;
-export const userInfoActions = userInfoSlice.actions;
-
 export const authReducer = authSlice.reducer;
-export const userInfoReducer = userInfoSlice.reducer;

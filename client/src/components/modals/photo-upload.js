@@ -1,6 +1,10 @@
 import { useState } from "react";
 import ReactDOM from "react-dom";
+
 import { useNavigate } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { userUpdatedActions } from "../../store/userUpdated";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudArrowUp, faImage } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +12,7 @@ import { faCloudArrowUp, faImage } from "@fortawesome/free-solid-svg-icons";
 const PhotoUpload = ({ setShowModal, username }) => {
     const [photoUploaded, setPhotoUploaded] = useState();
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleFileInput = (e) => {
@@ -57,9 +62,9 @@ const PhotoUpload = ({ setShowModal, username }) => {
 
                     if (result.saved) {
                         setShowModal(false);
-                        navigate(`/profile/${username}`, {
-                            state: { photo: "changed" },
-                        });
+                        navigate(`/profile/${username}`);
+
+                        dispatch(userUpdatedActions.setUserUpdatedTrue());
                     }
                 });
         }

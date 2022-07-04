@@ -1,7 +1,12 @@
+import { useState, useEffect } from "react";
+
 import { useNavigate, Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/autorization";
+
+import getCookie from "../../helper/getCookie";
+import getUserInfo from "../../helper/getUserInfo";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOut, faCog } from "@fortawesome/free-solid-svg-icons";
@@ -10,26 +15,19 @@ const HeaderDropdown = ({ img }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const userInfo = useSelector((state) => {
-        return state.userInfo.userInfo;
+    const [userInfo, setUserInfo] = useState({});
+
+    const userUpdated = useSelector((state) => {
+        return state.userUpdated.updated;
     });
 
-    // const getUserInfo = async () => {
-    //     const responce = await fetch(`http://localhost:5000/user/data`, {
-    //         headers: {
-    //             autorization: localStorage.getItem("token"),
-    //         },
-    //     });
-
-    //     const result = await responce.json();
-
-    //     setUserInfo(result.userInfo);
-    //     dispatch(userInfoActions.setUserInfo({ userInfo: result.userInfo }));
-    // };
-
-    // if (!userInfo) {
-    //     getUserInfo();
-    // }
+    useEffect(() => {
+        if (userUpdated || !getCookie("userInfo")) {
+            getUserInfo({ setUserInfo: setUserInfo });
+        } else {
+            setUserInfo(JSON.parse(getCookie("userInfo")));
+        }
+    }, [userUpdated]);
 
     const logout = () => {
         dispatch(authActions.logout());

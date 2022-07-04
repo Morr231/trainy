@@ -1,12 +1,32 @@
 import { useState } from "react";
 
+import { useLocation } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { userUpdatedActions } from "../../../../store/userUpdated";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 import CtaButton from "../../../buttons/cta-button";
 
-const PomodoroTimer = ({ countDown, stopTimerCount }) => {
+import DefaultTimer from "./default-timer";
+import PomodoroTimer from "./pomodoro-timer";
+
+const Timer = () => {
     const [hideContainer, setHideContainer] = useState(false);
+    const [stopTimer, setStopTimer] = useState(false);
+
+    const dispatch = useDispatch();
+    const location = useLocation();
+
+    let currPath = location.pathname.split("/");
+    currPath = currPath[currPath.length - 1];
+
+    const stopTimerCount = () => {
+        setStopTimer(true);
+        dispatch(userUpdatedActions.setUserUpdatedTrue());
+    };
 
     return (
         <div
@@ -24,12 +44,11 @@ const PomodoroTimer = ({ countDown, stopTimerCount }) => {
             {!hideContainer && (
                 <>
                     <div className="write-container__el">
-                        <div className="write-timer">
-                            {Math.floor(countDown / 60 / 10)}
-                            {Math.floor((countDown / 60) % 10)}:
-                            {Math.floor((countDown % 60) / 10)}
-                            {Math.floor((countDown % 60) % 10)}
-                        </div>
+                        {currPath === "classic" ? (
+                            <DefaultTimer stopTimer={stopTimer} />
+                        ) : (
+                            <PomodoroTimer stopTimer={stopTimer} />
+                        )}
                     </div>
                     <div className="write-container__el">
                         <CtaButton
@@ -44,4 +63,4 @@ const PomodoroTimer = ({ countDown, stopTimerCount }) => {
     );
 };
 
-export default PomodoroTimer;
+export default Timer;

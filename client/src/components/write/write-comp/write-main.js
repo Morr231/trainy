@@ -1,17 +1,15 @@
 import React, { useState, useRef, useEffect, createRef } from "react";
 import JoditEditor from "jodit-react";
 
+import { useSelector } from "react-redux";
+
 import { useScreenshot } from "use-react-screenshot";
 
 const config = {
     buttons: ["bold", "italic", "underline"],
 };
 
-const WriteMain = React.memo(function MemoWriteMain({
-    randomTopic,
-    topicNumber,
-    countDownEnd,
-}) {
+const WriteMain = ({ randomTopic, topicNumber }) => {
     const [text, setText] = useState("");
 
     const editor = useRef(null);
@@ -19,6 +17,11 @@ const WriteMain = React.memo(function MemoWriteMain({
 
     const [image, takeScreenshot] = useScreenshot();
     const getImage = () => takeScreenshot(ref.current);
+
+    const timerTime = useSelector((state) => state.timerTime.value);
+    const pomodoroFinished = useSelector(
+        (state) => state.timerTime.pomodoroFinished
+    );
 
     useEffect(() => {
         if (image) {
@@ -43,7 +46,9 @@ const WriteMain = React.memo(function MemoWriteMain({
                     updateText({ text: text, imageUrl: data.url });
                 });
         }
-    }, [image, countDownEnd]);
+    }, [image, timerTime]);
+
+    console.log(timerTime);
 
     const debounce = (fn, ms) => {
         let timeout;
@@ -70,11 +75,11 @@ const WriteMain = React.memo(function MemoWriteMain({
             imageUrl: imageUrl,
         };
 
-        if (countDownEnd) {
-            textData.timeSpend = countDownEnd;
+        if (timerTime) {
+            textData.timeSpend = timerTime;
         }
 
-        console.log(countDownEnd, textData);
+        console.log(timerTime, textData);
 
         const responce = await fetch(`${process.env.REACT_APP_IP}text/save`, {
             method: "POST",
@@ -89,6 +94,8 @@ const WriteMain = React.memo(function MemoWriteMain({
 
     return (
         <div className="write-main">
+            {pomodoroFinished && <div className="write-cover"></div>}
+
             <div className="write-main-container">
                 <div className="write-main__form" ref={ref}>
                     <JoditEditor
@@ -105,6 +112,6 @@ const WriteMain = React.memo(function MemoWriteMain({
             </div>
         </div>
     );
-});
+};
 
 export default WriteMain;

@@ -1,13 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { authReducer, userInfoReducer } from "./autorization";
+import { authReducer } from "./autorization";
+import { timerTimeReducer } from "./timerTime";
 import { deleteCardReducer } from "./deleteCard";
+import { userUpdatedReducer } from "./userUpdated";
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
-        userInfo: userInfoReducer,
+        timerTime: timerTimeReducer,
         deleteCard: deleteCardReducer,
+        userUpdated: userUpdatedReducer,
     },
 });
 
