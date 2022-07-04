@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 
 import BrowserGenerator from "./browser-comp/browser-generator";
+import Generate from "./1.png";
 
 const Browser = ({ browserSwitch }) => {
     return (
@@ -21,6 +22,10 @@ const Browser = ({ browserSwitch }) => {
                     </div>
                 </div>
             </div>
+
+            {/* {browserSwitch === "generate" && (
+                <img src={Generate} className="browser-image" />
+            )} */}
 
             {browserSwitch === "generate" && <BrowserGenerator />}
         </div>

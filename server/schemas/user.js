@@ -101,6 +101,10 @@ const userSchema = new Schema({
         type: [textsSchema],
         default: null,
     },
+    imageUrl: {
+        type: String,
+        default: null,
+    },
     daysTextCount: [dateSchema],
     statistics: { type: statsSchema, default: null },
 });

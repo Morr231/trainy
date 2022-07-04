@@ -10,6 +10,7 @@ import ProfileMain from "./profile-comp/profile-main";
 import Dashboard from "./profile-comp/dashboard";
 import Achieve from "./profile-comp/achieve";
 import Stats from "./profile-comp/stats/stats";
+import Settings from "./profile-comp/settings";
 import TopicCard from "./profile-comp/topic-card";
 
 const Profile = () => {
@@ -26,9 +27,9 @@ const Profile = () => {
 
     const dispatch = useDispatch();
 
-    // console.log(document.cookie);
+    console.log(location.state);
 
-    console.log(localStorage.getItem("token"));
+    // console.log(document.cookie);
 
     useEffect(() => {
         const getUserInfo = async () => {
@@ -52,14 +53,16 @@ const Profile = () => {
         };
 
         getUserInfo();
-    }, [cardDeleted]);
+    }, [cardDeleted, location.state]);
 
     return (
         <div className="profile">
             <div className="profile-container">
                 <ProfileNav userInfo={userInfo} />
 
-                {userInfo && currPath === userInfo.username && <ProfileMain />}
+                {userInfo && currPath === userInfo.username && (
+                    <ProfileMain userInfo={userInfo} />
+                )}
 
                 <Routes>
                     <Route
@@ -78,6 +81,10 @@ const Profile = () => {
                     <Route
                         path="achievements"
                         element={<Achieve userInfo={userInfo} />}
+                    />
+                    <Route
+                        path="settings/*"
+                        element={<Settings userInfo={userInfo} />}
                     />
                 </Routes>
             </div>

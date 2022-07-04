@@ -50,10 +50,13 @@ const Header = () => {
                                     {/* <div className="profile-header__user_notifications">
                         <FontAwesomeIcon icon={faBell} />
                     </div> */}
-                                    <img
-                                        src={dog}
-                                        className="header__user_img"
-                                    />
+                                    {/* {userInfo.imageUrl && (
+                                        <img
+                                            src={userInfo.imageUrl}
+                                            alt="user image"
+                                            className="header-dropdown__user_img"
+                                        />
+                                    )} */}
                                 </div>
                                 <FontAwesomeIcon
                                     className="header__user_icon"

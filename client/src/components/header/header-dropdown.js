@@ -43,7 +43,13 @@ const HeaderDropdown = ({ img }) => {
 
             <Link to={`/profile/${userInfo.username}`}>
                 <div className="header-dropdown__user">
-                    <img src={img} className="header-dropdown__user_img" />
+                    {userInfo.imageUrl && (
+                        <img
+                            src={userInfo.imageUrl}
+                            alt="user image"
+                            className="header-dropdown__user_img"
+                        />
+                    )}
                     <div className="header-dropdown__user_info">
                         <div className="header-dropdown__user_name">
                             {userInfo.name} {userInfo.surname}

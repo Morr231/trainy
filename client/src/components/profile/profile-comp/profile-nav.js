@@ -55,7 +55,14 @@ const ProfileNav = ({ userInfo }) => {
                         icon={faTrophy}
                     />
                 </Link>
-                <FontAwesomeIcon className="profile-nav__icon" icon={faCog} />
+                <Link to={`/profile/${userInfo.username}/settings`}>
+                    <FontAwesomeIcon
+                        className={`profile-nav__icon ${
+                            currPath === "settings" && "profile-icon__active"
+                        }`}
+                        icon={faCog}
+                    />
+                </Link>
             </div>
 
             <FontAwesomeIcon

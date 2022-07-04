@@ -14,6 +14,7 @@ const signRouter = require("./routes/sign");
 const userRouter = require("./routes/userInfo");
 const randomRouter = require("./routes/randomTopic");
 const textRouter = require("./routes/text");
+const settingsRouter = require("./routes/settings");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -23,6 +24,7 @@ app.use(signRouter);
 app.use("/user", userRouter);
 app.use(randomRouter);
 app.use("/text", textRouter);
+app.use("/settings", settingsRouter);
 
 mongoose
     .connect(

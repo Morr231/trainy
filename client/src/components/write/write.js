@@ -8,6 +8,8 @@ import WriteAll from "./write-comp/write-all";
 import DefaultTimer from "./write-comp/timers/default-timer";
 import PomodoroTimer from "./write-comp/timers/pomodoro-timer";
 
+import AchieveModal from "../modals/achieve-modal";
+
 const Write = () => {
     const [randomTopic, setRandomTopic] = useState([]);
     const [topicNumber, setTopicNumber] = useState(0);
@@ -86,6 +88,10 @@ const Write = () => {
 
     return (
         <div className="write">
+            {timer === 0 && countDown >= 0.3 && countDown <= 3 && (
+                <AchieveModal name="first essay" />
+            )}
+
             {showAll ? (
                 <WriteAll />
             ) : (
