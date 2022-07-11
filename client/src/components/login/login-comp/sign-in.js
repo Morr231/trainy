@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { authActions } from "../../../store/autorization";
 
-const SignIn = ({ setSign }) => {
+const SignIn = ({ setSign, setForgotPassword, setSignUp }) => {
     const [signed, setSigned] = useState();
 
     const navigate = useNavigate();
@@ -37,8 +37,6 @@ const SignIn = ({ setSign }) => {
         const result = await responce.json();
 
         if (result.found) {
-            localStorage.setItem("token", result.token);
-
             const date = new Date();
 
             document.cookie = `token=${
@@ -88,7 +86,14 @@ const SignIn = ({ setSign }) => {
             </div>
 
             <div className="login-main__form_container_forgot">
-                <div className="login-main__form_container_forgot_text">
+                <div
+                    className="login-main__form_container_forgot_text"
+                    onClick={() => {
+                        setForgotPassword(true);
+                        setSign(false);
+                        setSignUp(false);
+                    }}
+                >
                     Forgot password?
                 </div>
                 <div

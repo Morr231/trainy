@@ -62,6 +62,7 @@ router.get("/data", (req, res) => {
         found.daysTextCount = calendarValues;
 
         found.save().then((err, done) => {
+            delete found.password;
             res.json({
                 userInfo: found,
             });

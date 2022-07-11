@@ -1,17 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const timerTimeSlice = createSlice({
-    name: "deleteCard",
+    name: "timerTime",
     initialState: {
         value: 0,
         pomodoroFinished: false,
+        dangerousUpdated: false,
+        dangerousFinished: false,
+        changeValue: false,
     },
     reducers: {
         updateTime(state, time) {
             state.value = time.payload;
         },
-        setPomodoroFinished(state, time) {
+        setPomodoroFinished(state) {
             state.pomodoroFinished = !state.pomodoroFinished;
+        },
+        setDangerousUpdated(state) {
+            state.dangerousUpdated = !state.dangerousUpdated;
+        },
+        setDangerousFinished(state) {
+            state.dangerousFinished = !state.dangerousFinished;
+        },
+        changeValue(state) {
+            state.changeValue = !state.changeValue;
         },
     },
 });

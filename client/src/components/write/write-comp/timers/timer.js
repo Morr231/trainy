@@ -12,6 +12,8 @@ import CtaButton from "../../../buttons/cta-button";
 
 import DefaultTimer from "./default-timer";
 import PomodoroTimer from "./pomodoro-timer";
+import HardcoreTimer from "./hardcore-timer";
+import DangerousTimer from "./dangerous-timer";
 
 const Timer = () => {
     const [hideContainer, setHideContainer] = useState(false);
@@ -46,8 +48,18 @@ const Timer = () => {
                     <div className="write-container__el">
                         {currPath === "classic" ? (
                             <DefaultTimer stopTimer={stopTimer} />
-                        ) : (
+                        ) : currPath === "pomodoro" ? (
                             <PomodoroTimer stopTimer={stopTimer} />
+                        ) : currPath === "hardcore" ? (
+                            <HardcoreTimer
+                                stopTimer={stopTimer}
+                                setStopTimer={setStopTimer}
+                            />
+                        ) : (
+                            <DangerousTimer
+                                stopTimer={stopTimer}
+                                setStopTimer={setStopTimer}
+                            />
                         )}
                     </div>
                     <div className="write-container__el">

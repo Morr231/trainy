@@ -4,9 +4,11 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 
-import getCookie from "../../helper/getCookie";
+import InstructionsModal from "../modals/instructions-modal";
+import HeaderNavDropdown from "./header-nav-dropdown";
+
 import getUserInfo from "../../helper/getUserInfo";
 
 import HeaderDropdown from "./header-dropdown";
@@ -16,71 +18,131 @@ import dog from "./dog.jpg";
 
 const Header = () => {
     const location = useLocation();
+    const [userInfo, setUserInfo] = useState({});
 
     const [showDropdown, setShowDropdown] = useState(false);
+    const [showNavDropdown, setShowNavDropdown] = useState(false);
 
-    const [userInfo, setUserInfo] = useState({});
+    const [showModal, setShowModal] = useState(false);
 
     const userUpdated = useSelector((state) => {
         return state.userUpdated.updated;
     });
-
-    useEffect(() => {
-        if (userUpdated || !getCookie("userInfo")) {
-            getUserInfo({ setUserInfo: setUserInfo });
-        } else {
-            setUserInfo(JSON.parse(getCookie("userInfo")));
-        }
-    }, [userUpdated]);
-
     const isAuth = useSelector((state) => {
         return state.auth.isAuthed;
     });
 
+    useEffect(() => {
+        if (userUpdated || !window.localStorage.getItem("userInfo")) {
+            getUserInfo({ setUserInfo: setUserInfo });
+        } else {
+            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
+        }
+    }, [userUpdated]);
+
     if (location.pathname !== "/login") {
         return (
             <header className="header">
+                {showModal && <InstructionsModal setShowModal={setShowModal} />}
+
                 <div className="header-container">
-                    <Link to="/">
+                    <Link to="/" style={{ textDecoration: "none" }}>
                         <div className="header-logo">
                             <div className="header-logo__img"></div>
                             <div className="header-logo__name">Lorem</div>
                         </div>
                     </Link>
 
-                    {/* <nav className="header-navigation">
-                <ul className="header-navigation__main">
-                    li.header-navigation__link*
-                </ul>
-            </nav> */}
-
-                    {isAuth ? (
+                    {isAuth || window.localStorage.getItem("userInfo") ? (
                         <>
-                            <Link to="/write">
-                                <div className="header__link">Write</div>
-                            </Link>
-                            <div
-                                className="header__user_container"
-                                onClick={() => setShowDropdown(!showDropdown)}
-                            >
-                                <div className="header__user">
-                                    {/* <div className="profile-header__user_notifications">
-                        <FontAwesomeIcon icon={faBell} />
-                    </div> */}
-                                    {userInfo.imageUrl && (
-                                        <img
-                                            src={userInfo.imageUrl}
-                                            alt="user image"
-                                            className="header-dropdown__user_img"
+                            {window.innerWidth > 900 ? (
+                                <div className="header__nav">
+                                    <Link
+                                        to="/write"
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        <div className="header__link">
+                                            Write essay
+                                        </div>
+                                    </Link>
+                                    <div
+                                        className="header__link"
+                                        onClick={() => setShowModal(true)}
+                                    >
+                                        Instructions
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="header__nav">
+                                    <div
+                                        className="header__nav_icon_container"
+                                        onClick={() => {
+                                            setShowNavDropdown(
+                                                !showNavDropdown
+                                            );
+                                            setShowDropdown(false);
+                                        }}
+                                    >
+                                        <FontAwesomeIcon
+                                            className="header__nav_icon"
+                                            icon={faBars}
+                                        />
+                                    </div>
+                                    {showNavDropdown && (
+                                        <HeaderNavDropdown
+                                            setShowModal={setShowModal}
                                         />
                                     )}
                                 </div>
-                                <FontAwesomeIcon
-                                    className="header__user_icon"
-                                    icon={faAngleDown}
-                                />
+                            )}
+                            <div className="header-user__nav">
+                                {window.innerWidth > 900 && (
+                                    <Link
+                                        to={`/profile/${userInfo.username}`}
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        <div
+                                            className="header__link"
+                                            style={{ marginRight: "1rem" }}
+                                        >
+                                            Profile
+                                        </div>
+                                    </Link>
+                                )}
 
-                                {showDropdown && <HeaderDropdown img={dog} />}
+                                <div
+                                    className="header__user_container"
+                                    onClick={() => {
+                                        setShowDropdown(!showDropdown);
+                                        setShowNavDropdown(false);
+                                    }}
+                                >
+                                    <div className="header__user">
+                                        {/* <div className="profile-header__user_notifications">
+                        <FontAwesomeIcon icon={faBell} />
+                    </div> */}
+                                        {userInfo.imageUrl ? (
+                                            <img
+                                                src={userInfo.imageUrl}
+                                                alt="user image"
+                                                className="header__user_img"
+                                            />
+                                        ) : (
+                                            <FontAwesomeIcon
+                                                className="header__user_img_icon"
+                                                icon={faUser}
+                                            />
+                                        )}
+                                    </div>
+                                    <FontAwesomeIcon
+                                        className="header__user_icon"
+                                        icon={faAngleDown}
+                                    />
+
+                                    {showDropdown && (
+                                        <HeaderDropdown img={dog} />
+                                    )}
+                                </div>
                             </div>
                         </>
                     ) : (

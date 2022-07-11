@@ -76,6 +76,29 @@ const statsSchema = new Schema({
     },
 });
 
+const achievementSchema = new Schema({
+    title: {
+        type: String,
+        default: "",
+    },
+    description: {
+        type: String,
+        default: "",
+    },
+    achievedTime: {
+        type: Date,
+        default: null,
+    },
+    achieved: {
+        type: Boolean,
+        default: false,
+    },
+    rank: {
+        type: String,
+        default: "",
+    },
+});
+
 const userSchema = new Schema({
     email: {
         type: String,
@@ -105,8 +128,16 @@ const userSchema = new Schema({
         type: String,
         default: null,
     },
+    firstEnter: {
+        type: Boolean,
+        default: true,
+    },
     daysTextCount: [dateSchema],
     statistics: { type: statsSchema, default: null },
+    achievements: {
+        type: [achievementSchema],
+        default: [],
+    },
 });
 
 exports.UserModel = mongoose.model("User", userSchema);

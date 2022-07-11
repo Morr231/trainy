@@ -34,3 +34,26 @@
 
         width: 70rem
         height: 70rem
+
+    @include respond(phone)
+
+    @include respond(tab-land)
+        .line
+            width: 50rem
+            height: 45rem
+
+            position: absolute
+
+            z-index: 10
+
+        .line-left
+            top: 23rem
+            left: 26rem
+
+        .line-right
+            top: 60rem
+            right: 25rem
+
+    @media (max-width: 1100px)
+
+    @include respond(tab-port)

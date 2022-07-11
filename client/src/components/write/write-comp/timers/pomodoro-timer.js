@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { timerTimeActions } from "../../../../store/timerTime";
 
 import setHourFormat from "../../../../helper/setHourFormat";
@@ -8,12 +8,20 @@ import setHourFormat from "../../../../helper/setHourFormat";
 const PomodoroTimer = ({ stopTimer }) => {
     const [intervals, setIntervals] = useState([]);
 
-    const [countDown, setCountDown] = useState(5);
+    const [countDown, setCountDown] = useState(25 * 60);
     const [iteration, setIteration] = useState(0);
 
     const dispatch = useDispatch();
+    const timerValueChange = useSelector(
+        (state) => state.timerTime.changeValue
+    );
 
     let countDownInterval;
+
+    if (timerValueChange) {
+        dispatch(timerTimeActions.updateTime(countDown));
+        dispatch(timerTimeActions.changeValue());
+    }
 
     if (stopTimer) {
         dispatch(timerTimeActions.updateTime(countDown));

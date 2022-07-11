@@ -10,9 +10,9 @@ const Slider = () => {
             <div className="slider-main">
                 <div className="slider-main__cta">Random essay topic theme</div>
                 <div className="slider-main__description">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Choose any topic and start writing on different themes
                 </div>
-                <button className="slider-main__button">Choose topic!</button>
+                <button className="slider-main__button">Choose topic</button>
             </div>
 
             <SliderRight />

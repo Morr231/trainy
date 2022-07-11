@@ -24,7 +24,14 @@
         top: 0
         z-index: -1
 
+        @include respond(tab-port)
+            height: 100vh
+
     &-container
+
+    &-main
+        @include respond(tab-port)
+            height: 50vh
 
     &-header
         font-weight: 700

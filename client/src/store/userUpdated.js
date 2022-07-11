@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const userUpdatedSlice = createSlice({
-    name: "deleteCard",
+    name: "userUpdated",
     initialState: {
         updated: false,
     },

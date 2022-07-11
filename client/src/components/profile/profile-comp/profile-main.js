@@ -1,5 +1,8 @@
 import React from "react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+
 const ProfileMain = ({ userInfo }) => {
     return (
         <div className="profile-main">
@@ -7,11 +10,16 @@ const ProfileMain = ({ userInfo }) => {
 
             <div className="profile-main__container">
                 <div className="profile-main__img_container">
-                    {userInfo.imageUrl && (
+                    {userInfo.imageUrl ? (
                         <img
                             src={userInfo.imageUrl}
                             alt="user image"
                             className="settings-header__img"
+                        />
+                    ) : (
+                        <FontAwesomeIcon
+                            className="profile-main__img_icon"
+                            icon={faUser}
                         />
                     )}
                 </div>

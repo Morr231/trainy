@@ -5,11 +5,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/autorization";
 
-import getCookie from "../../helper/getCookie";
 import getUserInfo from "../../helper/getUserInfo";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOut, faCog } from "@fortawesome/free-solid-svg-icons";
+import { faSignOut, faCog, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderDropdown = ({ img }) => {
     const navigate = useNavigate();
@@ -22,16 +21,20 @@ const HeaderDropdown = ({ img }) => {
     });
 
     useEffect(() => {
-        if (userUpdated || !getCookie("userInfo")) {
+        if (userUpdated || !window.localStorage.getItem("userInfo")) {
             getUserInfo({ setUserInfo: setUserInfo });
         } else {
-            setUserInfo(JSON.parse(getCookie("userInfo")));
+            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
         }
     }, [userUpdated]);
 
     const logout = () => {
         dispatch(authActions.logout());
-        window.localStorage.removeItem("token");
+
+        document.cookie =
+            "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        window.localStorage.removeItem("userInfo");
         navigate(`/`);
     };
 
@@ -39,13 +42,21 @@ const HeaderDropdown = ({ img }) => {
         <div className="header-dropdown">
             <div className="header-dropdown__description">Currently in</div>
 
-            <Link to={`/profile/${userInfo.username}`}>
+            <Link
+                to={`/profile/${userInfo.username}`}
+                style={{ textDecoration: "none" }}
+            >
                 <div className="header-dropdown__user">
-                    {userInfo.imageUrl && (
+                    {userInfo.imageUrl ? (
                         <img
                             src={userInfo.imageUrl}
                             alt="user image"
                             className="header-dropdown__user_img"
+                        />
+                    ) : (
+                        <FontAwesomeIcon
+                            className="header-dropdown__user_icon"
+                            icon={faUser}
                         />
                     )}
                     <div className="header-dropdown__user_info">
@@ -59,13 +70,18 @@ const HeaderDropdown = ({ img }) => {
                 </div>
             </Link>
 
-            <div className="header-dropdown__item">
-                <FontAwesomeIcon
-                    className="header-dropdown_icon"
-                    icon={faCog}
-                />
-                <div className="header-dropdown__item_text">Settings</div>
-            </div>
+            <Link
+                to={`/profile/${userInfo.username}/settings`}
+                style={{ textDecoration: "none" }}
+            >
+                <div className="header-dropdown__item">
+                    <FontAwesomeIcon
+                        className="header-dropdown_icon"
+                        icon={faCog}
+                    />
+                    <div className="header-dropdown__item_text">Settings</div>
+                </div>
+            </Link>
             <div className="header-dropdown__item" onClick={logout}>
                 <FontAwesomeIcon
                     className="header-dropdown_icon"

@@ -1,0 +1,87 @@
+@import "instruction-card"
+
+.instruction-modal
+    position: fixed
+    z-index: 1000
+
+    width: 100vw
+    height: 100vh
+
+    display: flex
+    justify-content: center
+    align-items: center
+
+    background-color: rgba(0, 0, 0, 0.3)
+
+    &__container
+        background-color: #FFFFFF
+
+        height: 66.6rem
+        width: 60%
+
+        border: 1px solid rgba(232, 234, 238, 0.8)
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.08)
+        border-radius: 1rem
+
+        position: relative
+
+    &__main
+        padding: 2.5rem
+
+    &__upper
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+    &__number
+        font-weight: 400
+        font-size: 1.8rem
+
+    &__close
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: #B8C1CC
+
+        width: 3rem
+        height: 3rem
+
+        border-radius: 50%
+
+        cursor: pointer
+
+        &_icon
+            font-size: 1.6rem
+            color: white
+
+    &__buttons
+        position: absolute
+        bottom: 0
+
+        border-bottom-left-radius: 1rem
+        border-bottom-right-radius: 1rem
+
+        height: 5rem
+        width: 100%
+
+        background: #FBFDFE
+        box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.1)
+
+        display: flex
+        justify-content: flex-end
+        align-items: center
+
+        padding-right: 5.6rem
+
+    &__button
+        padding: 0.5rem 2rem
+
+        background: #FFFFFF
+        border: 1px solid rgba(0, 0, 0, 0.1)
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16)
+        border-radius: 5px
+
+        color: #000000
+
+        &:not(:last-child)
+            margin-right: 0.8rem

@@ -1,13 +1,36 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
+
+import { useSelector } from "react-redux";
 
 import DashboardCard from "./dashboard-card";
 
-const Dashboard = ({ userInfo }) => {
+import getUserInfo from "../../../helper/getUserInfo";
+
+const Dashboard = () => {
     const [dateOfProgress, setDateOfProgress] = useState("");
+    const [cardDeleted, setCardDeleted] = useState(false);
 
     let [filteredCalendarValues, setfilteredCalendarValues] = useState([]);
+
+    const [userInfo, setUserInfo] = useState({});
+
+    const userUpdated = useSelector((state) => {
+        return state.userUpdated.updated;
+    });
+
+    useEffect(() => {
+        if (
+            userUpdated ||
+            cardDeleted ||
+            !window.localStorage.getItem("userInfo")
+        ) {
+            getUserInfo({ setUserInfo: setUserInfo });
+            setCardDeleted(false);
+        } else {
+            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
+        }
+    }, [userUpdated, cardDeleted]);
 
     const currentYear = new Date().getFullYear();
     const currentTimeNF = new Date();
@@ -24,9 +47,13 @@ const Dashboard = ({ userInfo }) => {
 
     function calendarRectClicked(value) {
         if (value) {
-            let tempCalendarVals = userInfo.texts.filter(
-                (el) => el.date.slice(0, 10) === value.date
-            );
+            let tempCalendarVals = userInfo.texts.filter((el) => {
+                if (value.date[value.date.length - 2] === "-") {
+                    return el.date.slice(0, 8) + el.date[9] === value.date;
+                }
+
+                return el.date.slice(0, 10) === value.date;
+            });
 
             const unformattedDate = new Date(tempCalendarVals[0].date)
                 .toDateString()
@@ -77,6 +104,8 @@ const Dashboard = ({ userInfo }) => {
                                       imageUrl={el.imageUrl}
                                       index={index}
                                       username={userInfo.username}
+                                      textsLength={userInfo.texts.length}
+                                      setCardDeleted={setCardDeleted}
                                   />
                               );
                           })
@@ -89,6 +118,8 @@ const Dashboard = ({ userInfo }) => {
                                       imageUrl={el.imageUrl}
                                       index={index}
                                       username={userInfo.username}
+                                      textsLength={userInfo.texts.length}
+                                      setCardDeleted={setCardDeleted}
                                   />
                               );
                           })}

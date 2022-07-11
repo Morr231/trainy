@@ -2,15 +2,20 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
-import { deleteCardActions } from "../../../store/deleteCard";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
-const DashboardCard = ({ topic, date, imageUrl, index, username }) => {
-    const dispatch = useDispatch();
+import getCookie from "../../../helper/getCookie";
 
+const DashboardCard = ({
+    topic,
+    date,
+    imageUrl,
+    index,
+    username,
+    textsLength,
+    setCardDeleted,
+}) => {
     const unformattedDate = new Date(date).toDateString().split(" ");
     const formattedDate = `${unformattedDate[2]} ${unformattedDate[1]} ${unformattedDate[3]}`;
 
@@ -20,32 +25,36 @@ const DashboardCard = ({ topic, date, imageUrl, index, username }) => {
         formattedTopic = formattedTopic.slice(0, 40) + "...";
     }
 
+    console.log(topic, textsLength - index - 1);
+
     const deleteText = async () => {
         const responce = await fetch(
-            `${process.env.REACT_APP_IP}text/delete/${index}`,
+            `${process.env.REACT_APP_IP}text/delete/${textsLength - index - 1}`,
             {
                 method: "DELETE",
                 mode: "cors",
                 credentials: "same-origin",
                 headers: {
-                    autorization: localStorage.getItem("token"),
+                    autorization: getCookie("token"),
                 },
             }
         );
         const data = await responce.json();
         if (data.deleted) {
-            dispatch(deleteCardActions.setDeleteCard());
+            setCardDeleted(true);
         }
         console.log("deleted", data);
     };
 
     return (
         <div className="dashboard-card">
-            <div className="dashboard-card__icon_container">
+            <div
+                className="dashboard-card__icon_container"
+                onClick={deleteText}
+            >
                 <FontAwesomeIcon
                     icon={faX}
                     className="dashboard-card__delete"
-                    onClick={deleteText}
                 />
             </div>
 

@@ -3,6 +3,11 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const StatsBlock = ({ number, header, time, iconColor, icon }) => {
+    let unformattedDate;
+    if (time !== "Not achieved") {
+        unformattedDate = new Date(time).toDateString().split(" ");
+    }
+
     return (
         <div className="stats-block">
             <div className="stats-block__upper">
@@ -15,7 +20,11 @@ const StatsBlock = ({ number, header, time, iconColor, icon }) => {
                 </div>
             </div>
             <div className="stats-block__description">{header}</div>
-            <div className="stats-block__time">{time}</div>
+            <div className="stats-block__time">
+                {time !== "Not achieved" && time !== "All time"
+                    ? `${unformattedDate[2]} ${unformattedDate[1]} ${unformattedDate[3]}`
+                    : time}
+            </div>
         </div>
     );
 };

@@ -9,6 +9,8 @@ import { userUpdatedActions } from "../../store/userUpdated";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudArrowUp, faImage } from "@fortawesome/free-solid-svg-icons";
 
+import getCookie from "../../helper/getCookie";
+
 const PhotoUpload = ({ setShowModal, username }) => {
     const [photoUploaded, setPhotoUploaded] = useState();
 
@@ -52,7 +54,7 @@ const PhotoUpload = ({ setShowModal, username }) => {
                             credentials: "same-origin",
                             headers: {
                                 "Content-Type": "application/json",
-                                autorization: localStorage.getItem("token"),
+                                autorization: getCookie("token"),
                             },
                             body: JSON.stringify({ imageUrl: data.url }),
                         }

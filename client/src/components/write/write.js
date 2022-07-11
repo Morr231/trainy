@@ -72,10 +72,6 @@ const Write = () => {
 
     return (
         <div className="write">
-            {/* {timer === 0 && countDown >= 0.3 && countDown <= 3 && (
-                <AchieveModal name="first essay" />
-            )} */}
-
             {showAll ? (
                 <WriteAll />
             ) : (

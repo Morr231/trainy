@@ -1,16 +1,35 @@
 import React, { useState, useRef, useEffect, createRef } from "react";
 import JoditEditor from "jodit-react";
 
-import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { userUpdatedActions } from "../../../store/userUpdated";
+import { timerTimeActions } from "../../../store/timerTime";
 
 import { useScreenshot } from "use-react-screenshot";
+
+import debounce from "../../../helper/debounce";
+import getCookie from "../../../helper/getCookie";
+import getUserInfo from "../../../helper/getUserInfo";
+import achievementsHandler from "../../../helper/achievementsHandler";
+
+import AchieveModal from "../../modals/achieve-modal";
 
 const config = {
     buttons: ["bold", "italic", "underline"],
 };
 
 const WriteMain = ({ randomTopic, topicNumber }) => {
+    const dispatch = useDispatch();
+    const location = useLocation();
+
+    let currPath = location.pathname.split("/");
+    currPath = currPath[currPath.length - 1];
+
     const [text, setText] = useState("");
+    const [userInfo, setUserInfo] = useState({});
+    const [achieved, setAchieved] = useState("");
 
     const editor = useRef(null);
     const ref = createRef(null);
@@ -19,12 +38,46 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
     const getImage = () => takeScreenshot(ref.current);
 
     const timerTime = useSelector((state) => state.timerTime.value);
+
     const pomodoroFinished = useSelector(
         (state) => state.timerTime.pomodoroFinished
     );
+    const dangerousFinished = useSelector(
+        (state) => state.timerTime.dangerousFinished
+    );
 
     useEffect(() => {
-        if (image) {
+        if (dangerousFinished) {
+            setText("");
+        }
+    }, [dangerousFinished]);
+
+    useEffect(() => {
+        if (currPath === "10-sec" && text) {
+            dispatch(timerTimeActions.setDangerousUpdated());
+        }
+    }, [text]);
+
+    useEffect(() => {
+        if (!window.localStorage.getItem("userInfo")) {
+            getUserInfo({ setUserInfo: setUserInfo });
+        } else {
+            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
+        }
+    }, []);
+
+    useEffect(() => {
+        achievementsHandler({
+            text: text,
+            userInfo: userInfo,
+            setUserInfo: setUserInfo,
+            setAchieved: setAchieved,
+        });
+    }, [text]);
+
+    useEffect(() => {
+        if (image && text) {
+            dispatch(timerTimeActions.changeValue());
             const formdata = new FormData();
 
             formdata.append("file", image);
@@ -44,28 +97,18 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
                 .then((responce) => responce.json())
                 .then((data) => {
                     updateText({ text: text, imageUrl: data.url });
+
+                    dispatch(userUpdatedActions.setUserUpdatedTrue());
                 });
         }
     }, [image, timerTime]);
-
-    console.log(timerTime);
-
-    const debounce = (fn, ms) => {
-        let timeout;
-        return function () {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                fn.apply(this, arguments);
-            }, ms);
-        };
-    };
 
     const getValue = (value) => {
         setText(value);
         getImage();
     };
 
-    const tempValueFN = debounce(getValue, 1000);
+    const tempValueFN = debounce(getValue, 250);
 
     const updateText = async ({ text, imageUrl }) => {
         const textData = {
@@ -79,13 +122,11 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
             textData.timeSpend = timerTime;
         }
 
-        console.log(timerTime, textData);
-
         const responce = await fetch(`${process.env.REACT_APP_IP}text/save`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                autorization: window.localStorage.getItem("token"),
+                autorization: getCookie("token"),
             },
             body: JSON.stringify(textData),
         });
@@ -94,8 +135,8 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
 
     return (
         <div className="write-main">
+            {achieved && <AchieveModal name={achieved} />}
             {pomodoroFinished && <div className="write-cover"></div>}
-
             <div className="write-main-container">
                 <div className="write-main__form" ref={ref}>
                     <JoditEditor

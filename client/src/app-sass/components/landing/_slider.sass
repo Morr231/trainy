@@ -1,9 +1,14 @@
 .slider
     position: relative
+    background-color: rgba(63, 138, 224, 0.2)
+    // background-color: $base-color
+    padding: 1rem
+    margin-bottom: 7rem
 
     &-right, &-left
         display: flex
         justify-content: space-between
+        align-items: center
 
         &:not(:last-child)
             margin-bottom: 5rem
@@ -16,26 +21,21 @@
 
     &-text
         display: flex
-
         text-align: center
-
-        font-size: 3rem
-        margin-right: 10rem
-        opacity: 50%
 
         position: relative
 
-        &::after
-            content: ''
-            position: absolute
-            top: 50%
-            left: 200%
-            transform: translate(-50%, -50%)
-
-            width: 1rem
-            height: 1rem
-            border-radius: 50%
-            background-color: black
+        &__large
+            font-weight: 700
+            font-size: 3.6rem
+            margin-right: 3rem
+            color: rgba(21, 87, 192, 0.2)
+        &__small
+            font-weight: 700
+            font-size: 1.8rem
+            line-height: 4.2rem
+            margin-right: 3rem
+            color: rgba(21, 87, 192, 0.2)
 
     &-main
         position: absolute
@@ -48,8 +48,10 @@
 
         z-index: 10
 
-        background: radial-gradient(96.32% 571.83% at 98.4% 19.88%, #8FB3FF 0%, #9D6BE8 27.72%, #DE2778 54.29%, #B03DE2 100%)
-        border-radius: 20px
+        background: #FFFFFF
+
+        box-shadow: 0px 0px 2rem 1rem rgba(0, 0, 0, 0.05)
+        border-radius: 1.5rem
 
         display: flex
         justify-content: center
@@ -57,38 +59,40 @@
         flex-direction: column
 
         &__cta
-            font-weight: 600
-            font-size: 4rem
+            font-weight: 700
+            font-size: 3.6rem
+            line-height: 4.2rem
 
-            text-align: center
-
-            color: #FFFFFF
+            color: #0A0A0A
 
             margin-bottom: 1rem
 
         &__description
             font-weight: 400
-            font-size: 1.6rem
+            font-size: 1.8rem
+            line-height: 2.2rem
 
+            color: #0A0A0A
             text-align: center
-            letter-spacing: 0.01em
 
-            color: rgba(255, 255, 255, 0.83)
-
-            margin-bottom: 3rem
+            margin-bottom: 2rem
 
         &__button
+            border: none
+            outline: none
+
             width: 40%
-            height: 5.2rem
+            height: 4.5rem
 
-            background: #231A36
-            border-radius: 2.6rem
+            background: #3F8AE0
 
-            font-weight: 500
-            font-size: 1.5rem
-            text-align: center
+            box-shadow: 0px 0px 1rem rgba(54, 133, 255, 0.3)
+            border-radius: 1rem
 
-            color: #FFFAF9
+            font-weight: 700
+            font-size: 1.8rem
+
+            color: #FFFFFF
 
     @keyframes right
         0%

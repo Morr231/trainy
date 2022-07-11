@@ -6,8 +6,20 @@
     display: flex
     align-items: center
 
+    @include respond(tab-port)
+        display: block
+
     &__switch
         margin-right: 5rem
+
+        @include respond(tab-port)
+            display: flex
+            justify-content: space-around
+
+        @include respond(phone)
+            display: grid
+            grid-template-columns: repeat(2, 1fr)
+            margin-right: 0
 
         &_item
 
@@ -22,6 +34,10 @@
 
             padding: 1rem
 
+            @include respond(phone)
+                justify-content: center
+                align-items: center
+
             &:not(:last-child)
                 margin-bottom: 2rem
 
@@ -31,5 +47,5 @@
 
             .welcome-icon-container
                 margin-right: 1rem
-                width: 2rem
-                height: 2rem
+                // width: 2rem
+                // height: 2rem

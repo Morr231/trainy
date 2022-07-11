@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { timerTimeActions } from "../../../../store/timerTime";
 
 import setHourFormat from "../../../../helper/setHourFormat";
@@ -9,9 +9,18 @@ const DefaultTimer = ({ stopTimer }) => {
     const [intervals, setIntervals] = useState([]);
 
     const [countDown, setCountDown] = useState(0);
+
     const dispatch = useDispatch();
+    const timerValueChange = useSelector(
+        (state) => state.timerTime.changeValue
+    );
 
     let countDownInterval;
+
+    if (timerValueChange) {
+        dispatch(timerTimeActions.updateTime(countDown));
+        dispatch(timerTimeActions.changeValue());
+    }
 
     if (stopTimer) {
         dispatch(timerTimeActions.updateTime(countDown));

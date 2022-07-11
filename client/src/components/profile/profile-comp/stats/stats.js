@@ -15,9 +15,7 @@ import StatsBlock from "./stats-comp/stats-block";
 import LineRendered from "./stats-comp/stats-chart";
 
 const Stats = ({ userInfo }) => {
-    console.log(userInfo.statistics);
-
-    if (userInfo.statistics) {
+    if (!(typeof userInfo.statistics === "undefined")) {
         return (
             <div className="stats">
                 <h2 className="stats-header">Your Statistics</h2>
@@ -107,7 +105,13 @@ const Stats = ({ userInfo }) => {
             </div>
         );
     } else {
-        <div className="stats">No info</div>;
+        return (
+            <div className="stats">
+                <h2 className="stats-header">
+                    Start writing essays to get your statistics
+                </h2>
+            </div>
+        );
     }
 };
 

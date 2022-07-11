@@ -11,20 +11,30 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 const signRouter = require("./routes/sign");
+const userVerificationRouter = require("./mail/user-verification");
+
 const userRouter = require("./routes/userInfo");
+const firstEnterRouter = require("./routes/firstEnter");
 const randomRouter = require("./routes/randomTopic");
 const textRouter = require("./routes/text");
 const settingsRouter = require("./routes/settings");
+const achievedRouter = require("./routes/achieved");
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(signRouter);
+app.use(userVerificationRouter);
+
 app.use("/user", userRouter);
+app.use("/user", achievedRouter);
+app.use("/user", firstEnterRouter);
+
+app.use("/settings", settingsRouter);
+
 app.use(randomRouter);
 app.use("/text", textRouter);
-app.use("/settings", settingsRouter);
 
 mongoose
     .connect(

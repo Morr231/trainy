@@ -1,4 +1,5 @@
 @import "variables"
+@import "mixins"
 
 @import "components/buttons"
 @import "components/modals"
@@ -8,15 +9,26 @@
 @import "components/profile"
 @import "components/regimes"
 @import "components/write"
+@import "components/footer"
 
 *
     margin: 0
     padding: 0
     box-sizing: border-box
+    font-family: 'Roboto', sans-serif
 
 html
     font-size: 62.5%
     overflow-x: hidden
+
+    @include respond(tab-land)
+        font-size: 56.25%
+
+    @include respond(tab-port)
+        font-size: 50%
+
+    @include respond(big-desktop)
+        font-size: 75%
 
 body
     background: #F9F9F9

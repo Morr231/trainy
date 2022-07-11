@@ -11,13 +11,7 @@ export default async function getUserInfo({ setUserInfo }) {
 
     const result = await responce.json();
 
-    const date = new Date();
-
-    document.cookie = `userInfo=${JSON.stringify(
-        result.userInfo
-    )}; path=/; expires=${date.setTime(
-        date.getTime() + 10 * 60 * 1000
-    )}${date.toGMTString()}`;
+    window.localStorage.setItem("userInfo", JSON.stringify(result.userInfo));
 
     setUserInfo(result.userInfo);
 }

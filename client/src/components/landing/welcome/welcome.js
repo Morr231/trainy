@@ -13,18 +13,21 @@ const Welcome = () => {
 
             <WelcomeBg />
             <div className="welcome-container">
-                <h1 className="welcome-header">
-                    Boost your <span className="header-first">copywriting</span>
-                    <br />
-                    productivity
-                </h1>
+                <div className="welcome-main">
+                    <h1 className="welcome-header">
+                        Boost your{" "}
+                        <span className="header-first">copywriting</span>
+                        <br />
+                        productivity
+                    </h1>
 
-                <div className="welcome-description">
-                    Lorem helps with your copywriting routine by providing
-                    random essay title
+                    <div className="welcome-description">
+                        Lorem helps with your copywriting routine by providing
+                        random essay title
+                    </div>
+
+                    <CtaButton text="Try for free" buttonStyle="outline" />
                 </div>
-
-                <CtaButton text="Try for free" buttonStyle="outline" />
 
                 <WelcomeExample />
 

@@ -137,7 +137,7 @@ router.delete("/delete/:id", (req, res) => {
         if (err) return HandleError(err);
 
         if (found) {
-            const deletingIndex = found.texts.length - req.params.id - 1;
+            const deletingIndex = req.params.id;
 
             imageUrl = found.texts[deletingIndex].imageUrl;
 
@@ -148,7 +148,9 @@ router.delete("/delete/:id", (req, res) => {
                 console.log(err, result);
             });
 
-            found.texts.splice(deletingIndex);
+            found.texts.splice(deletingIndex, 1);
+
+            console.log(found.texts);
 
             found.save().then((item) => {
                 res.json({ deleted: true });

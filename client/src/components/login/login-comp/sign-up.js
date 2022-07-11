@@ -1,19 +1,21 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+const SignUp = ({ setSign, setUserData, setSignUp }) => {
+    const sendEmail = async (email) => {
+        const responce = await fetch(`${process.env.REACT_APP_IP}send-email`, {
+            method: "POST",
+            mode: "cors",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: email }),
+        });
 
-import { useDispatch } from "react-redux";
-
-import { authActions } from "../../../store/autorization";
-
-const SignUp = ({ setSign }) => {
-    const [signed, setSigned] = useState();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+        const result = await responce.json();
+        console.log(result);
+    };
 
     const signUp = (e) => {
         e.preventDefault();
-
-        dispatch(authActions.login());
 
         const userData = {
             username: e.target.username.value,
@@ -23,40 +25,14 @@ const SignUp = ({ setSign }) => {
             surname: e.target.surname.value,
         };
 
-        sendUserData(userData);
-    };
+        sendEmail(e.target.email.value);
 
-    const sendUserData = async (userData) => {
-        const responce = await fetch(`${process.env.REACT_APP_IP}signUp`, {
-            method: "POST",
-            mode: "cors",
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-        });
-
-        const result = await responce.json();
-
-        if (result.saved) {
-            localStorage.setItem("token", result.token);
-
-            setSigned(true);
-            navigate(`/profile/${userData.username}`);
-        } else {
-            setSigned(false);
-        }
+        setUserData(userData);
+        setSignUp(false);
     };
 
     return (
         <form className="login-main__form" onSubmit={signUp}>
-            {signed === false && (
-                <div className="login-main__form_container login-main__form_error">
-                    Incorrect username or password
-                </div>
-            )}
-
             <div className="login-main__form_container">
                 <label htmlFor="username" className="login-main__form_label">
                     Username
@@ -66,6 +42,7 @@ const SignUp = ({ setSign }) => {
                     id="username"
                     name="username"
                     className="login-main__form_input"
+                    minlength="4"
                     required
                 />
             </div>
@@ -93,6 +70,8 @@ const SignUp = ({ setSign }) => {
                     name="password"
                     className="login-main__form_input"
                     required
+                    minlength="8"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                 />
             </div>
 
@@ -106,8 +85,9 @@ const SignUp = ({ setSign }) => {
                         id="name"
                         name="name"
                         className="login-main__form_input"
+                        minlength="2"
+                        required
                     />
-                    required
                 </div>
 
                 <div className="login-main__form_small_container_el">
@@ -119,6 +99,7 @@ const SignUp = ({ setSign }) => {
                         id="surname"
                         name="surname"
                         className="login-main__form_input"
+                        minlength="2"
                         required
                     />
                 </div>
@@ -145,11 +126,7 @@ const SignUp = ({ setSign }) => {
             </div>
 
             <div className="login-main__form_container">
-                <button
-                    type="submit"
-                    className="login-main__form_submit
-                    "
-                >
+                <button type="submit" className="login-main__form_submit">
                     Sign Up
                 </button>
             </div>

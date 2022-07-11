@@ -1,4 +1,3 @@
-import Header from "../header/header";
 import Welcome from "./welcome/welcome";
 import Better from "./better/better";
 import Motivation from "./motivation/motivation";
@@ -9,10 +8,7 @@ import Cta from "./cta/cta";
 const Landing = () => {
     return (
         <div className="landing">
-            {/* <Header /> */}
-            {/* <div className="landing-upper"> */}
             <Welcome />
-            {/* </div> */}
             <Better />
             <Motivation />
             <Slider />

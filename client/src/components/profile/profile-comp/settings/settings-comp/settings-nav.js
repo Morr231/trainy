@@ -1,16 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
 
-const SettingsNav = () => {
+const SettingsNav = ({ userInfo }) => {
     const location = useLocation();
     let currPath = location.pathname.split("/");
     currPath = currPath[currPath.length - 1];
 
     return (
         <div className="settings-nav">
-            <Link to="edit-profile" style={{ textDecoration: "none" }}>
+            <Link
+                to={`/profile/${userInfo.username}/settings`}
+                style={{ textDecoration: "none" }}
+            >
                 <div
                     className={`settings-nav__el ${
-                        currPath === "edit-profile" && "settings-nav__el_active"
+                        currPath === "settings" && "settings-nav__el_active"
                     }`}
                 >
                     Edit profile

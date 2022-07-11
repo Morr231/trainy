@@ -1,21 +1,33 @@
+import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+
 import "./achieve.sass";
 
 const AchieveModal = ({ name }) => {
+    const [showModal, setShowModal] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => setShowModal(false), 3000);
+    }, []);
+
     return ReactDOM.createPortal(
-        <div className="achieve-modal">
-            <div className="achieve-modal__icon">
-                <div className="main-container">
-                    <div className="check-container">
-                        <div className="check-background">
-                            <SvgComponent />
+        <>
+            {showModal && (
+                <div className="achieve-modal">
+                    <div className="achieve-modal__icon">
+                        <div className="main-container">
+                            <div className="check-container">
+                                <div className="check-background">
+                                    <SvgComponent />
+                                </div>
+                                <div className="check-shadow"></div>
+                            </div>
                         </div>
-                        <div className="check-shadow"></div>
                     </div>
+                    <div className="achieve-modal__name">{name}</div>
                 </div>
-            </div>
-            <div className="achieve-modal__name">{name}</div>
-        </div>,
+            )}
+        </>,
         document.getElementById("portal")
     );
 };

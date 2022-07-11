@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 
 import { Routes, Route, useLocation } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import getCookie from "../../helper/getCookie";
 import getUserInfo from "../../helper/getUserInfo";
 
 import ProfileNav from "./profile-comp/profile-nav";
@@ -14,34 +13,35 @@ import Achieve from "./profile-comp/achieve";
 import Stats from "./profile-comp/stats/stats";
 import Settings from "./profile-comp/settings";
 import TopicCard from "./profile-comp/topic-card";
+import InstructionsModal from "../modals/instructions-modal";
 
 const Profile = () => {
+    const [userInfo, setUserInfo] = useState({});
+
     const location = useLocation();
 
     let currPath = location.pathname.split("/");
     currPath = currPath[currPath.length - 1];
-
-    const [userInfo, setUserInfo] = useState({});
-
-    const cardDeleted = useSelector((state) => {
-        return state.deleteCard.deleted;
-    });
 
     const userUpdated = useSelector((state) => {
         return state.userUpdated.updated;
     });
 
     useEffect(() => {
-        if (cardDeleted || userUpdated || !getCookie("userInfo")) {
+        if (userUpdated || !window.localStorage.getItem("userInfo")) {
             getUserInfo({ setUserInfo: setUserInfo });
         } else {
-            setUserInfo(JSON.parse(getCookie("userInfo")));
+            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
         }
-    }, [cardDeleted, userUpdated]);
+    }, [userUpdated]);
 
     return (
         <div className="profile">
             <div className="profile-container">
+                {userInfo && userInfo.firstEnter && (
+                    <InstructionsModal setUserInfo={setUserInfo} />
+                )}
+
                 <ProfileNav userInfo={userInfo} />
 
                 {userInfo && currPath === userInfo.username && (
