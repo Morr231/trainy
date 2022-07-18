@@ -20,7 +20,9 @@ const Settings = ({ userInfo }) => {
             <div className="settings-container">
                 <SettingsNav userInfo={userInfo} />
 
-                {currPath === "settings" && <EditUser />}
+                {currPath === "settings" && (
+                    <EditUser username={userInfo.username} />
+                )}
 
                 <Routes>
                     <Route

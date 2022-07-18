@@ -52,7 +52,7 @@ const InstructionsModal = ({ setUserInfo, setShowModal }) => {
 
             setUserInfo(result.userInfo);
 
-            dispatch(userUpdatedActions.setUserUpdatedTrue);
+            dispatch(userUpdatedActions.setUserUpdated);
         } else {
             setShowModal(false);
         }

@@ -43,7 +43,7 @@
         left: 50%
         transform: translate(-50%, -50%)
 
-        width: 35%
+        max-width: 50vw
         padding: 2rem
 
         z-index: 10
@@ -58,6 +58,14 @@
         align-items: center
         flex-direction: column
 
+        @include respond(phone)
+            width: 80%
+            max-width: 80%
+
+        @include respond(tab-land)
+
+        @include respond(tab-port)
+
         &__cta
             font-weight: 700
             font-size: 3.6rem
@@ -66,6 +74,7 @@
             color: #0A0A0A
 
             margin-bottom: 1rem
+            text-align: center
 
         &__description
             font-weight: 400

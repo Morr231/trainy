@@ -1,20 +1,17 @@
 import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faPen } from "@fortawesome/free-solid-svg-icons";
 
 import PhotoUpload from "../../../../modals/photo-upload";
+import DescriptionModal from "../../../../modals/description-modal";
 
 const SettingsHeader = ({ userInfo }) => {
     const [showModal, setShowModal] = useState(false);
+    const [showDescriptionModal, setShowDescriptionModal] = useState(false);
 
-    const getUserData = (e) => {
-        setShowModal(true);
-
-        // e.preventDefault();
-        // console.log(e.target);
-        // const userData = {};
-        // editUser(userData);
+    const handleDescriptionChange = () => {
+        setShowDescriptionModal(true);
     };
 
     const editUser = async (userData) => {
@@ -52,10 +49,17 @@ const SettingsHeader = ({ userInfo }) => {
                 />
             )}
 
+            {showDescriptionModal && (
+                <DescriptionModal
+                    setShowDescriptionModal={setShowDescriptionModal}
+                    username={userInfo.username}
+                />
+            )}
+
             <div className="settings-header__img_container">
                 <div
                     className="settings-header__img_container_icon"
-                    onClick={getUserData}
+                    onClick={() => setShowModal(true)}
                 >
                     <FontAwesomeIcon
                         className="settings-header__img_icon"
@@ -71,9 +75,23 @@ const SettingsHeader = ({ userInfo }) => {
                 )}
             </div>
             <div className="settins-header__info">
-                <div className="settings-header__name">Almaz Balgali</div>
+                <div className="settings-header__name">
+                    {userInfo.name} {userInfo.surname}
+                </div>
                 <div className="settings-header__description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    <div className="settings-header__description_text">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit.
+                    </div>
+                    <div
+                        className="settings-header__img_container_icon settings-header__description_icon"
+                        onClick={handleDescriptionChange}
+                    >
+                        <FontAwesomeIcon
+                            className="settings-header__img_icon"
+                            icon={faPen}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

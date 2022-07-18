@@ -9,22 +9,12 @@ cloudinary.config({
     api_secret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
 });
 
-const {
-    countFastestEssay,
-    countLongestEssay,
-    countAverageWPM,
-    countAverageTime,
-    countAverageWordCount,
-    countEverydayWords,
-    countEverydayTime,
-    countDaysStreak,
-} = require("../routes/stats");
-
-const router = express.Router();
-
 const { UserModel } = require("../schemas/user");
 
 const validateToken = require("../middleware/validateToken");
+const getStatistics = require("../helper/getStatistics");
+
+const router = express.Router();
 
 router.all("*", [validateToken]);
 
@@ -75,48 +65,7 @@ router.post("/save", (req, res) => {
 
             found.save().then((item) => {
                 if (foundTextIndex !== -1) {
-                    const fastestEssay = countFastestEssay({
-                        texts: item.texts,
-                    });
-                    const longestEssay = countLongestEssay({
-                        texts: item.texts,
-                    });
-
-                    const averageWPM = countAverageWPM({
-                        texts: item.texts,
-                    });
-                    const averageTime = countAverageTime({
-                        texts: item.texts,
-                    });
-                    const averageWordCount = countAverageWordCount({
-                        texts: item.texts,
-                    });
-
-                    const everydayWords = countEverydayWords({
-                        texts: item.texts,
-                    });
-                    const everydayTime = countEverydayTime({
-                        texts: item.texts,
-                    });
-
-                    const daysStreak = countDaysStreak({
-                        daysCount: item.daysTextCount,
-                    });
-
-                    // console.log(found.statistics);
-
-                    const statObj = {
-                        daysStreak: daysStreak,
-                        fastestEssay: found.texts[fastestEssay],
-                        longestEssay: found.texts[longestEssay],
-                        averageWPM: averageWPM,
-                        averageTime: averageTime,
-                        averageWordCount: averageWordCount,
-                        dailyWordCount: everydayWords,
-                        dailyTime: everydayTime,
-                    };
-
-                    found.statistics = statObj;
+                    found.statistics = getStatistics(found, item);
 
                     found.save().then((item) => {
                         res.json({ saved: true });
@@ -150,10 +99,12 @@ router.delete("/delete/:id", (req, res) => {
 
             found.texts.splice(deletingIndex, 1);
 
-            console.log(found.texts);
-
             found.save().then((item) => {
-                res.json({ deleted: true });
+                found.statistics = getStatistics(found, item);
+
+                found.save().then((item) => {
+                    res.json({ deleted: true });
+                });
             });
         } else {
             res.json({ deleted: false });

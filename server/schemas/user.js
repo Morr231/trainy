@@ -120,6 +120,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    description: {
+        type: String,
+        default: "",
+    },
     texts: {
         type: [textsSchema],
         default: null,
@@ -138,6 +142,7 @@ const userSchema = new Schema({
         type: [achievementSchema],
         default: [],
     },
+    friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 exports.UserModel = mongoose.model("User", userSchema);

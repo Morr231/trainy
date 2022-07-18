@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userUpdatedActions } from "../../store/userUpdated";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +16,10 @@ const PhotoUpload = ({ setShowModal, username }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const userUpdated = useSelector((state) => {
+        return state.userUpdated.updated;
+    });
 
     const handleFileInput = (e) => {
         // console.log(e.target.value);
@@ -46,6 +50,8 @@ const PhotoUpload = ({ setShowModal, username }) => {
             })
                 .then((responce) => responce.json())
                 .then(async (data) => {
+                    console.log(data.url);
+
                     const responce = await fetch(
                         `${process.env.REACT_APP_IP}user/update-photo`,
                         {
@@ -64,9 +70,12 @@ const PhotoUpload = ({ setShowModal, username }) => {
 
                     if (result.saved) {
                         setShowModal(false);
-                        navigate(`/profile/${username}`);
 
-                        dispatch(userUpdatedActions.setUserUpdatedTrue());
+                        dispatch(userUpdatedActions.setUserUpdated());
+
+                        setPhotoUploaded(null);
+
+                        navigate(`/profile/${username}`);
                     }
                 });
         }

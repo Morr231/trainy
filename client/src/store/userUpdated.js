@@ -6,11 +6,8 @@ const userUpdatedSlice = createSlice({
         updated: false,
     },
     reducers: {
-        setUserUpdatedTrue(state) {
-            state.updated = true;
-        },
-        setUserUpdatedFalse(state) {
-            state.updated = false;
+        setUserUpdated(state) {
+            state.updated = !state.updated;
         },
     },
 });

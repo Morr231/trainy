@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import { useLocation } from "react-router-dom";
+
 import WriteGenerator from "./write-comp/write-generator";
 import WriteMain from "./write-comp/write-main";
 import WriteAll from "./write-comp/write-all";
@@ -9,6 +11,11 @@ import Timer from "./write-comp/timers/timer";
 import AchieveModal from "../modals/achieve-modal";
 
 const Write = () => {
+    const location = useLocation();
+
+    let currPath = location.pathname.split("/");
+    currPath = currPath[currPath.length - 1];
+
     const [randomTopic, setRandomTopic] = useState([]);
     const [topicNumber, setTopicNumber] = useState(0);
     const [showAll, setShowAll] = useState(false);
@@ -33,7 +40,11 @@ const Write = () => {
     useEffect(() => {
         const getRandomTopic = async () => {
             const responce = await fetch(
-                `${process.env.REACT_APP_IP}randomTopic`,
+                `${process.env.REACT_APP_IP}${
+                    currPath === "ielts-second-part"
+                        ? "randomIeltsFPTopic"
+                        : "randomTopic"
+                }`,
                 {
                     mode: "cors",
                     credentials: "same-origin",

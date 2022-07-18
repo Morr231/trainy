@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { authActions } from "../../../store/autorization";
 
-const EmailVerification = ({ email, setSignUp, userData }) => {
+const EmailVerification = ({ userData, forgotPassword }) => {
     const [signed, setSigned] = useState();
 
     const navigate = useNavigate();
@@ -27,7 +27,34 @@ const EmailVerification = ({ email, setSignUp, userData }) => {
             number: number,
         };
 
-        sendUserData(data);
+        if (forgotPassword) {
+            passwordConfirmation(data);
+        } else {
+            sendUserData(data);
+        }
+    };
+
+    const passwordConfirmation = async (userData) => {
+        const responce = await fetch(
+            `${process.env.REACT_APP_IP}forgot-password`,
+            {
+                method: "POST",
+                mode: "cors",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userData),
+            }
+        );
+
+        const result = await responce.json();
+
+        console.log(result);
+
+        if (result.found) {
+            navigate("/login");
+        }
     };
 
     const sendUserData = async (userData) => {
@@ -84,7 +111,7 @@ const EmailVerification = ({ email, setSignUp, userData }) => {
             </div>
 
             <div className="email-verification__text">
-                Code send to your email {email}
+                Code send to your email {userData.email}
             </div>
 
             <form
@@ -194,7 +221,7 @@ const EmailVerification = ({ email, setSignUp, userData }) => {
                     <button
                         className="login-main__form_submit"
                         style={{ width: "30%" }}
-                        onClick={() => setSignUp(true)}
+                        onClick={() => navigate("/login/sign-up")}
                     >
                         Change email
                     </button>

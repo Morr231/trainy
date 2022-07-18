@@ -26,6 +26,8 @@ router.post("/signUp", (req, res) => {
             query.exec((err, found) => {
                 if (err) return HandleError(err);
 
+                console.log(found);
+
                 if (!found) {
                     const user = new UserModel({
                         ...req.body,

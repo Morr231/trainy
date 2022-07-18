@@ -61,6 +61,18 @@ const Regimes = () => {
                         />
                     </Link>
                 </div>
+                <div className="regimes-container__el">
+                    <Link
+                        to="/write/ielts-second-part"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                        <RegimesCard
+                            name="IELTS second part"
+                            description="Write essay for IELTS second part topics"
+                            img={towerClock}
+                        />
+                    </Link>
+                </div>
             </div>
         </div>
     );

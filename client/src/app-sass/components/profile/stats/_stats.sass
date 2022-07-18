@@ -1,7 +1,5 @@
 .stats
-    width: 80%
-
-    margin: 5rem auto
+    margin: auto 0
 
     &-header
         font-weight: 600
@@ -10,15 +8,21 @@
         margin-bottom: 3rem
 
     &-container
-        display: flex
-        justify-content: space-between
-        align-items: center
-
+        display: grid
+        grid-template-columns: repeat(4, 1fr)
+        gap: 5%
         margin-bottom: 3.2rem
+
+        @include respond(phone)
+            grid-template-columns: repeat(2, 1fr)
+            margin-bottom: 13rem
 
     &-charts
         display: flex
         justify-content: space-between
+
+        @include respond(tab-land)
+            flex-direction: column
 
         &__header
             font-weight: 600
@@ -27,8 +31,15 @@
             margin-bottom: 3rem
 
         &__el
+            width: 47.5%
             padding: 2.2rem
             background-color: #FFFFFF
 
             box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.08)
             border-radius: 1.2rem
+
+            @include respond(tab-land)
+                width: 100%
+
+                &:not(:last-child)
+                    margin-bottom: 2rem

@@ -98,7 +98,7 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
                 .then((data) => {
                     updateText({ text: text, imageUrl: data.url });
 
-                    dispatch(userUpdatedActions.setUserUpdatedTrue());
+                    dispatch(userUpdatedActions.setUserUpdated());
                 });
         }
     }, [image, timerTime]);
@@ -108,7 +108,7 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
         getImage();
     };
 
-    const tempValueFN = debounce(getValue, 250);
+    const tempValueFN = debounce(getValue, 500);
 
     const updateText = async ({ text, imageUrl }) => {
         const textData = {

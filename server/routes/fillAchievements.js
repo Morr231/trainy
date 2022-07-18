@@ -1,4 +1,4 @@
-const { achievements } = require("../useful/achievements");
+const { achievements } = require("../helper/achievements");
 
 const fillAchievements = () => {
     return achievements.map((el) => {

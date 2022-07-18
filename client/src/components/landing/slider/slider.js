@@ -1,7 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 import SliderRight from "./slider-comp/slider-right";
 import SliderLeft from "./slider-comp/slider-left";
 
+import CtaButton from "../../buttons/cta-button";
+
 const Slider = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="slider">
             <SliderRight />
@@ -12,7 +18,11 @@ const Slider = () => {
                 <div className="slider-main__description">
                     Choose any topic and start writing on different themes
                 </div>
-                <button className="slider-main__button">Choose topic</button>
+                <CtaButton
+                    text="Choose topic"
+                    buttonStyle="solid"
+                    action={() => navigate("/login")}
+                />
             </div>
 
             <SliderRight />

@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+import { Routes, Route } from "react-router-dom";
+
+import { useLocation } from "react-router-dom";
+
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 
@@ -9,9 +13,13 @@ import EmailVerification from "./email-verification";
 import ForgotPassword from "./forgot-password";
 
 const LoginMain = () => {
-    const [sign, setSign] = useState(true);
-    const [signUp, setSignUp] = useState(true);
+    const location = useLocation();
+
+    let currPath = location.pathname.split("/");
+    currPath = currPath[currPath.length - 1];
+
     const [forgotPassword, setForgotPassword] = useState(false);
+    const [loginError, setLoginError] = useState(false);
 
     const [userData, setUserData] = useState({});
 
@@ -23,19 +31,17 @@ const LoginMain = () => {
         console.log(response);
     };
 
-    console.log(forgotPassword);
-
     return (
         <div className="login-main">
             <div className="login-main__container">
                 <h2 className="login-main__header">
-                    {sign ? "Sign in" : "Sign Up"}
+                    {currPath === "login" ? "Sign in" : "Sign Up"}
                 </h2>
                 <div className="login-main__cta">
                     Get started absolutely free
                 </div>
 
-                {signUp && (
+                {currPath === "login" && currPath === "sign-up" && (
                     <div className="login-main__sign_other">
                         <GoogleLogin
                             clientId={process.env.REACT_APP_GOOGLEID}
@@ -57,27 +63,26 @@ const LoginMain = () => {
                     </div>
                 )}
 
-                {sign ? (
-                    <SignIn
-                        setSign={setSign}
-                        setForgotPassword={setForgotPassword}
-                        setSignUp={setSignUp}
-                    />
-                ) : signUp ? (
-                    <SignUp
-                        setSign={setSign}
-                        setUserData={setUserData}
-                        setSignUp={setSignUp}
-                    />
-                ) : forgotPassword ? (
-                    <ForgotPassword />
-                ) : (
-                    <EmailVerification
-                        email={userData.email}
-                        setSignUp={setSignUp}
-                        userData={userData}
-                    />
+                {currPath === "login" && (
+                    <SignIn setForgotPassword={setForgotPassword} />
                 )}
+
+                <Routes>
+                    <Route path="/sign-up" element={<SignUp />} />
+                    <Route
+                        path="/forgot-password"
+                        element={<ForgotPassword setUserData={setUserData} />}
+                    />
+                    <Route
+                        path="/email-verification"
+                        element={
+                            <EmailVerification
+                                userData={userData}
+                                forgotPassword={forgotPassword}
+                            />
+                        }
+                    />
+                </Routes>
             </div>
         </div>
     );

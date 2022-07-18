@@ -1,12 +1,7 @@
 const nodemailer = require("nodemailer");
-const express = require("express");
 require("dotenv").config();
 
-const { TokenModel } = require("../schemas/token");
-
-const router = express.Router();
-
-const sendMail = (token, email) => {
+const sendMail = (text, email, emailSubject) => {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -15,11 +10,13 @@ const sendMail = (token, email) => {
         },
     });
 
+    console.log(email);
+
     const mailOptions = {
         from: process.env.MY_EMAIL,
         to: email,
-        subject: "Verify your trainy email!",
-        text: `randomNumber: ${token}`,
+        subject: emailSubject,
+        text: text,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -31,38 +28,4 @@ const sendMail = (token, email) => {
     });
 };
 
-router.post("/send-email", (req, res) => {
-    const query = TokenModel.findOne({ email: req.body.email });
-
-    query.exec((err, found) => {
-        if (err) return HandleError(err);
-
-        const randomNumber = Math.floor(100000 + Math.random() * 900000);
-        sendMail(randomNumber, req.body.email);
-
-        console.log(randomNumber);
-
-        if (!found) {
-            const emailToken = new TokenModel();
-
-            emailToken.email = req.body.email;
-            emailToken.token = randomNumber;
-
-            emailToken.save().then(() => {
-                res.json({
-                    saved: true,
-                });
-            });
-        } else {
-            found.token = randomNumber;
-            found.save().then((item) => {
-                console.log(item);
-                res.json({
-                    saved: true,
-                });
-            });
-        }
-    });
-});
-
-module.exports = router;
+exports.sendMail = sendMail;

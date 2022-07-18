@@ -19,4 +19,40 @@
     margin: 0 auto
 
     &-container
+        height: 100%
         display: flex
+        justify-content: center
+
+        &__main
+            margin-top: 5rem
+            margin-left: 3rem
+            width: 100%
+            height: 100%
+
+            @include respond(phone)
+                margin-top: 2rem
+                margin-left: 0
+                padding: 2rem
+
+            &_header
+                position: relative
+
+                &_nav
+                    cursor: pointer
+
+                &_icon
+                    margin-left: 1rem
+
+                &_text, &_nav
+                    font-weight: 600
+                    font-size: 2.4rem
+                    color: #202020
+                    margin-bottom: 3rem
+
+                @include respond(phone)
+                    display: flex
+                    justify-content: space-between
+
+                @include respond(tab-land)
+
+                @include respond(tab-port)

@@ -45,11 +45,8 @@ const Better = () => {
                     more creative
                 </div>
             </div>
-            <LineLeft style={{ top: "100rem" }} />
-            <div
-                className="better-container better-right"
-                style={{ top: "135rem" }}
-            >
+            <LineLeft style={{ top: "95rem" }} />
+            <div className="better-mobile better-container better-right">
                 <img
                     src={Niche}
                     className="better-illustrations fourth-illustration"

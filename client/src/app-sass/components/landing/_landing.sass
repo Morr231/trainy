@@ -17,6 +17,8 @@
 
         z-index: 10
 
+    .line-small
+
     .main-line
         bottom: -35rem
 
@@ -34,8 +36,6 @@
 
         width: 70rem
         height: 70rem
-
-    @include respond(phone)
 
     @include respond(tab-land)
         .line
@@ -57,3 +57,36 @@
     @media (max-width: 1100px)
 
     @include respond(tab-port)
+
+    @include respond(phone)
+        .line
+            width: 40rem
+            height: 40rem
+
+            position: absolute
+
+            z-index: 10
+
+        .line-small
+            width: 25rem
+            height: 25rem
+
+            position: absolute
+
+            z-index: 10
+
+        .main-line
+            bottom: -13rem
+            right: -3rem
+
+        .line-left
+            top: 27rem
+            left: 5rem
+
+        .line-right
+            top: 64rem
+            right: 2rem
+
+        .last-line
+            top: 137rem
+            right: -2rem

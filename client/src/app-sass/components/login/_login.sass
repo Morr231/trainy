@@ -10,7 +10,7 @@
     &-left
         width: 50%
         background: url("./bg.png") no-repeat center
-        background-size: 100%
+        background-size: cover
         padding: 3rem
 
         &__container
@@ -28,3 +28,22 @@
             font-size: 1.8rem
 
             color: #FFFFFF
+
+    @include respond(phone)
+
+    @include respond(tab-land)
+
+    @include respond(tab-port)
+        display: flex
+        justify-content: center
+        align-items: center
+        position: relative
+
+        .login
+
+            &-left
+                position: absolute
+                z-index: -1
+
+                width: 100%
+                height: 100%

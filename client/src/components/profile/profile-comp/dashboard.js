@@ -65,15 +65,16 @@ const Dashboard = () => {
         }
     }
 
+    const yLabels = ["Sun", "Mon", "Tue"];
+
     return (
         <div className="dashboard">
-            <h2 className="dashboard-header">Your Dashboard</h2>
-
             <div className="dashboard-calendar">
                 <h2 className="dashboard-header">Your progress</h2>
 
                 {userInfo.daysTextCount && (
                     <CalendarHeatmap
+                        showWeekdayLabels={true}
                         startDate={new Date(`${currentYear}-01-01`)}
                         endDate={new Date(currentTimeF)}
                         values={userInfo.daysTextCount}

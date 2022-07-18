@@ -15,8 +15,12 @@
 
             margin-bottom: 2rem
 
-            display: flex
-            justify-content: space-between
+            display: grid
+            grid-template-columns: repeat(2, 1fr)
+            gap: 2rem
+
+            @include respond(phone)
+                grid-template-columns: repeat(1, 1fr)
 
             &_el
                 flex: 1

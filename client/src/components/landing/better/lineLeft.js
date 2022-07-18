@@ -1,9 +1,9 @@
-const LineLeft = (props) => (
+const LineLeft = ({ style, lineClass }) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 800 800"
-        {...props}
-        className="line-left line"
+        style={style}
+        className={`${lineClass} line-left line line-small`}
     >
         <path
             d="M186.5 184.042q63 478 427 427"

@@ -14,6 +14,7 @@ import DefaultTimer from "./default-timer";
 import PomodoroTimer from "./pomodoro-timer";
 import HardcoreTimer from "./hardcore-timer";
 import DangerousTimer from "./dangerous-timer";
+import IeltsSPTimer from "./ielts-second-part";
 
 const Timer = () => {
     const [hideContainer, setHideContainer] = useState(false);
@@ -27,7 +28,7 @@ const Timer = () => {
 
     const stopTimerCount = () => {
         setStopTimer(true);
-        dispatch(userUpdatedActions.setUserUpdatedTrue());
+        dispatch(userUpdatedActions.setUserUpdated());
     };
 
     return (
@@ -55,8 +56,13 @@ const Timer = () => {
                                 stopTimer={stopTimer}
                                 setStopTimer={setStopTimer}
                             />
-                        ) : (
+                        ) : currPath === "10-sec" ? (
                             <DangerousTimer
+                                stopTimer={stopTimer}
+                                setStopTimer={setStopTimer}
+                            />
+                        ) : (
+                            <IeltsSPTimer
                                 stopTimer={stopTimer}
                                 setStopTimer={setStopTimer}
                             />

@@ -34,8 +34,16 @@ router.post("/edit-profile", (req, res) => {
             found.email = req.body.email;
         }
 
+        if (req.body.description) {
+            found.description = req.body.description;
+        }
+
         found.save().then((item) => {
-            res.json({ saved: true, usernameChanged: usernameChanged });
+            res.json({
+                saved: true,
+                usernameChanged: usernameChanged,
+                userChanged: true,
+            });
             console.log("Text saved");
         });
     });

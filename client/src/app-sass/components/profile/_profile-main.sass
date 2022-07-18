@@ -1,7 +1,6 @@
 .profile-main
-    width: 80%
-
-    margin: 5rem auto 0
+    height: 100%
+    margin: 0 auto
 
     &__container
         border: 1px solid rgba(232, 234, 238, 0.8)
@@ -9,7 +8,8 @@
 
         background-color: #FFFFFF
 
-        height: 90%
+        padding: 3rem
+        height: 100%
 
         display: flex
         flex-direction: column
@@ -44,18 +44,30 @@
         color: #282828
         margin-bottom: 1.6rem
 
+        text-align: center
+
     &__user_description
         font-size: 1.6rem
         letter-spacing: 0.02em
 
         color: #282828
         margin-bottom: 3rem
+        text-align: center
 
     &__user_achievements
         width: 40%
 
         display: flex
         justify-content: space-between
+
+        @include respond(tab-land)
+            width: 50%
+
+        @include respond(tab-port)
+            width: 55%
+
+        @include respond(phone)
+            width: 100%
 
     &__user_achievement
         display: flex

@@ -1,15 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const TextModel = require("../schemas/text");
-const jwt = require("jsonwebtoken");
+const IeltsFPModel = require("../../schemas/IeltsFirstPart");
 require("dotenv").config();
 
 // const validateToken = require("../middleware/validateToken");
 
 // router.all("*", [validateToken]);
 
-router.get("/randomTopic", (req, res) => {
-    const query = TextModel.find({});
+router.get("/randomIeltsFPTopic", (req, res) => {
+    const query = IeltsFPModel.find({});
     query.exec((err, found) => {
         if (err) return handleError(err);
 

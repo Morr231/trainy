@@ -8,6 +8,16 @@
 
     position: relative
 
+    @include respond(tab-port)
+        width: 80%
+        margin: 0 auto
+        height: 30vh
+
+    @include respond(tab-port)
+        width: 80%
+        margin: 0 auto
+        height: 35vh
+
     &:hover
         .dashboard-card__icon_container
             opacity: 1

@@ -6,7 +6,12 @@ import Linkedin from "./linkedin.png";
 const Footer = () => {
     const location = useLocation();
 
-    if (location.pathname !== "/login") {
+    let currPath = location.pathname.split("/");
+
+    if (
+        currPath[currPath.length - 1] !== "login" &&
+        currPath[currPath.length - 2] !== "login"
+    ) {
         return (
             <div className="footer">
                 <div className="footer-container">

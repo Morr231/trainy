@@ -1,4 +1,8 @@
-const SignUp = ({ setSign, setUserData, setSignUp }) => {
+import { useNavigate } from "react-router-dom";
+
+const SignUp = ({ setUserData, setSignUp }) => {
+    const navigate = useNavigate();
+
     const sendEmail = async (email) => {
         const responce = await fetch(`${process.env.REACT_APP_IP}send-email`, {
             method: "POST",
@@ -21,7 +25,7 @@ const SignUp = ({ setSign, setUserData, setSignUp }) => {
             username: e.target.username.value,
             email: e.target.email.value,
             password: e.target.password.value,
-            name: e.target.surname.value,
+            name: e.target.name.value,
             surname: e.target.surname.value,
         };
 
@@ -119,7 +123,7 @@ const SignUp = ({ setSign, setUserData, setSignUp }) => {
             >
                 <div
                     className="login-main__form_container_forgot_sign_up"
-                    onClick={() => setSign(true)}
+                    onClick={() => navigate("/login")}
                 >
                     Sign in!
                 </div>

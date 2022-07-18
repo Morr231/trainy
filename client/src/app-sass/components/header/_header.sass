@@ -20,6 +20,12 @@
         justify-content: space-between
         align-items: center
 
+        @include respond(tab-land)
+            padding: 0 1.5rem
+
+        @include respond(tab-port)
+            padding: 0 2rem
+
     &-logo
         display: flex
         align-items: center

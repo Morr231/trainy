@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { authActions } from "../../../store/autorization";
 
-const SignIn = ({ setSign, setForgotPassword, setSignUp }) => {
+const SignIn = ({ setForgetPassword }) => {
     const [signed, setSigned] = useState();
 
     const navigate = useNavigate();
@@ -45,10 +45,7 @@ const SignIn = ({ setSign, setForgotPassword, setSignUp }) => {
                 date.getDate() + 1
             )}${date.toGMTString()}`;
 
-            setSigned(true);
             navigate(`/profile/${result.username}`);
-        } else {
-            setSigned(false);
         }
     };
 
@@ -89,16 +86,15 @@ const SignIn = ({ setSign, setForgotPassword, setSignUp }) => {
                 <div
                     className="login-main__form_container_forgot_text"
                     onClick={() => {
-                        setForgotPassword(true);
-                        setSign(false);
-                        setSignUp(false);
+                        navigate("/login/forgot-password");
+                        setForgetPassword(true);
                     }}
                 >
                     Forgot password?
                 </div>
                 <div
                     className="login-main__form_container_forgot_sign_up"
-                    onClick={() => setSign(false)}
+                    onClick={() => navigate("/login/sign-up")}
                 >
                     Sign up!
                 </div>

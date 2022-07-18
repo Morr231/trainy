@@ -2,7 +2,7 @@ const MainLine = ({ which }) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 800 800"
-        className={`${which} line`}
+        className={`${which} line line-small`}
     >
         <path
             d="M184 190q504 64 420 420"

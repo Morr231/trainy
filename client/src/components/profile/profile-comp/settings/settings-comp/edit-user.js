@@ -1,16 +1,17 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { userUpdatedActions } from "../../../../../store/userUpdated";
 import { authActions } from "../../../../../store/autorization";
 
-const EditUser = () => {
+import getCookie from "../../../../../helper/getCookie";
+
+const EditUser = ({ username }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const getUserData = (e) => {
         e.preventDefault();
-
-        console.log(e.target);
 
         const userData = {
             name: e.target.name.value,
@@ -30,7 +31,7 @@ const EditUser = () => {
                 credentials: "same-origin",
                 headers: {
                     "Content-Type": "application/json",
-                    autorization: localStorage.getItem("token"),
+                    autorization: getCookie("token"),
                 },
                 body: JSON.stringify(userData),
             }
@@ -38,10 +39,17 @@ const EditUser = () => {
         const data = await responce.json();
         console.log(data);
 
-        if (data.userChanged) {
+        if (data.usernameChanged) {
             dispatch(authActions.logout());
-            window.localStorage.removeItem("token");
+
+            document.cookie =
+                "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            window.localStorage.removeItem("userInfo");
             navigate(`/`);
+        } else if (data.userChanged) {
+            dispatch(userUpdatedActions.setUserUpdated());
+            navigate(`/profile/${username}`);
         }
     };
 
@@ -80,8 +88,7 @@ const EditUser = () => {
                             className="login-main__form_input"
                         />
                     </div>
-                </div>
-                <div className="edit-user__form_container">
+
                     <div className="edit-user__form_container_el">
                         <label
                             htmlFor="username"

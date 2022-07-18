@@ -18,8 +18,6 @@ const Stats = ({ userInfo }) => {
     if (!(typeof userInfo.statistics === "undefined")) {
         return (
             <div className="stats">
-                <h2 className="stats-header">Your Statistics</h2>
-
                 <div className="stats-container">
                     <StatsBlock
                         header="Days streak"
@@ -49,9 +47,7 @@ const Stats = ({ userInfo }) => {
                         iconColor="#775DA6"
                         icon={faStar}
                     />
-                </div>
 
-                <div className="stats-container">
                     <StatsBlock
                         header="Average time"
                         number={userInfo.statistics.averageTime}

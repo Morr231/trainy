@@ -3,17 +3,15 @@
 
     max-width: 130rem
     margin: 0 auto
-    padding: 10rem
+    padding-top: 10rem
 
-    height: 200rem
+    height: 195rem
 
     position: relative
 
     @include respond(phone)
 
-    @include respond(tab-land)
-
-    @include respond(tab-port)
+        height: 166rem !important
 
     &-illustrations
         position: absolute
@@ -35,6 +33,12 @@
     .fourth-illustration
         left: -30rem
         bottom: -100%
+
+    &-mobile
+        top: 130rem !important
+
+        @include respond(phone)
+            top: 106rem
 
     &-header
         font-weight: 700
@@ -73,9 +77,48 @@
         right: 13rem
 
     &-left
-
         top: 95rem
         left: 15rem
+
+    @include respond(tab-land)
+
+    @include respond(tab-port)
+
+    @include respond(phone)
+        .better
+
+            &-illustrations
+                position: absolute
+                width: 17rem
+                height: 17rem
+
+            &-main
+                top: 7rem
+                left: 7rem
+
+            &-right
+                top: 42rem
+                right: 2rem
+
+            &-left
+                top: 81rem
+                left: 4rem
+
+        .first-illustration
+            right: -17rem
+            bottom: -3rem
+
+        .second-illustration
+            left: -19rem
+            bottom: -7rem
+
+        .third-illustration
+            right: -20rem
+            bottom: 0rem
+
+        .fourth-illustration
+            left: -21rem
+            bottom: 10rem
 
     // .better-container
     //     margin-bottom: 6.1rem

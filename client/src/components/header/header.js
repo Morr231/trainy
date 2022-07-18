@@ -18,6 +18,8 @@ import dog from "./dog.jpg";
 
 const Header = () => {
     const location = useLocation();
+    let currPath = location.pathname.split("/");
+
     const [userInfo, setUserInfo] = useState({});
 
     const [showDropdown, setShowDropdown] = useState(false);
@@ -40,7 +42,10 @@ const Header = () => {
         }
     }, [userUpdated]);
 
-    if (location.pathname !== "/login") {
+    if (
+        currPath[currPath.length - 1] !== "login" &&
+        currPath[currPath.length - 2] !== "login"
+    ) {
         return (
             <header className="header">
                 {showModal && <InstructionsModal setShowModal={setShowModal} />}

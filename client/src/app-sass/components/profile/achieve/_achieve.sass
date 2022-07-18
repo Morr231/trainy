@@ -1,7 +1,5 @@
 .achieve
-    width: 80%
-
-    margin: 5rem auto 0
+    margin: 0 auto
 
     &-header
         font-weight: 600
@@ -14,8 +12,13 @@
             margin-bottom: 2rem
 
     &__container
+        max-width: 80%
         display: grid
         grid-template-columns: repeat(3, 1fr)
         gap: 3rem
 
         margin-bottom: 3rem
+
+        @include respond(phone)
+            max-width: 100%
+            grid-template-columns: repeat(2, 1fr)

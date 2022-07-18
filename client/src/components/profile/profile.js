@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 
 import { Routes, Route, useLocation } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userUpdatedActions } from "../../store/userUpdated";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 import getUserInfo from "../../helper/getUserInfo";
 
@@ -15,9 +19,20 @@ import Settings from "./profile-comp/settings";
 import TopicCard from "./profile-comp/topic-card";
 import InstructionsModal from "../modals/instructions-modal";
 
+import ProfileDropdown from "../header/profile-dropdown";
+
 const Profile = () => {
     const [userInfo, setUserInfo] = useState({});
+    const [showModal, setShowModal] = useState(false);
+    // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+    // console.log(windowWidth);
+
+    // useEffect(() => {
+    //     setWindowWidth(window.innerWidth);
+    // }, [window.innerWidth]);
+
+    const dispatch = useDispatch();
     const location = useLocation();
 
     let currPath = location.pathname.split("/");
@@ -28,12 +43,23 @@ const Profile = () => {
     });
 
     useEffect(() => {
+        if (userUpdated) {
+            dispatch(userUpdatedActions.setUserUpdated());
+            dispatch(userUpdatedActions.setUserUpdated());
+        } else {
+            dispatch(userUpdatedActions.setUserUpdated());
+        }
+
         if (userUpdated || !window.localStorage.getItem("userInfo")) {
             getUserInfo({ setUserInfo: setUserInfo });
         } else {
             setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
         }
     }, [userUpdated]);
+
+    window.addEventListener("scroll", () => {
+        setShowModal(false);
+    });
 
     return (
         <div className="profile">
@@ -42,35 +68,68 @@ const Profile = () => {
                     <InstructionsModal setUserInfo={setUserInfo} />
                 )}
 
-                <ProfileNav userInfo={userInfo} />
+                {window.innerWidth >= 600 && <ProfileNav userInfo={userInfo} />}
 
-                {userInfo && currPath === userInfo.username && (
-                    <ProfileMain userInfo={userInfo} />
-                )}
+                <div className="profile-container__main">
+                    <div className="profile-container__main_header">
+                        {showModal && (
+                            <ProfileDropdown setShowModal={setShowModal} />
+                        )}
 
-                <Routes>
-                    <Route
-                        path="dashboard"
-                        element={<Dashboard userInfo={userInfo} />}
-                    />
-                    <Route
-                        path=":topicId"
-                        element={<TopicCard userInfo={userInfo} />}
-                    />
+                        {window.innerWidth < 600 && (
+                            <div
+                                className="profile-container__main_header_nav"
+                                onClick={() => setShowModal(!showModal)}
+                            >
+                                Menu
+                                <FontAwesomeIcon
+                                    className="profile-container__main_header_icon"
+                                    icon={faAngleDown}
+                                />
+                            </div>
+                        )}
 
-                    <Route
-                        path="statistics"
-                        element={<Stats userInfo={userInfo} />}
-                    />
-                    <Route
-                        path="achievements"
-                        element={<Achieve userInfo={userInfo} />}
-                    />
-                    <Route
-                        path="settings/*"
-                        element={<Settings userInfo={userInfo} />}
-                    />
-                </Routes>
+                        <h2 className="profile-container__main_header_text">
+                            {userInfo && currPath === userInfo.username
+                                ? "Your Profile"
+                                : currPath === "dashboard"
+                                ? "Your Dashboard"
+                                : currPath === "statistics"
+                                ? "Your statistics"
+                                : currPath === "achievements"
+                                ? "Your achievements"
+                                : currPath === "settings" && "Your settings"}
+                        </h2>
+                    </div>
+
+                    {userInfo && currPath === userInfo.username && (
+                        <ProfileMain userInfo={userInfo} />
+                    )}
+
+                    <Routes>
+                        <Route
+                            path="dashboard"
+                            element={<Dashboard userInfo={userInfo} />}
+                        />
+                        <Route
+                            path=":topicId"
+                            element={<TopicCard userInfo={userInfo} />}
+                        />
+
+                        <Route
+                            path="statistics"
+                            element={<Stats userInfo={userInfo} />}
+                        />
+                        <Route
+                            path="achievements"
+                            element={<Achieve userInfo={userInfo} />}
+                        />
+                        <Route
+                            path="settings/*"
+                            element={<Settings userInfo={userInfo} />}
+                        />
+                    </Routes>
+                </div>
             </div>
         </div>
     );

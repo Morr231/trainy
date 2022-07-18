@@ -13,13 +13,13 @@
     fill: #1e6823
 
 .react-calendar-heatmap
-    height: 80%
+    height: 100%
+    width: 100%
     position: relative
+    z-index: 10 !important
 
 .dashboard
-    width: 80%
-
-    margin: 5rem auto
+    margin: auto 0
 
     &-header
         font-weight: 600
@@ -55,3 +55,6 @@
             display: grid
             grid-template-columns: repeat(3, 1fr)
             gap: 3rem
+
+            @include respond(phone)
+                grid-template-columns: repeat(1, 1fr)

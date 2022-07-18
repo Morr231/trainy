@@ -15,7 +15,7 @@ const AchieveModal = ({ name }) => {
             {showModal && (
                 <div className="achieve-modal">
                     <div className="achieve-modal__icon">
-                        <div className="main-container">
+                        <div className="achieve-main-container">
                             <div className="check-container">
                                 <div className="check-background">
                                     <SvgComponent />

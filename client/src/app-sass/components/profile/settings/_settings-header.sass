@@ -14,6 +14,12 @@
         margin-right: 4rem
         position: relative
 
+        @include respond(phone)
+            width: 25rem !important
+
+        @media (max-width: 450px)
+            width: 40rem !important
+
         &_icon
             position: absolute
 
@@ -48,7 +54,21 @@
         color: #202020
 
     &__description
-        font-size: 1.6rem
-        letter-spacing: 0.02em
+        position: relative
 
-        color: #282828
+        &_text
+            font-size: 1.6rem
+            letter-spacing: 0.02em
+
+            color: #282828
+
+        &_icon
+            width: 2.8rem
+            height: 2.8rem
+
+            position: absolute
+            bottom: -25%
+            right: -3rem
+
+            color: #FFFFFF
+            font-size: 1.2rem
