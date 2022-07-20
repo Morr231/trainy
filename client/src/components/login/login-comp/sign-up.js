@@ -4,6 +4,7 @@ const SignUp = ({ setUserData, setSignUp }) => {
     const navigate = useNavigate();
 
     const sendEmail = async (email) => {
+        console.log(email);
         const responce = await fetch(`${process.env.REACT_APP_IP}send-email`, {
             method: "POST",
             mode: "cors",
@@ -16,6 +17,7 @@ const SignUp = ({ setUserData, setSignUp }) => {
 
         const result = await responce.json();
         console.log(result);
+        navigate("/login/email-verification");
     };
 
     const signUp = (e) => {
@@ -32,7 +34,6 @@ const SignUp = ({ setUserData, setSignUp }) => {
         sendEmail(e.target.email.value);
 
         setUserData(userData);
-        setSignUp(false);
     };
 
     return (

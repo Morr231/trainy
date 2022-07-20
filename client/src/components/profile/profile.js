@@ -42,18 +42,35 @@ const Profile = () => {
         return state.userUpdated.updated;
     });
 
-    useEffect(() => {
-        if (userUpdated) {
-            dispatch(userUpdatedActions.setUserUpdated());
-            dispatch(userUpdatedActions.setUserUpdated());
-        } else {
-            dispatch(userUpdatedActions.setUserUpdated());
-        }
+    const otherUserInfo = useSelector((state) => {
+        return state.otherUser.otherUserInfo;
+    });
 
-        if (userUpdated || !window.localStorage.getItem("userInfo")) {
-            getUserInfo({ setUserInfo: setUserInfo });
+    // useEffect(() => {
+    //     if (otherUserInfo) {
+    //         setUserInfo(otherUserInfo);
+    //     }
+    // }, [otherUserInfo]);
+
+    useEffect(() => {
+        console.log(otherUserInfo);
+        if (otherUserInfo) {
+            setUserInfo(otherUserInfo);
         } else {
-            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
+            if (userUpdated) {
+                dispatch(userUpdatedActions.setUserUpdated());
+                dispatch(userUpdatedActions.setUserUpdated());
+            } else {
+                dispatch(userUpdatedActions.setUserUpdated());
+            }
+
+            if (userUpdated || !window.localStorage.getItem("userInfo")) {
+                getUserInfo({ setUserInfo: setUserInfo });
+            } else {
+                setUserInfo(
+                    JSON.parse(window.localStorage.getItem("userInfo"))
+                );
+            }
         }
     }, [userUpdated]);
 
@@ -107,10 +124,7 @@ const Profile = () => {
                     )}
 
                     <Routes>
-                        <Route
-                            path="dashboard"
-                            element={<Dashboard userInfo={userInfo} />}
-                        />
+                        <Route path="dashboard" element={<Dashboard />} />
                         <Route
                             path=":topicId"
                             element={<TopicCard userInfo={userInfo} />}
@@ -124,10 +138,12 @@ const Profile = () => {
                             path="achievements"
                             element={<Achieve userInfo={userInfo} />}
                         />
-                        <Route
-                            path="settings/*"
-                            element={<Settings userInfo={userInfo} />}
-                        />
+                        {!otherUserInfo && (
+                            <Route
+                                path="settings/*"
+                                element={<Settings userInfo={userInfo} />}
+                            />
+                        )}
                     </Routes>
                 </div>
             </div>

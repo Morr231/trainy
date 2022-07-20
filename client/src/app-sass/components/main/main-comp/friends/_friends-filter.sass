@@ -2,16 +2,26 @@
     background-color: #FFFFFF
     border-radius: 1rem
     padding: 2.4rem
+    padding-left: 0
 
     margin-bottom: 2rem
 
     &__el
-        font-size: 1.4rem
+        height: 4rem
 
+        display: flex
+        align-items: center
+
+        padding-left: 2.4rem
+        font-size: 1.4rem
         letter-spacing: -0.035em
+
+        cursor: pointer
+        border-left: 4px solid transparent
 
         &:not(:last-child)
             margin-bottom: 2.4rem
 
         &_active
             color: #2F80ED
+            border-left: 4px solid #2F80ED

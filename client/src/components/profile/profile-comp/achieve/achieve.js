@@ -16,11 +16,21 @@ const Achieve = () => {
         return state.userUpdated.updated;
     });
 
+    const otherUserInfo = useSelector((state) => {
+        return state.otherUser.otherUserInfo;
+    });
+
     useEffect(() => {
-        if (userUpdated || !window.localStorage.getItem("userInfo")) {
-            getUserInfo({ setUserInfo: setUserInfo });
+        if (otherUserInfo) {
+            setUserInfo(otherUserInfo);
         } else {
-            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
+            if (userUpdated || !window.localStorage.getItem("userInfo")) {
+                getUserInfo({ setUserInfo: setUserInfo });
+            } else {
+                setUserInfo(
+                    JSON.parse(window.localStorage.getItem("userInfo"))
+                );
+            }
         }
     }, [userUpdated]);
 

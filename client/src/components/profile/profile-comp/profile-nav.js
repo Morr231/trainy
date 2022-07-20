@@ -2,6 +2,8 @@ import React from "react";
 
 import { Link, useLocation } from "react-router-dom";
 
+import { useSelector } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUser,
@@ -26,6 +28,10 @@ const ProfileNav = ({ userInfo }) => {
 
     let currPath = location.pathname.split("/");
     currPath = currPath[currPath.length - 1];
+
+    const otherUserInfo = useSelector((state) => {
+        return state.otherUser.otherUserInfo;
+    });
 
     return (
         <div className="profile-nav">
@@ -123,36 +129,40 @@ const ProfileNav = ({ userInfo }) => {
                         </div>
                     </div>
                 </Link>
-                <Link
-                    to={`/profile/${userInfo.username}/settings`}
-                    style={linkStyle}
-                >
-                    <div className="profile-nav__main_el">
-                        <div className="profile-nav__icon_container">
-                            <FontAwesomeIcon
-                                className={`profile-nav__icon ${
+                {!otherUserInfo && (
+                    <Link
+                        to={`/profile/${userInfo.username}/settings`}
+                        style={linkStyle}
+                    >
+                        <div className="profile-nav__main_el">
+                            <div className="profile-nav__icon_container">
+                                <FontAwesomeIcon
+                                    className={`profile-nav__icon ${
+                                        currPath === "settings" &&
+                                        "profile-icon__active"
+                                    }`}
+                                    icon={faCog}
+                                />
+                            </div>
+                            <div
+                                className={`profile-nav__text ${
                                     currPath === "settings" &&
-                                    "profile-icon__active"
+                                    "profile-nav__text_active"
                                 }`}
-                                icon={faCog}
-                            />
+                            >
+                                Settings
+                            </div>
                         </div>
-                        <div
-                            className={`profile-nav__text ${
-                                currPath === "settings" &&
-                                "profile-nav__text_active"
-                            }`}
-                        >
-                            Settings
-                        </div>
-                    </div>
-                </Link>
+                    </Link>
+                )}
             </div>
 
-            <FontAwesomeIcon
-                className="profile-nav__disconnect"
-                icon={faSignOut}
-            />
+            {!otherUserInfo && (
+                <FontAwesomeIcon
+                    className="profile-nav__disconnect"
+                    icon={faSignOut}
+                />
+            )}
         </div>
     );
 };

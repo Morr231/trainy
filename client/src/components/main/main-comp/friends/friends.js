@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -7,8 +7,56 @@ import FriendsCard from "./friend-card";
 
 import getCookie from "../../../../helper/getCookie";
 
-const Friends = ({ userInfo }) => {
+const Friends = ({ userInfo, friendsState }) => {
     const [search, setSearch] = useState(null);
+
+    const [requests, setRequests] = useState(null);
+    const [friends, setFriends] = useState(null);
+
+    useEffect(() => {
+        const getAllFriends = async (search) => {
+            const responce = await fetch(
+                `${process.env.REACT_APP_IP}friend/all-friends`,
+                {
+                    mode: "cors",
+                    credentials: "same-origin",
+                    headers: {
+                        "Content-Type": "application/json",
+                        autorization: getCookie("token"),
+                    },
+                }
+            );
+
+            const data = await responce.json();
+
+            if (data.found) {
+                setFriends(data.found);
+            }
+        };
+
+        const getIncomingRequests = async (search) => {
+            const responce = await fetch(
+                `${process.env.REACT_APP_IP}friend/incoming-requests`,
+                {
+                    mode: "cors",
+                    credentials: "same-origin",
+                    headers: {
+                        "Content-Type": "application/json",
+                        autorization: getCookie("token"),
+                    },
+                }
+            );
+
+            const data = await responce.json();
+
+            if (data.found) {
+                setRequests(data.found);
+            }
+        };
+
+        getAllFriends();
+        getIncomingRequests();
+    }, []);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -22,7 +70,7 @@ const Friends = ({ userInfo }) => {
 
     const getSearchUsers = async (search) => {
         const responce = await fetch(
-            `${process.env.REACT_APP_IP}search-users`,
+            `${process.env.REACT_APP_IP}search/search-users`,
             {
                 method: "POST",
                 mode: "cors",
@@ -41,6 +89,7 @@ const Friends = ({ userInfo }) => {
         const data = await responce.json();
 
         if (data.found) {
+            console.log(data.found);
             setSearch(data.found);
         }
     };
@@ -67,38 +116,46 @@ const Friends = ({ userInfo }) => {
                 <div className="friends-result">
                     <h3 className="friends-header">Recommendations</h3>
 
-                    {search.map((el) => {
+                    {search.map((el, index) => {
                         return (
                             <FriendsCard
-                                img={el.imageUrl}
-                                name={el.name}
-                                surname={el.surname}
+                                key={el["_id"]}
+                                user={el}
+                                myId={userInfo["_id"]}
                                 badges="Best, Fastest, Greatest"
                                 recommendations={true}
                             />
                         );
                     })}
                 </div>
-            ) : (
+            ) : friendsState && friends ? (
                 <div className="friends-mine">
                     <h3 className="friends-header">My friends</h3>
 
-                    <FriendsCard
-                        name="Almaz"
-                        surname="Balgali"
-                        badges="Best, Fastest, Greatest"
-                    />
-                    <FriendsCard
-                        name="Almaz"
-                        surname="Balgali"
-                        badges="Best, Fastest, Greatest"
-                    />
-                    <FriendsCard
-                        name="Almaz"
-                        surname="Balgali"
-                        badges="Best, Fastest, Greatest"
-                    />
+                    {friends.map((el) => {
+                        return (
+                            <FriendsCard
+                                key={el["_id"]}
+                                user={el}
+                                myId={userInfo["_id"]}
+                                badges="Best, Fastest, Greatest"
+                            />
+                        );
+                    })}
                 </div>
+            ) : (
+                requests &&
+                requests.map((el) => {
+                    return (
+                        <FriendsCard
+                            key={el["_id"]}
+                            myId={userInfo["_id"]}
+                            user={el}
+                            badges="Best, Fastest, Greatest"
+                            incoming={true}
+                        />
+                    );
+                })
             )}
         </div>
     );

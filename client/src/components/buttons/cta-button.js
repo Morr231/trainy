@@ -1,6 +1,6 @@
 import React from "react";
 
-const CtaButton = ({ text, buttonStyle, action }) => {
+const CtaButton = ({ text, buttonStyle, action, type }) => {
     return (
         <button
             className={`cta-button ${
@@ -9,6 +9,7 @@ const CtaButton = ({ text, buttonStyle, action }) => {
                     : "cta-button-outline"
             }`}
             onClick={action && action}
+            type={type && type}
         >
             {text}
         </button>

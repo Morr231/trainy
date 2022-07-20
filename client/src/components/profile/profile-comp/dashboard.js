@@ -19,16 +19,26 @@ const Dashboard = () => {
         return state.userUpdated.updated;
     });
 
+    const otherUserInfo = useSelector((state) => {
+        return state.otherUser.otherUserInfo;
+    });
+
     useEffect(() => {
-        if (
-            userUpdated ||
-            cardDeleted ||
-            !window.localStorage.getItem("userInfo")
-        ) {
-            getUserInfo({ setUserInfo: setUserInfo });
-            setCardDeleted(false);
+        if (otherUserInfo) {
+            setUserInfo(otherUserInfo);
         } else {
-            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
+            if (
+                userUpdated ||
+                cardDeleted ||
+                !window.localStorage.getItem("userInfo")
+            ) {
+                getUserInfo({ setUserInfo: setUserInfo });
+                setCardDeleted(false);
+            } else {
+                setUserInfo(
+                    JSON.parse(window.localStorage.getItem("userInfo"))
+                );
+            }
         }
     }, [userUpdated, cardDeleted]);
 

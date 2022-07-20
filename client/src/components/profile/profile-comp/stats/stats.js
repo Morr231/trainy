@@ -15,7 +15,7 @@ import StatsBlock from "./stats-comp/stats-block";
 import LineRendered from "./stats-comp/stats-chart";
 
 const Stats = ({ userInfo }) => {
-    if (!(typeof userInfo.statistics === "undefined")) {
+    if (userInfo.statistics) {
         return (
             <div className="stats">
                 <div className="stats-container">

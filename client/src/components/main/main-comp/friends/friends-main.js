@@ -4,7 +4,7 @@ import Friends from "./friends";
 import FriendsFilter from "./friends-filter";
 import FriendsRandom from "./friends-recs";
 
-const FriendsMain = () => {
+const FriendsMain = ({ userInfo }) => {
     const [friendsState, setFriendsState] = useState(true);
 
     return (
@@ -14,9 +14,9 @@ const FriendsMain = () => {
                     friendsState={friendsState}
                     setFriendsState={setFriendsState}
                 />
-                <FriendsRandom />
+                {/* <FriendsRandom /> */}
             </div>
-            <Friends />
+            <Friends friendsState={friendsState} userInfo={userInfo} />
         </div>
     );
 };

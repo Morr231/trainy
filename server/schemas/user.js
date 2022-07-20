@@ -1,6 +1,35 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const commentSchema = new Schema({
+    text: {
+        type: String,
+        // required: true,
+        default: null,
+    },
+    date: {
+        type: Date,
+        default: null,
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        default: null,
+    },
+    startPosition: {
+        type: Number,
+        defalt: null,
+    },
+    endPosition: {
+        type: Number,
+        defalt: null,
+    },
+    yPos: {
+        type: Number,
+        defalt: null,
+    },
+});
+
 const textsSchema = new Schema({
     text: {
         type: String,
@@ -26,6 +55,7 @@ const textsSchema = new Schema({
         type: String,
         default: null,
     },
+    comments: { type: [commentSchema], default: null },
 });
 
 const dateSchema = new Schema({
@@ -142,7 +172,12 @@ const userSchema = new Schema({
         type: [achievementSchema],
         default: [],
     },
+    incomingRequests: {
+        type: [{ type: Schema.Types.ObjectId, ref: "User" }],
+        default: [],
+    },
     friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 exports.UserModel = mongoose.model("User", userSchema);

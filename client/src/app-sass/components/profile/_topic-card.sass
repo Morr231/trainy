@@ -1,11 +1,42 @@
 .topic-card
-    width: 80%
-    margin: 3rem auto 0
+    width: 60%
     height: 45vh
     border: 1px solid rgba(232, 234, 238, 0.8)
     border-radius: 1rem
     padding: 2rem
 
+    background-color: #FFFFFF
+
+    position: relative
+
     &-top
         display: flex
         justify-content: space-between
+        align-items: center
+
+        &__buttons
+            display: flex
+
+        &__button
+
+            &:not(:last-child)
+                margin-right: 1rem
+
+    &-main
+        margin-bottom: 1.5rem
+
+    &__container
+        position: relative
+
+    &-canvas
+        width: 100%
+        // height: auto
+
+    &-text
+        position: absolute
+        z-index: 10
+
+        font-size: 1.4rem
+
+        &__yellow
+            background-color: yellow

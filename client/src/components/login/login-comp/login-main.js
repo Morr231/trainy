@@ -68,7 +68,10 @@ const LoginMain = () => {
                 )}
 
                 <Routes>
-                    <Route path="/sign-up" element={<SignUp />} />
+                    <Route
+                        path="/sign-up"
+                        element={<SignUp setUserData={setUserData} />}
+                    />
                     <Route
                         path="/forgot-password"
                         element={<ForgotPassword setUserData={setUserData} />}

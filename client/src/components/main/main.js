@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userUpdatedActions } from "../../store/userUpdated";
 
 import MainNav from "./main-comp/main-nav";
-import Feed from "./main-comp/feed";
+import Feed from "./main-comp/feed/feed";
 import FriendsMain from "./main-comp/friends/friends-main";
 
 import getUserInfo from "../../helper/getUserInfo";

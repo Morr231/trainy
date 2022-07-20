@@ -7,6 +7,7 @@ const FriendsFilter = ({ friendsState, setFriendsState }) => {
                 className={`friends-filter__el ${
                     friendsState && "friends-filter__el_active"
                 }`}
+                onClick={() => setFriendsState(true)}
             >
                 My friends
             </div>
@@ -14,6 +15,7 @@ const FriendsFilter = ({ friendsState, setFriendsState }) => {
                 className={`friends-filter__el ${
                     !friendsState && "friends-filter__el_active"
                 }`}
+                onClick={() => setFriendsState(false)}
             >
                 Incoming requests
             </div>

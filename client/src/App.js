@@ -1,6 +1,9 @@
+import { useEffect } from "react";
+
 import { Routes, Route } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { authActions } from "./store/autorization";
 
 import Header from "./components/header/header";
 
@@ -16,7 +19,17 @@ import Footer from "./components/footer/footer";
 
 import "./app-sass/App.sass";
 
+import getCookie from "./helper/getCookie";
+
 const App = () => {
+    // const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     if (getCookie("token")) {
+    //         dispatch(authActions.login());
+    //     }
+    // }, []);
+
     const isAuth = useSelector((state) => {
         return state.auth.isAuthed;
     });
@@ -27,9 +40,9 @@ const App = () => {
 
             <Routes>
                 {isAuth ? (
-                    <Route path="/" element={<Landing />} />
-                ) : (
                     <Route path="/*" element={<Main />} />
+                ) : (
+                    <Route path="/" element={<Landing />} />
                 )}
                 <Route path="/login/*" element={<Login />} />
                 <Route path="/profile/:username/*" element={<Profile />} />

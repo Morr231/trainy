@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import getCookie from "../helper/getCookie";
+
 let initialState = {
     isAuthed: false,
 };
 
-if (window.localStorage.getItem("token")) {
+if (getCookie("token")) {
     initialState.isAuthed = true;
 }
 
