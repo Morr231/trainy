@@ -25,8 +25,6 @@ const DashboardCard = ({
         formattedTopic = formattedTopic.slice(0, 40) + "...";
     }
 
-    console.log(topic, textsLength - index - 1);
-
     const deleteText = async () => {
         const responce = await fetch(
             `${process.env.REACT_APP_IP}text/delete/${textsLength - index - 1}`,

@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
-    otherUserInfo: null,
+    isOtherUser: false,
 };
 
 const otherUserSlice = createSlice({
     name: "otherUser",
     initialState: initialState,
     reducers: {
-        setOtherUserInfo(state, payload) {
-            state.otherUserInfo = payload.payload;
+        setOtherUserTrue(state) {
+            state.otherUserInfo = true;
+        },
+        setOtherUserFalse(state) {
+            state.otherUserInfo = false;
         },
     },
 });

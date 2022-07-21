@@ -1,39 +1,8 @@
-import React, { useState, useEffect } from "react";
-
-import { useSelector } from "react-redux";
-
 import StatsBlock from "../stats/stats-comp/stats-block";
 
 import { faMedal } from "@fortawesome/free-solid-svg-icons";
 
-import getUserInfo from "../../../../helper/getUserInfo";
-import getCookie from "../../../../helper/getCookie";
-
-const Achieve = () => {
-    const [userInfo, setUserInfo] = useState();
-
-    const userUpdated = useSelector((state) => {
-        return state.userUpdated.updated;
-    });
-
-    const otherUserInfo = useSelector((state) => {
-        return state.otherUser.otherUserInfo;
-    });
-
-    useEffect(() => {
-        if (otherUserInfo) {
-            setUserInfo(otherUserInfo);
-        } else {
-            if (userUpdated || !window.localStorage.getItem("userInfo")) {
-                getUserInfo({ setUserInfo: setUserInfo });
-            } else {
-                setUserInfo(
-                    JSON.parse(window.localStorage.getItem("userInfo"))
-                );
-            }
-        }
-    }, [userUpdated]);
-
+const Achieve = ({ userInfo }) => {
     let filteredAchievements;
 
     if (userInfo) {

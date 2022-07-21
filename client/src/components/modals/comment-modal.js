@@ -15,6 +15,9 @@ const CommentModal = ({
     endPosition,
     setShowCommentModal,
     topic,
+    topicId,
+    commentAdded,
+    setCommentAdded,
 }) => {
     const currDate = new Date();
 
@@ -37,7 +40,7 @@ const CommentModal = ({
 
     const addComment = async (text) => {
         const responce = await fetch(
-            `${process.env.REACT_APP_IP}text/comment`,
+            `${process.env.REACT_APP_IP}text/comment/${topicId}`,
             {
                 method: "POST",
                 mode: "cors",
@@ -62,6 +65,7 @@ const CommentModal = ({
         console.log(data);
 
         if (data.saved) {
+            setCommentAdded(!commentAdded);
             setShowCommentModal(false);
         }
     };

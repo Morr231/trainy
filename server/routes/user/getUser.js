@@ -7,21 +7,18 @@ const { UserModel } = require("../../schemas/user");
 const validateToken = require("../../middleware/validateToken");
 router.all("*", [validateToken]);
 
-router.get("/comment/:userId/:id", (req, res) => {
-    const query = UserModel.findOne({ _id: req.params["userId"] });
+router.get("/:id", (req, res) => {
+    const query = UserModel.findOne({ username: req.params["id"] });
 
     try {
         query.exec((err, found) => {
-            const textLength = found.texts.length;
-            const resultText = found.texts[textLength - req.params["id"] - 1];
-
             res.json({
-                found: resultText.comments,
+                found: found,
             });
         });
     } catch (e) {
         res.json({
-            found: [],
+            found: null,
         });
     }
 });

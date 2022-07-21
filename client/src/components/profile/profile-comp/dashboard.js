@@ -1,46 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
-
-import { useSelector } from "react-redux";
 
 import DashboardCard from "./dashboard-card";
 
-import getUserInfo from "../../../helper/getUserInfo";
-
-const Dashboard = () => {
+const Dashboard = ({ userInfo, setCardDeleted }) => {
     const [dateOfProgress, setDateOfProgress] = useState("");
-    const [cardDeleted, setCardDeleted] = useState(false);
 
     let [filteredCalendarValues, setfilteredCalendarValues] = useState([]);
-
-    const [userInfo, setUserInfo] = useState({});
-
-    const userUpdated = useSelector((state) => {
-        return state.userUpdated.updated;
-    });
-
-    const otherUserInfo = useSelector((state) => {
-        return state.otherUser.otherUserInfo;
-    });
-
-    useEffect(() => {
-        if (otherUserInfo) {
-            setUserInfo(otherUserInfo);
-        } else {
-            if (
-                userUpdated ||
-                cardDeleted ||
-                !window.localStorage.getItem("userInfo")
-            ) {
-                getUserInfo({ setUserInfo: setUserInfo });
-                setCardDeleted(false);
-            } else {
-                setUserInfo(
-                    JSON.parse(window.localStorage.getItem("userInfo"))
-                );
-            }
-        }
-    }, [userUpdated, cardDeleted]);
 
     const currentYear = new Date().getFullYear();
     const currentTimeNF = new Date();

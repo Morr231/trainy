@@ -18,6 +18,7 @@ import Write from "./components/write/write";
 import Footer from "./components/footer/footer";
 
 import "./app-sass/App.sass";
+import "./app-sass/loader.css";
 
 import getCookie from "./helper/getCookie";
 

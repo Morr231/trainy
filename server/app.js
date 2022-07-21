@@ -25,6 +25,10 @@ const IelstFPRouter = require("./routes/randomTopics/randomIeltsFP");
 
 const textRouter = require("./routes/text/text");
 const textCommentRouter = require("./routes/text/comment");
+const allCommentsRouter = require("./routes/text/getComments");
+
+const getUserRouter = require("./routes/user/getUser");
+const commentedUsersRouter = require("./routes/user/getCommentedUsers");
 
 const settingsRouter = require("./routes/settings");
 const achievedRouter = require("./routes/achieved");
@@ -46,8 +50,10 @@ app.use(userVerificationRouter);
 app.use(forgotPassword);
 
 app.use("/user", userRouter);
+app.use("/user", userRouter);
 app.use("/user", achievedRouter);
 app.use("/user", firstEnterRouter);
+app.use("/user", getUserRouter);
 
 app.use("/settings", settingsRouter);
 
@@ -56,6 +62,7 @@ app.use(IelstFPRouter);
 
 app.use("/text", textRouter);
 app.use("/text", textCommentRouter);
+app.use("/text", allCommentsRouter);
 
 app.use("/search", usersSearchRouter);
 

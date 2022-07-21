@@ -7,14 +7,13 @@ const { UserModel } = require("../../schemas/user");
 const validateToken = require("../../middleware/validateToken");
 router.all("*", [validateToken]);
 
-router.post("/comment", (req, res) => {
+router.post("/comment/:id", (req, res) => {
     const query = UserModel.findOne({ _id: req.body.user });
 
     try {
         query.exec((err, found) => {
-            const changingText = found.texts.filter(
-                (el) => el.topic === req.body.topic
-            )[0];
+            const textLength = found.texts.length;
+            const changingText = found.texts[textLength - req.params["id"] - 1];
 
             const comment = {
                 text: req.body.text,
@@ -22,6 +21,7 @@ router.post("/comment", (req, res) => {
                 user: req.body.user,
                 startPosition: req.body.startPosition,
                 endPosition: req.body.endPosition,
+                yPos: req.body.yPos,
             };
 
             changingText.comments.push(comment);

@@ -4,7 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+    faAngleDown,
+    faUser,
+    faBars,
+    faBell,
+} from "@fortawesome/free-solid-svg-icons";
 
 import InstructionsModal from "../modals/instructions-modal";
 import HeaderNavDropdown from "./header-nav-dropdown";
@@ -70,6 +75,12 @@ const Header = () => {
                                             Write essay
                                         </div>
                                     </Link>
+                                    <Link
+                                        to="/"
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        <div className="header__link">Feed</div>
+                                    </Link>
                                     <div
                                         className="header__link"
                                         onClick={() => setShowModal(true)}
@@ -100,53 +111,53 @@ const Header = () => {
                                     )}
                                 </div>
                             )}
-                            <div className="header-user__nav">
-                                {window.innerWidth > 900 && (
+                            <div className="header__user__nav">
+                                <FontAwesomeIcon
+                                    icon={faBell}
+                                    className="header__user__nav_icon"
+                                />
+
+                                <div className="header__user__nav_container">
                                     <Link
                                         to={`/profile/${userInfo.username}`}
                                         style={{ textDecoration: "none" }}
                                     >
-                                        <div
-                                            className="header__link"
-                                            style={{ marginRight: "1rem" }}
-                                        >
-                                            Profile
+                                        <div className="header__user_img_container">
+                                            {userInfo.imageUrl ? (
+                                                <img
+                                                    src={userInfo.imageUrl}
+                                                    alt="user image"
+                                                    className="header__user_img"
+                                                />
+                                            ) : (
+                                                <FontAwesomeIcon
+                                                    className="header__user_img_icon"
+                                                    icon={faUser}
+                                                />
+                                            )}
                                         </div>
                                     </Link>
-                                )}
 
-                                <div
-                                    className="header__user_container"
-                                    onClick={() => {
-                                        setShowDropdown(!showDropdown);
-                                        setShowNavDropdown(false);
-                                    }}
-                                >
-                                    <div className="header__user">
-                                        {/* <div className="profile-header__user_notifications">
-                        <FontAwesomeIcon icon={faBell} />
-                    </div> */}
-                                        {userInfo.imageUrl ? (
-                                            <img
-                                                src={userInfo.imageUrl}
-                                                alt="user image"
-                                                className="header__user_img"
-                                            />
-                                        ) : (
-                                            <FontAwesomeIcon
-                                                className="header__user_img_icon"
-                                                icon={faUser}
-                                            />
+                                    <div
+                                        className="header__user_container"
+                                        onClick={() => {
+                                            setShowDropdown(!showDropdown);
+                                            setShowNavDropdown(false);
+                                        }}
+                                    >
+                                        <div className="header__user_name">
+                                            {userInfo.name} {userInfo.surname}
+                                        </div>
+
+                                        <FontAwesomeIcon
+                                            className="header__user_icon"
+                                            icon={faAngleDown}
+                                        />
+
+                                        {showDropdown && (
+                                            <HeaderDropdown img={dog} />
                                         )}
                                     </div>
-                                    <FontAwesomeIcon
-                                        className="header__user_icon"
-                                        icon={faAngleDown}
-                                    />
-
-                                    {showDropdown && (
-                                        <HeaderDropdown img={dog} />
-                                    )}
                                 </div>
                             </div>
                         </>

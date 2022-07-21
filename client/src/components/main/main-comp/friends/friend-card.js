@@ -61,7 +61,7 @@ const FriendsCard = ({ user, badges, recommendations, myId, incoming }) => {
     };
 
     const handleLinkClick = () => {
-        dispatch(otherUserActions.setOtherUserInfo(user));
+        dispatch(otherUserActions.setOtherUserTrue());
     };
 
     return (
