@@ -45,7 +45,7 @@ const SignIn = ({ setForgetPassword }) => {
                 date.getDate() + 1
             )}${date.toGMTString()}`;
 
-            navigate(`/profile/${result.username}`);
+            navigate(`/my-profile/${result.username}`);
         }
     };
 

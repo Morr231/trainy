@@ -84,7 +84,7 @@ const EmailVerification = ({ userData, forgotPassword }) => {
             )}${date.toGMTString()}`;
 
             dispatch(authActions.login());
-            navigate(`/profile/${result.username}`);
+            navigate(`/my-profile/${result.username}`);
         }
     };
 
