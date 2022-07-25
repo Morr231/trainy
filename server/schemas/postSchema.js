@@ -15,6 +15,10 @@ const postSchema = new Schema({
         ref: "UserText",
         default: null,
     },
+    privacy: {
+        type: String,
+        default: null,
+    },
     likes: {
         type: Number,
         default: 0,

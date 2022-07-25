@@ -3,12 +3,13 @@ import ReactDOM from "react-dom";
 
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userUpdatedActions } from "../../store/userUpdated";
 
 import getCookie from "../../helper/getCookie";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
-const ShareModal = ({ setShowModal, username }) => {
+const ShareModal = ({ setShowModal, textId }) => {
     const [postPrivacy, setPostPrivacy] = useState("private");
 
     const inputRef = useRef(null);
@@ -16,9 +17,14 @@ const ShareModal = ({ setShowModal, username }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleShare = async () => {
+    const handleShare = () => {
+        changeTextPrivacy();
+        savePost();
+    };
+
+    const changeTextPrivacy = async () => {
         const responce = await fetch(
-            `${process.env.REACT_APP_IP}settings/edit-profile`,
+            `${process.env.REACT_APP_IP}text/change-privacy`,
             {
                 method: "POST",
                 mode: "cors",
@@ -27,18 +33,40 @@ const ShareModal = ({ setShowModal, username }) => {
                     "Content-Type": "application/json",
                     autorization: getCookie("token"),
                 },
-                body: JSON.stringify({ description: inputRef.current.value }),
+                body: JSON.stringify({
+                    text: textId,
+                    privacy: postPrivacy,
+                }),
             }
         );
-        const result = await responce.json();
 
-        if (result.userChanged) {
-            dispatch(userUpdatedActions.setUserUpdated());
-            navigate(`/profile/${username}`);
-        }
+        const result = await responce.json();
     };
 
-    console.log(postPrivacy);
+    const savePost = async () => {
+        const responce = await fetch(`${process.env.REACT_APP_IP}post/save`, {
+            method: "POST",
+            mode: "cors",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                autorization: getCookie("token"),
+            },
+            body: JSON.stringify({
+                description: inputRef.current.value,
+                date: new Date(),
+                text: textId,
+                privacy: postPrivacy,
+            }),
+        });
+
+        const result = await responce.json();
+
+        if (result.saved) {
+            dispatch(userUpdatedActions.setUserUpdated());
+            navigate(`/`);
+        }
+    };
 
     return ReactDOM.createPortal(
         <div className="photo-upload-modal">
@@ -97,7 +125,7 @@ const ShareModal = ({ setShowModal, username }) => {
                     </button>
                     <button
                         className="photo-upload-modal__button photo-modal__upload_button photo-modal__upload_button_active"
-                        onSubmit={handleShare}
+                        onClick={handleShare}
                     >
                         Post
                     </button>

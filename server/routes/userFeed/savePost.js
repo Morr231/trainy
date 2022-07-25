@@ -9,16 +9,17 @@ const validateToken = require("../../middleware/validateToken");
 router.all("*", [validateToken]);
 
 router.post("/save", (req, res) => {
-    const user = UserModel.find({
-        _id: req.body.userId,
+    const user = UserModel.findOne({
+        username: req.tokenData.username,
     });
 
     try {
-        user.exec((found) => {
+        user.exec((e, found) => {
             const newPost = {
                 description: req.body.description,
                 date: req.body.date,
-                text: req.body.textId,
+                text: req.body.text,
+                privacy: req.body.privacy,
             };
 
             const newPostModel = UserPostModel(newPost);

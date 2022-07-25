@@ -19,6 +19,8 @@ const Write = () => {
     const [showAll, setShowAll] = useState(false);
     const [startWriting, setStartWriting] = useState(false);
 
+    const [textId, setTextId] = useState(null);
+
     const [timer, setTimer] = useState(3);
 
     let timerInterval;
@@ -106,9 +108,10 @@ const Write = () => {
                             <div className="write-cover"></div>
                         </>
                     ) : (
-                        <Timer />
+                        <Timer textId={textId} />
                     )}
                     <WriteMain
+                        setTextId={setTextId}
                         randomTopic={randomTopic}
                         topicNumber={topicNumber}
                     />

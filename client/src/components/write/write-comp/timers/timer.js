@@ -18,7 +18,7 @@ import IeltsSPTimer from "./ielts-second-part";
 
 import ShareModal from "../../../modals/share-modal";
 
-const Timer = () => {
+const Timer = ({ textId }) => {
     const [hideContainer, setHideContainer] = useState(false);
     const [stopTimer, setStopTimer] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -44,7 +44,9 @@ const Timer = () => {
                 hideContainer && "write-container-hided"
             }`}
         >
-            {showModal && <ShareModal setShowModal={setShowModal} />}
+            {showModal && (
+                <ShareModal setShowModal={setShowModal} textId={textId} />
+            )}
             <div className="write-container__el">
                 <FontAwesomeIcon
                     icon={faEye}

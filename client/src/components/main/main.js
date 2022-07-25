@@ -45,7 +45,10 @@ const Main = () => {
                     </h2>
 
                     <Routes>
-                        <Route path="/feed" element={<Feed />} />
+                        <Route
+                            path="/feed"
+                            element={<Feed userInfo={userInfo} />}
+                        />
                         <Route
                             path="/friends"
                             element={<FriendsMain userInfo={userInfo} />}

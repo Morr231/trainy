@@ -21,7 +21,7 @@ router.all("*", [validateToken]);
 router.get("/my-data", (req, res) => {
     const query = UserModel.findOne({
         username: req.tokenData.username,
-    }).populate("statistics achievements texts");
+    }).populate("statistics achievements texts posts");
 
     query.exec((err, found) => {
         if (err) return HandleError(err);

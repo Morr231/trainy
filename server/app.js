@@ -26,6 +26,7 @@ const IelstFPRouter = require("./routes/randomTopics/randomIeltsFP");
 const textRouter = require("./routes/text/text");
 const textCommentRouter = require("./routes/text/comment");
 const allCommentsRouter = require("./routes/text/getComments");
+const changeTextPrivacyRouter = require("./routes/text/changePrivacy");
 
 const getUserRouter = require("./routes/user/getUser");
 
@@ -40,7 +41,7 @@ const addFriendRouter = require("./routes/friend/addFriend");
 const skipFriendRouter = require("./routes/friend/skipFriend");
 const acceptFriendRouter = require("./routes/friend/acceptFriend");
 
-const savePostRouter = require("./routes/feed/saveTextPost");
+const savePostRouter = require("./routes/userFeed/savePost");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -63,6 +64,7 @@ app.use(IelstFPRouter);
 app.use("/text", textRouter);
 app.use("/text", textCommentRouter);
 app.use("/text", allCommentsRouter);
+app.use("/text", changeTextPrivacyRouter);
 
 app.use("/search", usersSearchRouter);
 

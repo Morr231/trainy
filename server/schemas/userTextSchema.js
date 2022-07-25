@@ -13,6 +13,10 @@ const textsSchema = new Schema({
     regime: {
         type: String,
     },
+    privacy: {
+        type: String,
+        default: "private",
+    },
     date: {
         type: Date,
         // required: true,

@@ -91,7 +91,10 @@ router.post("/save", (req, res) => {
                                     allStats.dailyTime = newStats.dailyTime;
 
                                     allStats.save().then((item) => {
-                                        res.json({ saved: true });
+                                        res.json({
+                                            saved: true,
+                                            textId: newTextModel["_id"],
+                                        });
                                         console.log("Text saved");
                                     });
                                 });
@@ -140,7 +143,10 @@ router.post("/save", (req, res) => {
                                 allStats.dailyTime = newStats.dailyTime;
 
                                 allStats.save().then((item) => {
-                                    res.json({ saved: true });
+                                    res.json({
+                                        saved: true,
+                                        textId: allTexts[foundTextIndex]["_id"],
+                                    });
                                     console.log("Text saved");
                                 });
                             });

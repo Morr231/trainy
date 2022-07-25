@@ -20,7 +20,7 @@ const config = {
     buttons: ["bold", "italic", "underline"],
 };
 
-const WriteMain = ({ randomTopic, topicNumber }) => {
+const WriteMain = ({ randomTopic, topicNumber, setTextId }) => {
     const dispatch = useDispatch();
     const location = useLocation();
 
@@ -139,6 +139,10 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
         });
 
         const result = await responce.json();
+
+        if (result.saved) {
+            setTextId(result.textId);
+        }
     };
 
     return (
