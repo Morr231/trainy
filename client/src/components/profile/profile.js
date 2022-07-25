@@ -66,6 +66,8 @@ const Profile = () => {
         setShowModal(false);
     });
 
+    console.log(userInfo);
+
     if (!userInfo) {
         return <div class="loader"></div>;
     } else {
