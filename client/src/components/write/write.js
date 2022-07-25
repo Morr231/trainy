@@ -8,8 +8,6 @@ import WriteAll from "./write-comp/write-all";
 
 import Timer from "./write-comp/timers/timer";
 
-import AchieveModal from "../modals/achieve-modal";
-
 const Write = () => {
     const location = useLocation();
 

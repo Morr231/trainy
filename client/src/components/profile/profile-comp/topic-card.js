@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
+import { useLocation, useNavigate } from "react-router-dom";
+
 import CommentModal from "../../modals/comment-modal";
 import CommentedModal from "../../modals/commented-modal";
 
@@ -8,6 +10,11 @@ import CtaButton from "../../buttons/cta-button";
 import getCookie from "../../../helper/getCookie";
 
 const TopicCard = ({ userInfo }) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const { id } = location.state;
+
     const textRef = useRef(null);
     const topicCardRef = useRef(null);
 
@@ -35,29 +42,31 @@ const TopicCard = ({ userInfo }) => {
     const [allComments, setAllComments] = useState(null);
     const [allUsers, setAllUsers] = useState(null);
 
-    useEffect(() => {
-        const getUsers = async () => {
-            const responce = await fetch(
-                `${process.env.REACT_APP_IP}user/all-users/${userInfo["_id"]}`,
-                {
-                    mode: "cors",
-                    credentials: "same-origin",
-                    headers: {
-                        "Content-Type": "application/json",
-                        autorization: getCookie("token"),
-                    },
-                }
-            );
-            const data = await responce.json();
+    const [prevCommentHeight, setPrevCommentHeight] = useState(null);
 
-            if (data.found) {
-                setAllUsers(data.found);
-            }
-        };
+    useEffect(() => {
+        // const getUsers = async () => {
+        //     const responce = await fetch(
+        //         `${process.env.REACT_APP_IP}user/all-users/${userInfo["_id"]}`,
+        //         {
+        //             mode: "cors",
+        //             credentials: "same-origin",
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //                 autorization: getCookie("token"),
+        //             },
+        //         }
+        //     );
+        //     const data = await responce.json();
+
+        //     if (data.found) {
+        //         setAllUsers(data.found);
+        //     }
+        // };
 
         const addComment = async (text) => {
             const responce = await fetch(
-                `${process.env.REACT_APP_IP}text/comment/${userInfo["_id"]}/${topicId}`,
+                `${process.env.REACT_APP_IP}text/all-comments/${id}`,
                 {
                     mode: "cors",
                     credentials: "same-origin",
@@ -70,12 +79,13 @@ const TopicCard = ({ userInfo }) => {
             const data = await responce.json();
 
             if (data.found) {
+                setAllUsers(data.users);
                 setAllComments(data.found);
             }
         };
 
         addComment();
-        getUsers();
+        // getUsers();
     }, [commentAdded]);
 
     const handleCommnent = () => {
@@ -113,13 +123,15 @@ const TopicCard = ({ userInfo }) => {
         }
     };
 
+    console.log(allUsers);
+
     return (
         <div className="topic-card" ref={topicCardRef}>
             {allComments &&
                 allUsers &&
-                allComments.map((el) => {
+                allComments.map((el, index) => {
                     const commentedUser = allUsers.filter(
-                        (user) => user["_id"] === el.user
+                        (user) => user.id === el.user
                     )[0];
 
                     return (
@@ -128,12 +140,17 @@ const TopicCard = ({ userInfo }) => {
                                 topicCardRef.current.getBoundingClientRect()
                                     .right
                             }
-                            yPos={el.yPos}
+                            yPos={
+                                index === 0
+                                    ? el.yPos
+                                    : (prevCommentHeight + 10) * index + el.yPos
+                            }
                             name={commentedUser.name}
                             surname={commentedUser.surname}
                             img={commentedUser.imageUrl}
                             text={el.text}
                             date={el.date}
+                            setPrevCommentHeight={setPrevCommentHeight}
                         />
                     );
                 })}
@@ -153,12 +170,33 @@ const TopicCard = ({ userInfo }) => {
                     topicId={topicId}
                     commentAdded={commentAdded}
                     setCommentAdded={setCommentAdded}
+                    textId={id}
                 />
             )}
             <div className="topic-card-top">
                 <h3 className="topic-card-header">Your text:</h3>
 
                 <div className="topic-card-top__buttons">
+                    {userInfo && !userInfo.texts[textsIndex].finished && (
+                        <div className="topic-card-top__button">
+                            <CtaButton
+                                text="Finish writing"
+                                buttonStyle="solid"
+                                action={() =>
+                                    navigate(
+                                        `/write/finish/${userInfo.texts[textsIndex].regime}`,
+                                        {
+                                            state: {
+                                                text: userInfo.texts[
+                                                    textsIndex
+                                                ],
+                                            },
+                                        }
+                                    )
+                                }
+                            />
+                        </div>
+                    )}
                     <div className="topic-card-top__button">
                         <CtaButton
                             text="Commentator mode"

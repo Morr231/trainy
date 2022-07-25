@@ -2,15 +2,10 @@ import { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
-import { otherUserActions } from "../../../../store/otherUser";
-
 import CtaButton from "../../../buttons/cta-button";
 import getCookie from "../../../../helper/getCookie";
 
 const FriendsCard = ({ user, badges, recommendations, myId, incoming }) => {
-    const dispatch = useDispatch();
-
     const [buttonClicked, setButtonClicked] = useState(true);
 
     const addFriend = async () => {
@@ -60,10 +55,6 @@ const FriendsCard = ({ user, badges, recommendations, myId, incoming }) => {
         }
     };
 
-    const handleLinkClick = () => {
-        dispatch(otherUserActions.setOtherUserTrue());
-    };
-
     return (
         <div className="friends-card">
             <div className="friends-card__container">
@@ -72,7 +63,6 @@ const FriendsCard = ({ user, badges, recommendations, myId, incoming }) => {
                     <Link
                         to={`/profile/${user.username}`}
                         style={{ textDecoration: "none" }}
-                        onClick={handleLinkClick}
                     >
                         <div className="friends-card__name">
                             {user.name} {user.surname}

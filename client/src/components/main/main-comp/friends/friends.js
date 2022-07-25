@@ -122,6 +122,7 @@ const Friends = ({ userInfo, friendsState }) => {
                                 key={el["_id"]}
                                 user={el}
                                 myId={userInfo["_id"]}
+                                originalUser={userInfo.username}
                                 badges="Best, Fastest, Greatest"
                                 recommendations={true}
                             />
@@ -138,6 +139,7 @@ const Friends = ({ userInfo, friendsState }) => {
                                 key={el["_id"]}
                                 user={el}
                                 myId={userInfo["_id"]}
+                                originalUser={userInfo.username}
                                 badges="Best, Fastest, Greatest"
                             />
                         );
@@ -152,6 +154,7 @@ const Friends = ({ userInfo, friendsState }) => {
                             myId={userInfo["_id"]}
                             user={el}
                             badges="Best, Fastest, Greatest"
+                            originalUser={userInfo.username}
                             incoming={true}
                         />
                     );

@@ -21,11 +21,8 @@ import InstructionsModal from "../modals/instructions-modal";
 
 import ProfileDropdown from "../header/profile-dropdown";
 
-import getCookie from "../../helper/getCookie";
-
 const Profile = () => {
     const [userInfo, setUserInfo] = useState(null);
-    const [otherUserInfo, setOtherUserInfo] = useState(null);
 
     const [showModal, setShowModal] = useState(false);
 
@@ -40,57 +37,36 @@ const Profile = () => {
         return state.userUpdated.updated;
     });
 
-    const isOtherUser = useSelector((state) => {
-        return state.otherUser.otherUserInfo;
-    });
-
-    const getOtherUserInfo = async () => {
-        const responce = await fetch(
-            `${process.env.REACT_APP_IP}user/${currPath}`,
-            {
-                mode: "cors",
-                credentials: "same-origin",
-                headers: {
-                    autorization: getCookie("token"),
-                },
-            }
-        );
-
-        const data = await responce.json();
-
-        if (data.found) {
-            setOtherUserInfo(data.found);
-        }
-    };
-
     useEffect(() => {
-        if (isOtherUser) {
-            getOtherUserInfo();
+        if (userUpdated || cardDeleted) {
+            dispatch(userUpdatedActions.setUserUpdated());
+            dispatch(userUpdatedActions.setUserUpdated());
         } else {
-            if (userUpdated) {
-                dispatch(userUpdatedActions.setUserUpdated());
-                dispatch(userUpdatedActions.setUserUpdated());
-            } else {
-                dispatch(userUpdatedActions.setUserUpdated());
-            }
+            dispatch(userUpdatedActions.setUserUpdated());
+        }
 
-            if (userUpdated || !window.localStorage.getItem("userInfo")) {
-                getUserInfo({ setUserInfo: setUserInfo });
-            } else {
-                setUserInfo(
-                    JSON.parse(window.localStorage.getItem("userInfo"))
-                );
-            }
+        if (
+            userUpdated ||
+            cardDeleted ||
+            !window.localStorage.getItem("userInfo")
+        ) {
+            getUserInfo({ setUserInfo: setUserInfo });
+        } else {
+            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
         }
     }, [userUpdated, cardDeleted]);
+
+    useEffect(() => {
+        if (cardDeleted) {
+            setCardDeleted(false);
+        }
+    }, [cardDeleted]);
 
     window.addEventListener("scroll", () => {
         setShowModal(false);
     });
 
-    console.log(otherUserInfo);
-
-    if (!userInfo && !otherUserInfo) {
+    if (!userInfo) {
         return <div class="loader"></div>;
     } else {
         return (
@@ -101,9 +77,7 @@ const Profile = () => {
                     )}
 
                     {window.innerWidth >= 600 && (
-                        <ProfileNav
-                            userInfo={otherUserInfo ? otherUserInfo : userInfo}
-                        />
+                        <ProfileNav userInfo={userInfo} />
                     )}
 
                     <div className="profile-container__main">
@@ -143,76 +117,34 @@ const Profile = () => {
                             <ProfileMain userInfo={userInfo} />
                         )}
 
-                        {otherUserInfo &&
-                            currPath === otherUserInfo.username && (
-                                <ProfileMain userInfo={otherUserInfo} />
-                            )}
-
                         <Routes>
                             <Route
                                 path="dashboard"
                                 element={
                                     <Dashboard
-                                        userInfo={
-                                            otherUserInfo
-                                                ? otherUserInfo
-                                                : userInfo
-                                        }
+                                        userInfo={userInfo}
                                         setCardDeleted={setCardDeleted}
                                     />
                                 }
                             />
                             <Route
                                 path=":topicId"
-                                element={
-                                    <TopicCard
-                                        userInfo={
-                                            otherUserInfo
-                                                ? otherUserInfo
-                                                : userInfo
-                                        }
-                                    />
-                                }
+                                element={<TopicCard userInfo={userInfo} />}
                             />
 
                             <Route
                                 path="statistics"
-                                element={
-                                    <Stats
-                                        userInfo={
-                                            otherUserInfo
-                                                ? otherUserInfo
-                                                : userInfo
-                                        }
-                                    />
-                                }
+                                element={<Stats userInfo={userInfo} />}
                             />
                             <Route
                                 path="achievements"
-                                element={
-                                    <Achieve
-                                        userInfo={
-                                            otherUserInfo
-                                                ? otherUserInfo
-                                                : userInfo
-                                        }
-                                    />
-                                }
+                                element={<Achieve userInfo={userInfo} />}
                             />
-                            {!isOtherUser && (
-                                <Route
-                                    path="settings/*"
-                                    element={
-                                        <Settings
-                                            userInfo={
-                                                otherUserInfo
-                                                    ? otherUserInfo
-                                                    : userInfo
-                                            }
-                                        />
-                                    }
-                                />
-                            )}
+
+                            <Route
+                                path="settings/*"
+                                element={<Settings userInfo={userInfo} />}
+                            />
                         </Routes>
                     </div>
                 </div>

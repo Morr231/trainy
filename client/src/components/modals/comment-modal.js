@@ -18,6 +18,7 @@ const CommentModal = ({
     topicId,
     commentAdded,
     setCommentAdded,
+    textId,
 }) => {
     const currDate = new Date();
 
@@ -40,7 +41,7 @@ const CommentModal = ({
 
     const addComment = async (text) => {
         const responce = await fetch(
-            `${process.env.REACT_APP_IP}text/comment/${topicId}`,
+            `${process.env.REACT_APP_IP}text/comment/${textId}`,
             {
                 method: "POST",
                 mode: "cors",

@@ -40,7 +40,11 @@ const Header = () => {
     });
 
     useEffect(() => {
-        if (userUpdated || !window.localStorage.getItem("userInfo")) {
+        if (
+            userUpdated ||
+            !window.localStorage.getItem("userInfo") ||
+            typeof window.localStorage.getItem("userInfo") === "undefined"
+        ) {
             getUserInfo({ setUserInfo: setUserInfo });
         } else {
             setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
@@ -119,7 +123,7 @@ const Header = () => {
 
                                 <div className="header__user__nav_container">
                                     <Link
-                                        to={`/profile/${userInfo.username}`}
+                                        to={`/my-profile/${userInfo.username}`}
                                         style={{ textDecoration: "none" }}
                                     >
                                         <div className="header__user_img_container">

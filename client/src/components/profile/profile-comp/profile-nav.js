@@ -2,8 +2,6 @@ import React from "react";
 
 import { Link, useLocation } from "react-router-dom";
 
-import { useSelector } from "react-redux";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUser,
@@ -29,14 +27,10 @@ const ProfileNav = ({ userInfo }) => {
     let currPath = location.pathname.split("/");
     currPath = currPath[currPath.length - 1];
 
-    const otherUserInfo = useSelector((state) => {
-        return state.otherUser.otherUserInfo;
-    });
-
     return (
         <div className="profile-nav">
             <div className="profile-nav__main">
-                <Link to={`/profile/${userInfo.username}`} style={linkStyle}>
+                <Link to={`/my-profile/${userInfo.username}`} style={linkStyle}>
                     <div className="profile-nav__main_el">
                         <div className="profile-nav__icon_container">
                             <FontAwesomeIcon
@@ -58,7 +52,7 @@ const ProfileNav = ({ userInfo }) => {
                     </div>
                 </Link>
                 <Link
-                    to={`/profile/${userInfo.username}/dashboard`}
+                    to={`/my-profile/${userInfo.username}/dashboard`}
                     style={linkStyle}
                 >
                     <div className="profile-nav__main_el">
@@ -82,7 +76,7 @@ const ProfileNav = ({ userInfo }) => {
                     </div>
                 </Link>
                 <Link
-                    to={`/profile/${userInfo.username}/statistics`}
+                    to={`/my-profile/${userInfo.username}/statistics`}
                     style={linkStyle}
                 >
                     <div className="profile-nav__main_el">
@@ -106,7 +100,7 @@ const ProfileNav = ({ userInfo }) => {
                     </div>
                 </Link>
                 <Link
-                    to={`/profile/${userInfo.username}/achievements`}
+                    to={`/my-profile/${userInfo.username}/achievements`}
                     style={linkStyle}
                 >
                     <div className="profile-nav__main_el">
@@ -129,40 +123,36 @@ const ProfileNav = ({ userInfo }) => {
                         </div>
                     </div>
                 </Link>
-                {!otherUserInfo && (
-                    <Link
-                        to={`/profile/${userInfo.username}/settings`}
-                        style={linkStyle}
-                    >
-                        <div className="profile-nav__main_el">
-                            <div className="profile-nav__icon_container">
-                                <FontAwesomeIcon
-                                    className={`profile-nav__icon ${
-                                        currPath === "settings" &&
-                                        "profile-icon__active"
-                                    }`}
-                                    icon={faCog}
-                                />
-                            </div>
-                            <div
-                                className={`profile-nav__text ${
+                <Link
+                    to={`/my-profile/${userInfo.username}/settings`}
+                    style={linkStyle}
+                >
+                    <div className="profile-nav__main_el">
+                        <div className="profile-nav__icon_container">
+                            <FontAwesomeIcon
+                                className={`profile-nav__icon ${
                                     currPath === "settings" &&
-                                    "profile-nav__text_active"
+                                    "profile-icon__active"
                                 }`}
-                            >
-                                Settings
-                            </div>
+                                icon={faCog}
+                            />
                         </div>
-                    </Link>
-                )}
+                        <div
+                            className={`profile-nav__text ${
+                                currPath === "settings" &&
+                                "profile-nav__text_active"
+                            }`}
+                        >
+                            Settings
+                        </div>
+                    </div>
+                </Link>
             </div>
 
-            {!otherUserInfo && (
-                <FontAwesomeIcon
-                    className="profile-nav__disconnect"
-                    icon={faSignOut}
-                />
-            )}
+            <FontAwesomeIcon
+                className="profile-nav__disconnect"
+                icon={faSignOut}
+            />
         </div>
     );
 };

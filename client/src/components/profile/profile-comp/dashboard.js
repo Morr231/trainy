@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import CalendarHeatmap from "react-calendar-heatmap";
 
 import DashboardCard from "./dashboard-card";
+import getOtherUserInfo from "../../../helper/getOtherUser";
 
-const Dashboard = ({ userInfo, setCardDeleted }) => {
+const Dashboard = ({ userInfo, setCardDeleted, otherUser }) => {
+    // let currPath = location.pathname.split("/");
+    // currPath = currPath[currPath.length - 2];
+
+    // useEffect(() => {
+    //     if (otherUser) {
+    //         getOtherUserInfo(currPath)
+    //     }
+    // }, []);
+
     const [dateOfProgress, setDateOfProgress] = useState("");
 
     let [filteredCalendarValues, setfilteredCalendarValues] = useState([]);
@@ -43,67 +54,77 @@ const Dashboard = ({ userInfo, setCardDeleted }) => {
 
     const yLabels = ["Sun", "Mon", "Tue"];
 
-    return (
-        <div className="dashboard">
-            <div className="dashboard-calendar">
-                <h2 className="dashboard-header">Your progress</h2>
+    if (!userInfo) {
+        return <div>Loading</div>;
+    } else {
+        console.log(userInfo.daysTextCount);
 
-                {userInfo.daysTextCount && (
-                    <CalendarHeatmap
-                        showWeekdayLabels={true}
-                        startDate={new Date(`${currentYear}-01-01`)}
-                        endDate={new Date(currentTimeF)}
-                        values={userInfo.daysTextCount}
-                        classForValue={(value) => {
-                            if (!value) {
-                                return "color-empty";
-                            }
-                            return `color-scale-${value.count}`;
-                        }}
-                        onClick={calendarRectClicked}
-                    />
-                )}
-            </div>
+        return (
+            <div className="dashboard">
+                <div className="dashboard-calendar">
+                    <h2 className="dashboard-header">Your progress</h2>
 
-            <div className="dashboard-grid">
-                <h2 className="dashboard-grid__header">
-                    {dateOfProgress ? dateOfProgress : "Your last progress"}
-                </h2>
+                    {userInfo.daysTextCount && (
+                        <CalendarHeatmap
+                            showWeekdayLabels={true}
+                            startDate={new Date(`${currentYear}-01-01`)}
+                            endDate={new Date(currentTimeF)}
+                            values={userInfo.daysTextCount}
+                            classForValue={(value) => {
+                                if (!value) {
+                                    return "color-empty";
+                                }
+                                return `color-scale-${value.count}`;
+                            }}
+                            onClick={calendarRectClicked}
+                        />
+                    )}
+                </div>
 
-                <div className="dashboard-grid__main">
-                    {typeof userInfo.texts !== "undefined" &&
-                    filteredCalendarValues.length === 0
-                        ? [...userInfo.texts].reverse().map((el, index) => {
-                              return (
-                                  <DashboardCard
-                                      topic={el.topic}
-                                      date={el.date}
-                                      imageUrl={el.imageUrl}
-                                      index={index}
-                                      username={userInfo.username}
-                                      textsLength={userInfo.texts.length}
-                                      setCardDeleted={setCardDeleted}
-                                  />
-                              );
-                          })
-                        : filteredCalendarValues.length &&
-                          [...filteredCalendarValues].map((el, index) => {
-                              return (
-                                  <DashboardCard
-                                      topic={el.topic}
-                                      date={el.date}
-                                      imageUrl={el.imageUrl}
-                                      index={index}
-                                      username={userInfo.username}
-                                      textsLength={userInfo.texts.length}
-                                      setCardDeleted={setCardDeleted}
-                                  />
-                              );
-                          })}
+                <div className="dashboard-grid">
+                    <h2 className="dashboard-grid__header">
+                        {dateOfProgress ? dateOfProgress : "Your last progress"}
+                    </h2>
+
+                    <div className="dashboard-grid__main">
+                        {typeof userInfo.texts !== "undefined" &&
+                        filteredCalendarValues.length === 0
+                            ? [...userInfo.texts].reverse().map((el, index) => {
+                                  return (
+                                      <DashboardCard
+                                          topic={el.topic}
+                                          date={el.date}
+                                          textId={el["_id"]}
+                                          imageUrl={el.imageUrl}
+                                          index={index}
+                                          username={userInfo.username}
+                                          textsLength={userInfo.texts.length}
+                                          setCardDeleted={setCardDeleted}
+                                          finished={el.finished}
+                                      />
+                                  );
+                              })
+                            : filteredCalendarValues.length &&
+                              [...filteredCalendarValues].map((el, index) => {
+                                  return (
+                                      <DashboardCard
+                                          topic={el.topic}
+                                          date={el.date}
+                                          textId={el["_id"]}
+                                          imageUrl={el.imageUrl}
+                                          index={index}
+                                          username={userInfo.username}
+                                          textsLength={userInfo.texts.length}
+                                          setCardDeleted={setCardDeleted}
+                                          finished={el.finished}
+                                      />
+                                  );
+                              })}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 };
 
 export default Dashboard;

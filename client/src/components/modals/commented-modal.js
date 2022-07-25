@@ -1,6 +1,26 @@
+import { useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
-const CommentedModal = ({ xPos, yPos, name, surname, img, text, date }) => {
+const CommentedModal = ({
+    xPos,
+    yPos,
+    name,
+    surname,
+    img,
+    text,
+    date,
+    setPrevCommentHeight,
+}) => {
+    const commentRef = useRef(null);
+
+    useEffect(() => {
+        if (commentRef.current) {
+            setPrevCommentHeight(
+                commentRef.current.getBoundingClientRect().height
+            );
+        }
+    }, [commentRef]);
+
     const currDate = new Date(date);
 
     const minutes = `${Math.floor(currDate.getMinutes() / 10)}${Math.floor(
@@ -17,6 +37,7 @@ const CommentedModal = ({ xPos, yPos, name, surname, img, text, date }) => {
     return ReactDOM.createPortal(
         <div
             className="comment-modal"
+            ref={commentRef}
             style={{
                 top: yPos,
                 left: xPos + 20,

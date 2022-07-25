@@ -16,9 +16,12 @@ import HardcoreTimer from "./hardcore-timer";
 import DangerousTimer from "./dangerous-timer";
 import IeltsSPTimer from "./ielts-second-part";
 
+import ShareModal from "../../../modals/share-modal";
+
 const Timer = () => {
     const [hideContainer, setHideContainer] = useState(false);
     const [stopTimer, setStopTimer] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -31,12 +34,17 @@ const Timer = () => {
         dispatch(userUpdatedActions.setUserUpdated());
     };
 
+    const handleShare = () => {
+        setShowModal(true);
+    };
+
     return (
         <div
             className={`write-container ${
                 hideContainer && "write-container-hided"
             }`}
         >
+            {showModal && <ShareModal setShowModal={setShowModal} />}
             <div className="write-container__el">
                 <FontAwesomeIcon
                     icon={faEye}
@@ -75,6 +83,15 @@ const Timer = () => {
                             action={stopTimerCount}
                         />
                     </div>
+                    {stopTimer && (
+                        <div className="write-container__el">
+                            <CtaButton
+                                text="share"
+                                buttonStyle="solid"
+                                action={handleShare}
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </div>

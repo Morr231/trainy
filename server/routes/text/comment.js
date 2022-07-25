@@ -2,19 +2,17 @@ const express = require("express");
 const router = express.Router();
 require("dotenv").config();
 
-const { UserModel } = require("../../schemas/user");
+const { UserTextModel } = require("../../schemas/userTextSchema");
+const { UserCommentModel } = require("../../schemas/commentSchema");
 
 const validateToken = require("../../middleware/validateToken");
 router.all("*", [validateToken]);
 
 router.post("/comment/:id", (req, res) => {
-    const query = UserModel.findOne({ _id: req.body.user });
+    const query = UserTextModel.findOne({ _id: req.params["id"] });
 
     try {
         query.exec((err, found) => {
-            const textLength = found.texts.length;
-            const changingText = found.texts[textLength - req.params["id"] - 1];
-
             const comment = {
                 text: req.body.text,
                 date: req.body.date,
@@ -24,11 +22,15 @@ router.post("/comment/:id", (req, res) => {
                 yPos: req.body.yPos,
             };
 
-            changingText.comments.push(comment);
+            const newComment = new UserCommentModel(comment);
 
-            found.save().then(() => {
-                res.json({
-                    saved: true,
+            newComment.save().then((item) => {
+                found.comments.push(item["_id"]);
+
+                found.save().then(() => {
+                    res.json({
+                        saved: true,
+                    });
                 });
             });
         });

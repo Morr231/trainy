@@ -4,6 +4,7 @@ const timerTimeSlice = createSlice({
     name: "timerTime",
     initialState: {
         value: 0,
+        essayFinished: false,
         pomodoroFinished: false,
         dangerousUpdated: false,
         dangerousFinished: false,
@@ -12,6 +13,12 @@ const timerTimeSlice = createSlice({
     reducers: {
         updateTime(state, time) {
             state.value = time.payload;
+        },
+        setEssayFinishedTrue(state) {
+            state.essayFinished = true;
+        },
+        setEssayFinishedFalse(state) {
+            state.essayFinished = false;
         },
         setPomodoroFinished(state) {
             state.pomodoroFinished = !state.pomodoroFinished;

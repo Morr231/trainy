@@ -43,7 +43,7 @@ const HeaderDropdown = ({ img }) => {
             <div className="header-dropdown__description">Currently in</div>
 
             <Link
-                to={`/profile/${userInfo.username}`}
+                to={`/my-profile/${userInfo.username}`}
                 style={{ textDecoration: "none" }}
             >
                 <div className="header-dropdown__user">
@@ -71,7 +71,7 @@ const HeaderDropdown = ({ img }) => {
             </Link>
 
             <Link
-                to={`/profile/${userInfo.username}/settings`}
+                to={`/my-profile/${userInfo.username}/settings`}
                 style={{ textDecoration: "none" }}
             >
                 <div className="header-dropdown__item">

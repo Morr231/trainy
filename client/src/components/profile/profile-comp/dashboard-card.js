@@ -11,10 +11,13 @@ const DashboardCard = ({
     topic,
     date,
     imageUrl,
+    textId,
     index,
     username,
     textsLength,
     setCardDeleted,
+    finished,
+    otherProfile,
 }) => {
     const unformattedDate = new Date(date).toDateString().split(" ");
     const formattedDate = `${unformattedDate[2]} ${unformattedDate[1]} ${unformattedDate[3]}`;
@@ -25,9 +28,15 @@ const DashboardCard = ({
         formattedTopic = formattedTopic.slice(0, 40) + "...";
     }
 
+    const handleDelete = () => {
+        setCardDeleted(true);
+
+        deleteText();
+    };
+
     const deleteText = async () => {
         const responce = await fetch(
-            `${process.env.REACT_APP_IP}text/delete/${textsLength - index - 1}`,
+            `${process.env.REACT_APP_IP}text/delete/${textId}`,
             {
                 method: "DELETE",
                 mode: "cors",
@@ -38,26 +47,25 @@ const DashboardCard = ({
             }
         );
         const data = await responce.json();
-        if (data.deleted) {
-            setCardDeleted(true);
-        }
-        console.log("deleted", data);
     };
 
     return (
         <div className="dashboard-card">
-            <div
-                className="dashboard-card__icon_container"
-                onClick={deleteText}
-            >
-                <FontAwesomeIcon
-                    icon={faX}
-                    className="dashboard-card__delete"
-                />
-            </div>
+            {!otherProfile && (
+                <div
+                    className="dashboard-card__icon_container"
+                    onClick={handleDelete}
+                >
+                    <FontAwesomeIcon
+                        icon={faX}
+                        className="dashboard-card__delete"
+                    />
+                </div>
+            )}
 
             <Link
                 to={`/profile/${username}/${index}`}
+                state={{ id: textId }}
                 style={{ textDecoration: "none", color: "inherit" }}
             >
                 <div className="dashboard-card__container">
@@ -71,6 +79,9 @@ const DashboardCard = ({
                         </h3>
                         <div className="dashboard-card__date">
                             {formattedDate}
+                        </div>
+                        <div className="dashboard-card__date">
+                            {finished ? "Finished" : "Not finished"}
                         </div>
                     </div>
                 </div>

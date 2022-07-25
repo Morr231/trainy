@@ -33,12 +33,14 @@ const WriteGenerator = ({
                         Previous
                     </button>
                 )}
-                <button
-                    className="write-generator-button generator-button-choose"
-                    onClick={() => setStartWriting(true)}
-                >
-                    Take this topic
-                </button>
+                {!startWriting && (
+                    <button
+                        className="write-generator-button generator-button-choose"
+                        onClick={() => setStartWriting(true)}
+                    >
+                        Take this topic
+                    </button>
+                )}
                 {!startWriting && (
                     <button
                         className="write-generator-button generator-button-switch"

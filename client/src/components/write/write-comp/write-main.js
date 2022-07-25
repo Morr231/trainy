@@ -39,6 +39,7 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
 
     const timerTime = useSelector((state) => state.timerTime.value);
 
+    const essayFinished = useSelector((state) => state.timerTime.essayFinished);
     const pomodoroFinished = useSelector(
         (state) => state.timerTime.pomodoroFinished
     );
@@ -113,13 +114,19 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
     const updateText = async ({ text, imageUrl }) => {
         const textData = {
             text: text,
+            regime: currPath,
             topic: randomTopic[topicNumber],
             date: new Date(),
             imageUrl: imageUrl,
+            finished: essayFinished,
         };
 
         if (timerTime) {
             textData.timeSpend = timerTime;
+        }
+
+        if (essayFinished) {
+            dispatch(timerTimeActions.setEssayFinishedFalse());
         }
 
         const responce = await fetch(`${process.env.REACT_APP_IP}text/save`, {
@@ -130,6 +137,7 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
             },
             body: JSON.stringify(textData),
         });
+
         const result = await responce.json();
     };
 
@@ -144,7 +152,6 @@ const WriteMain = ({ randomTopic, topicNumber }) => {
                         value={text}
                         config={config}
                         tabIndex={1}
-                        //   onBlur={(newContent) => getValue(newContent)}
                         onChange={tempValueFN}
                         height="500px"
                         spellCheck={1}
