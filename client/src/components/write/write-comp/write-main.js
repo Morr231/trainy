@@ -109,7 +109,7 @@ const WriteMain = ({ randomTopic, topicNumber, setTextId }) => {
         getImage();
     };
 
-    const tempValueFN = debounce(getValue, 500);
+    const tempValueFN = debounce(getValue, 1000);
 
     const updateText = async ({ text, imageUrl }) => {
         const textData = {
