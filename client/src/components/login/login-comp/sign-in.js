@@ -45,6 +45,7 @@ const SignIn = ({ setForgetPassword }) => {
                 date.getDate() + 1
             )}${date.toGMTString()}`;
 
+            dispatch(authActions.login());
             navigate(`/my-profile/${result.username}`);
         }
     };
@@ -72,6 +73,13 @@ const SignIn = ({ setForgetPassword }) => {
             <div className="login-main__form_container">
                 <label htmlFor="password" className="login-main__form_label">
                     Password
+                </label>
+                <label
+                    htmlFor="password"
+                    className="login-main__form_label_description"
+                >
+                    Password should contain more than 8 symbols, numbers and
+                    uppercase letter
                 </label>
                 <input
                     type="password"

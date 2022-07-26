@@ -12,7 +12,7 @@ import InstructionCard from "./instruction-card";
 import getCookie from "../../helper/getCookie";
 import { instructionImages } from "./instruction-img/instruction-img";
 
-const InstructionsModal = ({ setUserInfo, setShowModal }) => {
+const InstructionsModal = ({ setShowInstructionModal, setShowModal }) => {
     const [currentInstruction, setCurrentInstruction] = useState(0);
     const dispatch = useDispatch();
 
@@ -29,8 +29,6 @@ const InstructionsModal = ({ setUserInfo, setShowModal }) => {
     };
 
     const closeModal = async () => {
-        console.log(setShowModal);
-
         if (!setShowModal) {
             const responce = await fetch(
                 `${process.env.REACT_APP_IP}user/first-enter`,
@@ -45,13 +43,7 @@ const InstructionsModal = ({ setUserInfo, setShowModal }) => {
             );
             const result = await responce.json();
 
-            window.localStorage.setItem(
-                "userInfo",
-                JSON.stringify(result.userInfo)
-            );
-
-            setUserInfo(result.userInfo);
-
+            setShowInstructionModal(false);
             dispatch(userUpdatedActions.setUserUpdated);
         } else {
             setShowModal(false);

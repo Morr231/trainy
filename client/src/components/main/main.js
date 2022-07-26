@@ -12,7 +12,7 @@ import FriendsMain from "./main-comp/friends/friends-main";
 import getUserInfo from "../../helper/getUserInfo";
 
 const Main = () => {
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState(null);
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -39,16 +39,14 @@ const Main = () => {
 
                 <div className="main-container__el">
                     <h2 className="main-header">
-                        {currPath === "feed"
+                        {currPath === ""
                             ? "Your Feed"
                             : currPath === "friends" && "Your Friends"}
                     </h2>
 
+                    {currPath === "" && <Feed userInfo={userInfo} />}
+
                     <Routes>
-                        <Route
-                            path="/feed"
-                            element={<Feed userInfo={userInfo} />}
-                        />
                         <Route
                             path="/friends"
                             element={<FriendsMain userInfo={userInfo} />}

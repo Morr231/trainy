@@ -27,7 +27,7 @@ const Browser = ({ browserSwitch }) => {
                 <img src={Generate} className="browser-image" />
             )} */}
 
-            {browserSwitch === "generate" && <BrowserGenerator />}
+            {/* {browserSwitch === "generate" && <BrowserGenerator />} */}
         </div>
     );
 };

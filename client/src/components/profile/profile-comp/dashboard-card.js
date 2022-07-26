@@ -2,6 +2,8 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
+import { useLocation } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,11 +20,17 @@ const DashboardCard = ({
     setCardDeleted,
     finished,
     otherProfile,
+    otherUser,
 }) => {
     const unformattedDate = new Date(date).toDateString().split(" ");
     const formattedDate = `${unformattedDate[2]} ${unformattedDate[1]} ${unformattedDate[3]}`;
 
     let formattedTopic = topic;
+
+    const location = useLocation();
+
+    let currPath = location.pathname.split("/");
+    currPath = currPath[currPath.length - 3];
 
     if (typeof formattedTopic !== "undefined" && formattedTopic.length > 40) {
         formattedTopic = formattedTopic.slice(0, 40) + "...";
@@ -64,8 +72,12 @@ const DashboardCard = ({
             )}
 
             <Link
-                to={`/profile/${username}/${index}`}
-                state={{ id: textId }}
+                to={
+                    currPath === "my-profile"
+                        ? `/my-profile/${username}/${index}`
+                        : `/profile/${username}/${index}`
+                }
+                state={{ id: textId, otherUser: otherUser }}
                 style={{ textDecoration: "none", color: "inherit" }}
             >
                 <div className="dashboard-card__container">

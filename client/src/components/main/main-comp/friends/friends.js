@@ -133,6 +133,12 @@ const Friends = ({ userInfo, friendsState }) => {
                 <div className="friends-mine">
                     <h3 className="friends-header">My friends</h3>
 
+                    {friends.length === 0 && (
+                        <div className="friends-description">
+                            Start adding friends
+                        </div>
+                    )}
+
                     {friends.map((el) => {
                         return (
                             <FriendsCard

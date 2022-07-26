@@ -28,21 +28,29 @@ const Stats = ({ userInfo }) => {
                     />
                     <StatsBlock
                         header="Fastest essay"
-                        number={userInfo.statistics.fastestEssay.timeSpend}
+                        number={
+                            userInfo.statistics.fastestEssay
+                                ? userInfo.statistics.fastestEssay.timeSpend
+                                : 0
+                        }
                         time="All time"
                         iconColor="#70B6C1"
                         icon={faBolt}
                     />
                     <StatsBlock
                         header="Longest essay"
-                        number={userInfo.statistics.longestEssay.wordCount}
+                        number={
+                            userInfo.statistics.longestEssay
+                                ? userInfo.statistics.longestEssay.wordCount
+                                : 0
+                        }
                         time="All time"
                         iconColor="#F3CC5C"
                         icon={faBook}
                     />
                     <StatsBlock
                         header="Best day"
-                        number="73"
+                        number="0"
                         time="All time"
                         iconColor="#775DA6"
                         icon={faStar}

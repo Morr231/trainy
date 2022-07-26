@@ -69,6 +69,13 @@ const SignUp = ({ setUserData, setSignUp }) => {
                 <label htmlFor="password" className="login-main__form_label">
                     Password
                 </label>
+                <label
+                    htmlFor="password"
+                    className="login-main__form_label_description"
+                >
+                    Password should contain more than 8 symbols, numbers and
+                    uppercase letter
+                </label>
                 <input
                     type="password"
                     id="password"

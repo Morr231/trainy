@@ -70,9 +70,11 @@ const EmailVerification = ({ userData, forgotPassword }) => {
 
         const result = await responce.json();
 
-        if (!result.token) {
-            setSigned(false);
-        }
+        console.log(result);
+
+        // if (!result.token) {
+        //     setSigned(false);
+        // }
 
         if (result.saved) {
             const date = new Date();

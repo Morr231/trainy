@@ -116,11 +116,6 @@ const Header = () => {
                                 </div>
                             )}
                             <div className="header__user__nav">
-                                <FontAwesomeIcon
-                                    icon={faBell}
-                                    className="header__user__nav_icon"
-                                />
-
                                 <div className="header__user__nav_container">
                                     <Link
                                         to={`/my-profile/${userInfo.username}`}

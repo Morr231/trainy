@@ -13,7 +13,7 @@ const TopicCard = ({ userInfo }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { id } = location.state;
+    const { id, otherUser } = location.state;
 
     const textRef = useRef(null);
     const topicCardRef = useRef(null);
@@ -45,25 +45,6 @@ const TopicCard = ({ userInfo }) => {
     const [prevCommentHeight, setPrevCommentHeight] = useState(null);
 
     useEffect(() => {
-        // const getUsers = async () => {
-        //     const responce = await fetch(
-        //         `${process.env.REACT_APP_IP}user/all-users/${userInfo["_id"]}`,
-        //         {
-        //             mode: "cors",
-        //             credentials: "same-origin",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //                 autorization: getCookie("token"),
-        //             },
-        //         }
-        //     );
-        //     const data = await responce.json();
-
-        //     if (data.found) {
-        //         setAllUsers(data.found);
-        //     }
-        // };
-
         const addComment = async (text) => {
             const responce = await fetch(
                 `${process.env.REACT_APP_IP}text/all-comments/${id}`,
@@ -205,7 +186,17 @@ const TopicCard = ({ userInfo }) => {
                         />
                     </div>
                     <div className="topic-card-top__button">
-                        <CtaButton text="go back" buttonStyle="solid" />
+                        <CtaButton
+                            text="go back"
+                            buttonStyle="solid"
+                            action={() =>
+                                navigate(
+                                    !otherUser
+                                        ? `/my-profile/${userInfo.username}/dashboard`
+                                        : `/profile/${userInfo.username}/dashboard`
+                                )
+                            }
+                        />
                     </div>
                 </div>
             </div>

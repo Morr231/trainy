@@ -25,6 +25,7 @@ const Profile = () => {
     const [userInfo, setUserInfo] = useState(null);
 
     const [showModal, setShowModal] = useState(false);
+    const [showInstructionModal, setShowInstructionModal] = useState(true);
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -46,9 +47,9 @@ const Profile = () => {
         }
 
         if (
+            !window.localStorage.getItem("userInfo") ||
             userUpdated ||
-            cardDeleted ||
-            !window.localStorage.getItem("userInfo")
+            cardDeleted
         ) {
             getUserInfo({ setUserInfo: setUserInfo });
         } else {
@@ -74,9 +75,15 @@ const Profile = () => {
         return (
             <div className="profile">
                 <div className="profile-container">
-                    {userInfo && userInfo.firstEnter && (
-                        <InstructionsModal setUserInfo={setUserInfo} />
-                    )}
+                    {userInfo &&
+                        userInfo.firstEnter &&
+                        showInstructionModal && (
+                            <InstructionsModal
+                                setShowInstructionModal={
+                                    setShowInstructionModal
+                                }
+                            />
+                        )}
 
                     {window.innerWidth >= 600 && (
                         <ProfileNav userInfo={userInfo} />

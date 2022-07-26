@@ -8,7 +8,12 @@ import { authActions } from "../../store/autorization";
 import getUserInfo from "../../helper/getUserInfo";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOut, faCog, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+    faSignOut,
+    faCog,
+    faUser,
+    faBell,
+} from "@fortawesome/free-solid-svg-icons";
 
 const HeaderDropdown = ({ img }) => {
     const navigate = useNavigate();
@@ -70,6 +75,19 @@ const HeaderDropdown = ({ img }) => {
                 </div>
             </Link>
 
+            {/* <Link
+                to={`/my-profile/${userInfo.username}/settings`}
+                style={{ textDecoration: "none" }}
+            > */}
+            <div className="header-dropdown__item">
+                <FontAwesomeIcon
+                    className="header-dropdown_icon"
+                    icon={faBell}
+                />
+                <div className="header-dropdown__item_text">Notifications</div>
+            </div>
+            {/* </Link> */}
+
             <Link
                 to={`/my-profile/${userInfo.username}/settings`}
                 style={{ textDecoration: "none" }}
@@ -82,7 +100,13 @@ const HeaderDropdown = ({ img }) => {
                     <div className="header-dropdown__item_text">Settings</div>
                 </div>
             </Link>
-            <div className="header-dropdown__item" onClick={logout}>
+
+            <hr className="header-dropdown__line" />
+
+            <div
+                className="header-dropdown__item header-dropdown__item-logout"
+                onClick={logout}
+            >
                 <FontAwesomeIcon
                     className="header-dropdown_icon"
                     icon={faSignOut}

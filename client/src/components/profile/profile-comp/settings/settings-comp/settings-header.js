@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faPen, faUser } from "@fortawesome/free-solid-svg-icons";
 
 import PhotoUpload from "../../../../modals/photo-upload";
 import DescriptionModal from "../../../../modals/description-modal";
@@ -66,11 +66,16 @@ const SettingsHeader = ({ userInfo }) => {
                         icon={faCamera}
                     />
                 </div>
-                {userInfo.imageUrl && (
+                {userInfo.imageUrl ? (
                     <img
                         src={userInfo.imageUrl}
                         alt="user image"
                         className="settings-header__img"
+                    />
+                ) : (
+                    <FontAwesomeIcon
+                        className="settings-header__img_placeholder"
+                        icon={faUser}
                     />
                 )}
             </div>
@@ -83,7 +88,7 @@ const SettingsHeader = ({ userInfo }) => {
                         Lorem ipsum dolor sit amet, consectetur adipisicing
                         elit.
                     </div>
-                    <div
+                    {/* <div
                         className="settings-header__img_container_icon settings-header__description_icon"
                         onClick={handleDescriptionChange}
                     >
@@ -91,7 +96,7 @@ const SettingsHeader = ({ userInfo }) => {
                             className="settings-header__img_icon"
                             icon={faPen}
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

@@ -2,10 +2,20 @@ import { useState } from "react";
 
 import { Link } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+
 import CtaButton from "../../../buttons/cta-button";
 import getCookie from "../../../../helper/getCookie";
 
-const FriendsCard = ({ user, badges, recommendations, myId, incoming }) => {
+const FriendsCard = ({
+    user,
+    badges,
+    recommendations,
+    myId,
+    incoming,
+    img,
+}) => {
     const [buttonClicked, setButtonClicked] = useState(true);
 
     const addFriend = async () => {
@@ -58,7 +68,20 @@ const FriendsCard = ({ user, badges, recommendations, myId, incoming }) => {
     return (
         <div className="friends-card">
             <div className="friends-card__container">
-                <img src={user.imageUrl} className="friends-card__img" />
+                <div className="friends-card-img__container">
+                    {img ? (
+                        <img
+                            src={img}
+                            alt="user image"
+                            className="friends-card-img"
+                        />
+                    ) : (
+                        <FontAwesomeIcon
+                            className="friends-card-img__icon"
+                            icon={faUser}
+                        />
+                    )}
+                </div>
                 <div className="friends-card__info">
                     <Link
                         to={`/profile/${user.username}`}
@@ -70,9 +93,24 @@ const FriendsCard = ({ user, badges, recommendations, myId, incoming }) => {
                         <div className="friends-card__badges">{badges}</div>
                         <div className="friends-card__mutual_friends">
                             <div className="friends-card__mutual_friends_images">
-                                <div className="friends-card__mutual_friends_images_el"></div>
-                                <div className="friends-card__mutual_friends_images_el"></div>
-                                <div className="friends-card__mutual_friends_images_el"></div>
+                                <div className="friends-card__mutual_friends_images_el">
+                                    <FontAwesomeIcon
+                                        className="friends-card__mutual_friends__icon"
+                                        icon={faUser}
+                                    />
+                                </div>
+                                <div className="friends-card__mutual_friends_images_el">
+                                    <FontAwesomeIcon
+                                        className="friends-card__mutual_friends__icon"
+                                        icon={faUser}
+                                    />
+                                </div>
+                                <div className="friends-card__mutual_friends_images_el">
+                                    <FontAwesomeIcon
+                                        className="friends-card__mutual_friends__icon"
+                                        icon={faUser}
+                                    />
+                                </div>
                             </div>
                             <div className="friends-card__mutual_friends_number">
                                 10 mutual friends

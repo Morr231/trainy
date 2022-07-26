@@ -6,16 +6,24 @@
     &__container
         display: flex
 
-    &__img
+    &-img__container
         width: 7.2rem
         height: 7.2rem
 
-        border-radius: 50%
-        background-color: grey
+        border-radius: 1.5rem
+        background-color: #D9D9D9
 
         // border: 1px solid rgba(0, 0, 0, 0.08)
 
         margin-right: 1.2rem
+
+        display: flex
+        justify-content: center
+        align-items: center
+
+    &-img__icon
+        color: #6D7885
+        font-size: 3.5rem
 
     &__name
         font-weight: 700
@@ -47,10 +55,16 @@
                 width: 2.4rem
                 height: 2.4rem
 
-                border: 1px solid rgba(0, 0, 0, 0.08)
                 border-radius: 50%
 
-                background-color: grey
+                background-color: #D9D9D9
+
+                display: flex
+                justify-content: center
+                align-items: center
+
+        &__icon
+            color: #6D7885
 
     &__buttons
         display: flex

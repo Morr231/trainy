@@ -8,11 +8,16 @@
     &__img_container
         width: 18rem
         height: 18rem
-        background-color: grey
 
         border-radius: 50%
         margin-right: 4rem
         position: relative
+
+        background-color: #D9D9D9
+
+        display: flex
+        justify-content: center
+        align-items: center
 
         @include respond(phone)
             width: 25rem !important
@@ -42,6 +47,10 @@
         .settings-header__img_icon
             font-size: 2.4rem
             color: #FFFFFF
+
+        .settings-header__img_placeholder
+            font-size: 10rem
+            color: #6D7885
 
     &__img
         width: 100%

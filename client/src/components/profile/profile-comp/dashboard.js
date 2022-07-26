@@ -57,7 +57,7 @@ const Dashboard = ({ userInfo, setCardDeleted, otherUser }) => {
     if (!userInfo) {
         return <div>Loading</div>;
     } else {
-        console.log(userInfo.daysTextCount);
+        console.log(userInfo);
 
         return (
             <div className="dashboard">
@@ -101,6 +101,7 @@ const Dashboard = ({ userInfo, setCardDeleted, otherUser }) => {
                                           textsLength={userInfo.texts.length}
                                           setCardDeleted={setCardDeleted}
                                           finished={el.finished}
+                                          otherUser={otherUser}
                                       />
                                   );
                               })
@@ -117,6 +118,7 @@ const Dashboard = ({ userInfo, setCardDeleted, otherUser }) => {
                                           textsLength={userInfo.texts.length}
                                           setCardDeleted={setCardDeleted}
                                           finished={el.finished}
+                                          otherUser={otherUser}
                                       />
                                   );
                               })}
