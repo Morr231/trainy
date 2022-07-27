@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, createRef } from "react";
-import JoditEditor from "jodit-react";
 
 import { useLocation } from "react-router-dom";
 
@@ -16,11 +15,7 @@ import achievementsHandler from "../../../helper/achievementsHandler";
 
 import AchieveModal from "../../modals/achieve-modal";
 
-const config = {
-    buttons: ["bold", "italic", "underline"],
-};
-
-const WriteMain = ({ randomTopic, topicNumber, setTextId }) => {
+const WriteMain = React.memo(({ randomTopic, topicNumber, setTextId }) => {
     const dispatch = useDispatch();
     const location = useLocation();
 
@@ -31,11 +26,10 @@ const WriteMain = ({ randomTopic, topicNumber, setTextId }) => {
     const [userInfo, setUserInfo] = useState({});
     const [achieved, setAchieved] = useState("");
 
-    const editor = useRef(null);
     const ref = createRef(null);
 
     const [image, takeScreenshot] = useScreenshot();
-    const getImage = () => takeScreenshot(ref.current);
+    const getImage = async () => takeScreenshot(ref.current);
 
     const timerTime = useSelector((state) => state.timerTime.value);
 
@@ -102,14 +96,14 @@ const WriteMain = ({ randomTopic, topicNumber, setTextId }) => {
                     dispatch(userUpdatedActions.setUserUpdated());
                 });
         }
-    }, [image, timerTime]);
+    }, [image]);
 
-    const getValue = (value) => {
-        setText(value);
+    const getValue = (e) => {
+        setText(e.target.value);
         getImage();
     };
 
-    const tempValueFN = debounce(getValue, 3000);
+    const tempValueFN = debounce(getValue, 500);
 
     const updateText = async ({ text, imageUrl }) => {
         const textData = {
@@ -151,19 +145,18 @@ const WriteMain = ({ randomTopic, topicNumber, setTextId }) => {
             {pomodoroFinished && <div className="write-cover"></div>}
             <div className="write-main-container">
                 <div className="write-main__form" ref={ref}>
-                    <JoditEditor
-                        ref={editor}
-                        value={text}
-                        config={config}
-                        tabIndex={1}
+                    <textarea
+                        name=""
+                        id=""
+                        cols="30"
+                        rows="20"
+                        className="write-main__form_textarea"
                         onChange={tempValueFN}
-                        height="500px"
-                        spellCheck={1}
-                    />
+                    ></textarea>
                 </div>
             </div>
         </div>
     );
-};
+});
 
 export default WriteMain;

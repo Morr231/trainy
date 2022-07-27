@@ -36,16 +36,8 @@ const getStatistics = (allTexts, item) => {
         texts: allTexts,
     });
 
-    const userDatas = UserDatesModel.findOne({
-        _id: item.daysTextCount,
-    });
-
-    let daysStreak = null;
-
-    userDatas.exec((err, allDatas) => {
-        daysStreak = countDaysStreak({
-            daysCount: allDatas.dates,
-        });
+    const daysStreak = countDaysStreak({
+        daysCount: item.daysTextCount.dates,
     });
 
     const statObj = {

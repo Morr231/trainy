@@ -86,8 +86,6 @@ router.get("/my-data", (req, res) => {
 
                         newDone.daysTextCount = calendarValues;
 
-                        console.log(newDone);
-
                         res.json({
                             userInfo: newDone,
                         });

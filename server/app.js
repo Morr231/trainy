@@ -42,6 +42,10 @@ const skipFriendRouter = require("./routes/friend/skipFriend");
 const acceptFriendRouter = require("./routes/friend/acceptFriend");
 
 const savePostRouter = require("./routes/userFeed/savePost");
+const likePostRouter = require("./routes/userFeed/likePost");
+const dislikePostRouter = require("./routes/userFeed/dislikePost");
+const commentPostRouter = require("./routes/userFeed/commentPost");
+const getCommentsPostRouter = require("./routes/userFeed/getComments");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -75,6 +79,10 @@ app.use("/friend", incomingRequests);
 app.use("/friend", acceptFriendRouter);
 
 app.use("/post", savePostRouter);
+app.use("/post", likePostRouter);
+app.use("/post", dislikePostRouter);
+app.use("/post", commentPostRouter);
+app.use("/post", getCommentsPostRouter);
 
 mongoose
     .connect(

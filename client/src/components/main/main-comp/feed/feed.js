@@ -32,13 +32,21 @@ const Feed = ({ userInfo }) => {
                     </form>
 
                     <div className="feed-container">
-                        {userInfo.posts.map((el) => (
+                        {[...userInfo.posts].reverse().map((el) => (
                             <FeedCard
+                                key={el["_id"]}
+                                postId={el["_id"]}
+                                userId={userInfo["_id"]}
                                 img={userInfo.image}
                                 name={userInfo.name}
                                 surname={userInfo.surname}
                                 date={el.date}
                                 description={el.description}
+                                likesNumber={el.likes.likesNumber}
+                                whoLiked={el.likes.whoLiked}
+                                dislikesNumber={el.dislikes.dislikesNumber}
+                                whoDisliked={el.dislikes.whoDisliked}
+                                comments={el.comments}
                             />
                         ))}
                     </div>

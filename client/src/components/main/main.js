@@ -25,6 +25,13 @@ const Main = () => {
     });
 
     useEffect(() => {
+        if (userUpdated) {
+            dispatch(userUpdatedActions.setUserUpdated());
+            dispatch(userUpdatedActions.setUserUpdated());
+        } else {
+            dispatch(userUpdatedActions.setUserUpdated());
+        }
+
         if (userUpdated || !window.localStorage.getItem("userInfo")) {
             getUserInfo({ setUserInfo: setUserInfo });
         } else {

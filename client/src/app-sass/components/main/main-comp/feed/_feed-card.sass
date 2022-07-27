@@ -49,9 +49,107 @@
         margin-bottom: 2rem
 
     &-essay
+        margin-bottom: 1.2rem
 
         &__img
             width: 100%
             height: 375.73px
 
             border-radius: 8px
+
+    &-numbers
+        display: flex
+        justify-content: flex-end
+
+    &-number
+        font-size: 1.2rem
+        line-height: 1.6rem
+        letter-spacing: -0.035em
+
+        color: #BDBDBD
+
+        &:not(:last-child)
+            margin-right: 1.6rem
+
+    &-line
+        border: none
+        height: 1px
+        background-color: #F2F2F2
+
+        margin: 0.8rem 0
+
+    &-buttons
+        display: flex
+
+    &-button
+        width: 25%
+        height: 4rem
+
+        display: flex
+        justify-content: center
+        align-items: center
+
+        font-weight: 400
+        font-size: 1.4rem
+
+        color: #4F4F4F
+
+        transition: all 0.3s
+
+        cursor: pointer
+
+        &__like
+            color: #EB5757
+
+        &__dislike
+            color: #2D9CDB
+
+        &:hover
+            background: #F2F2F2
+            border-radius: 8px
+
+        &__icon
+            font-size: 1.7rem
+            margin-right: 1.4rem
+
+    &-comment
+
+        &__reply
+            display: flex
+            align-items: center
+
+            &_img
+                width: 4rem
+                height: 4rem
+                background-color: grey
+
+                margin-right: 1.6rem
+
+                border-radius: 0.8rem
+
+            &_form
+                width: calc( 100% - 4rem)
+
+                &_input
+                    width: 100%
+
+                    border: none
+                    outline: none
+
+                    cursor: pointer
+
+                    height: 40px
+
+                    background: #FAFAFA
+                    border: 1px solid #F2F2F2
+                    border-radius: 0.8rem
+
+                    padding-left: 1.2rem
+
+                    &::placeholder
+                        font-weight: 400
+                        font-size: 1.4rem
+
+                        letter-spacing: -0.035em
+
+                        color: #BDBDBD
