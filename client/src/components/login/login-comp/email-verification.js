@@ -222,23 +222,23 @@ const EmailVerification = ({ userData, forgotPassword }) => {
                 <div className="email-verification__form_buttons">
                     <button
                         className="login-main__form_submit"
-                        style={{ width: "30%" }}
+                        style={{ width: "23%" }}
                         onClick={() => navigate("/login/sign-up")}
                     >
                         Change email
                     </button>
                     <button
-                        className="login-main__form_submit"
-                        style={{ width: "30%" }}
-                    >
-                        Send again
-                    </button>
-                    <button
                         type="submit"
-                        className="login-main__form_submit"
-                        style={{ width: "30%" }}
+                        className="login-main__form_submit main-submit"
+                        style={{ width: "33%" }}
                     >
                         Sign Up
+                    </button>
+                    <button
+                        className="login-main__form_submit"
+                        style={{ width: "23%" }}
+                    >
+                        Send again
                     </button>
                 </div>
             </form>

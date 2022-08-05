@@ -46,19 +46,14 @@ const Main = () => {
 
                 <div className="main-container__el">
                     <h2 className="main-header">
-                        {currPath === ""
+                        {currPath === "/feed"
                             ? "Your Feed"
                             : currPath === "friends" && "Your Friends"}
                     </h2>
-
-                    {currPath === "" && <Feed userInfo={userInfo} />}
-
-                    <Routes>
-                        <Route
-                            path="/friends"
-                            element={<FriendsMain userInfo={userInfo} />}
-                        />
-                    </Routes>
+                    {currPath === "feed" && <Feed userInfo={userInfo} />}
+                    {currPath === "friends" && (
+                        <FriendsMain userInfo={userInfo} />
+                    )}
                 </div>
             </div>
         </div>

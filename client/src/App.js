@@ -31,15 +31,13 @@ const App = () => {
             <Header />
 
             <Routes>
-                {isAuth ? (
-                    <Route path="/*" element={<Main />} />
-                ) : (
-                    <Route path="/" element={<Landing />} />
-                )}
+                {!isAuth && <Route path="/" element={<Landing />} />}
                 <Route path="/login/*" element={<Login />} />
                 <Route path="/profile/:username/*" element={<OtherProfile />} />
                 <Route path="/my-profile/:username/*" element={<Profile />} />
                 <Route path="/write" element={<Regimes />} />
+                <Route path="/feed" element={<Main />} />
+                <Route path="/friends" element={<Main />} />
                 <Route path="/write/:regime" element={<Write />} />
                 <Route path="/write/finish/:regime" element={<WriteFinish />} />
             </Routes>

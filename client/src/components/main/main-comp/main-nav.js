@@ -23,12 +23,13 @@ const MainNav = ({ userInfo }) => {
     return (
         <div className="profile-nav main-nav">
             <div className="profile-nav__main">
-                <Link to={`/`} style={linkStyle}>
+                <Link to={`/feed`} style={linkStyle}>
                     <div className="profile-nav__main_el">
                         <div className="profile-nav__icon_container">
                             <FontAwesomeIcon
                                 className={`profile-nav__icon ${
-                                    currPath === "" && "profile-icon__active"
+                                    currPath === "feed" &&
+                                    "profile-icon__active"
                                 }`}
                                 icon={faCircleNodes}
                             />

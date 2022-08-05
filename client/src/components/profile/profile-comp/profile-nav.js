@@ -148,11 +148,6 @@ const ProfileNav = ({ userInfo }) => {
                     </div>
                 </Link>
             </div>
-
-            <FontAwesomeIcon
-                className="profile-nav__disconnect"
-                icon={faSignOut}
-            />
         </div>
     );
 };

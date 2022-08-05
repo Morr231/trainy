@@ -60,11 +60,19 @@ const Header = () => {
                 {showModal && <InstructionsModal setShowModal={setShowModal} />}
 
                 <div className="header-container">
-                    <Link to="/" style={{ textDecoration: "none" }}>
-                        <div className="header-logo">
-                            <div className="header-logo__name">Trainy</div>
-                        </div>
-                    </Link>
+                    {!isAuth ? (
+                        <Link to="/" style={{ textDecoration: "none" }}>
+                            <div className="header-logo">
+                                <div className="header-logo__name">Trainy</div>
+                            </div>
+                        </Link>
+                    ) : (
+                        <Link to="/write" style={{ textDecoration: "none" }}>
+                            <div className="header-logo">
+                                <div className="header-logo__name">Trainy</div>
+                            </div>
+                        </Link>
+                    )}
 
                     {isAuth || window.localStorage.getItem("userInfo") ? (
                         <>
@@ -79,7 +87,7 @@ const Header = () => {
                                         </div>
                                     </Link>
                                     <Link
-                                        to="/"
+                                        to="/feed"
                                         style={{ textDecoration: "none" }}
                                     >
                                         <div className="header__link">Feed</div>
