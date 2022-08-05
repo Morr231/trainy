@@ -22,7 +22,7 @@ const firstEnterRouter = require("./routes/firstEnter");
 const allStatsRouter = require("./routes/allStats");
 
 const randomRouter = require("./routes/randomTopics/randomTopic");
-const IelstFPRouter = require("./routes/randomTopics/randomIeltsFP");
+// const IelstFPRouter = require("./routes/randomTopics/randomIeltsFP");
 
 const textRouter = require("./routes/text/text");
 const textCommentRouter = require("./routes/text/comment");
@@ -66,7 +66,7 @@ app.use("/user", allStatsRouter);
 app.use("/settings", settingsRouter);
 
 app.use(randomRouter);
-app.use(IelstFPRouter);
+// app.use(IelstFPRouter);
 
 app.use("/text", textRouter);
 app.use("/text", textCommentRouter);

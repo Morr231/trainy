@@ -62,8 +62,7 @@ const Header = () => {
                 <div className="header-container">
                     <Link to="/" style={{ textDecoration: "none" }}>
                         <div className="header-logo">
-                            <div className="header-logo__img"></div>
-                            <div className="header-logo__name">Lorem</div>
+                            <div className="header-logo__name">Trainy</div>
                         </div>
                     </Link>
 

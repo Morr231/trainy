@@ -35,8 +35,7 @@ const LoginMain = () => {
         <div className="login-main">
             <Link to="/">
                 <div className="login-left__container">
-                    <div className="login-left__logo"></div>
-                    <div className="login-left__name">Lorem</div>
+                    <div className="login-left__name">Trainy</div>
                 </div>
             </Link>
 
