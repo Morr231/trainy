@@ -14,7 +14,7 @@ const Welcome = () => {
         <div className="welcome">
             <div className="welcome-bg-color"></div>
 
-            <WelcomeBg />
+            {/* <WelcomeBg /> */}
             <div className="welcome-container">
                 <div className="welcome-main">
                     <h1 className="welcome-header">
@@ -30,7 +30,7 @@ const Welcome = () => {
                     </div>
 
                     <CtaButton
-                        text="Try for free"
+                        text="Try now"
                         buttonStyle="outline"
                         action={() => navigate("/login")}
                     />

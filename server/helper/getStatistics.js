@@ -40,16 +40,13 @@ const getStatistics = (allTexts, item) => {
         daysCount: item.daysTextCount.dates,
     });
 
+    console.log(fastestEssay);
+    console.log(longestEssay);
+
     const statObj = {
         daysStreak: daysStreak,
-        fastestEssay:
-            allTexts.length === 1
-                ? item.texts[0]
-                : allTexts[fastestEssay]["_id"],
-        longestEssay:
-            allTexts.length === 1
-                ? item.texts[0]
-                : allTexts[longestEssay]["_id"],
+        fastestEssay: fastestEssay,
+        longestEssay: longestEssay,
         averageWPM: averageWPM,
         averageTime: averageTime,
         averageWordCount: averageWordCount,

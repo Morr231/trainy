@@ -22,7 +22,7 @@ router.get("/my-data", (req, res) => {
     UserModel.findOne({
         username: req.tokenData.username,
     })
-        .populate("statistics achievements posts texts")
+        .populate("achievements posts texts")
         .exec((err, found) => {
             if (err) return HandleError(err);
 

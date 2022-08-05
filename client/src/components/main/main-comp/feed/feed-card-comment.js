@@ -31,14 +31,6 @@ const FeedCardComments = ({ name, surname, date, text, likes, dislikes }) => {
                         </div>
                     </div>
                     <div className="feed-card-comment__text">{text}</div>
-                    <div className="feed-card-comment__responces">
-                        <div className="feed-card-comment__info_likes">
-                            {likes} likes
-                        </div>
-                        <div className="feed-card-comment__info_dislikes">
-                            {dislikes} dislikes
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

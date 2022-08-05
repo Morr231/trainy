@@ -17,6 +17,14 @@ const InstructionsModal = ({ setShowInstructionModal, setShowModal }) => {
     const dispatch = useDispatch();
 
     const handleNext = () => {
+        if (currentInstruction + 1 === instructionImages.length) {
+            if (setShowInstructionModal) {
+                setShowInstructionModal(false);
+            }
+            if (setShowModal) {
+                setShowModal(false);
+            }
+        }
         if (currentInstruction < instructionImages.length - 1) {
             setCurrentInstruction(currentInstruction + 1);
         }

@@ -5,33 +5,33 @@ const MainLine = ({ which }) => (
         className={`${which} line line-small`}
     >
         <path
-            d="M184 190q504 64 420 420"
+            d="M226.925 233q411 76 334 334"
             markerEnd="url(#a)"
-            transform="rotate(77 400.5 400.629)"
-            strokeWidth={13}
+            transform="rotate(67 399.5 399.245)"
+            strokeWidth={7}
             stroke="hsl(227, 71%, 57%)"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeDasharray="37 22"
+            strokeDasharray="63 11"
         />
         <defs>
             <marker
-                markerWidth={8}
-                markerHeight={8}
-                refX={4}
-                refY={4}
-                viewBox="0 0 8 8"
+                markerWidth={10}
+                markerHeight={10}
+                refX={5}
+                refY={5}
+                viewBox="0 0 10 10"
                 orient="auto"
                 id="a"
             >
                 <path
                     fill="none"
-                    strokeWidth={1.333}
+                    strokeWidth={1.667}
                     stroke="hsl(227, 71%, 57%)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="m1.333 6 4-2-4-2"
+                    d="m1.667 7.5 5-2.5-5-2.5"
                 />
             </marker>
         </defs>

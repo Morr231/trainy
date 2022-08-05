@@ -5,6 +5,7 @@ const WriteGenerator = ({
     setShowAll,
     setStartWriting,
     startWriting,
+    first,
 }) => {
     const handlePrevious = () => {
         if (topicNumber - 1 != -1) {
@@ -19,7 +20,19 @@ const WriteGenerator = ({
     };
 
     return (
-        <div className="write-generator">
+        <div
+            className="write-generator"
+            style={
+                first
+                    ? { margin: "0 auto", width: "60%" }
+                    : {
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          flexDirection: "column",
+                      }
+            }
+        >
             <div className="write-generator-header">Choose your topic</div>
             <div className="write-generator-main">
                 {randomTopic.length ? randomTopic[topicNumber] : "Generating"}

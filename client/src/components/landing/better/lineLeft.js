@@ -6,33 +6,33 @@ const LineLeft = ({ style, lineClass }) => (
         className={`${lineClass} line-left line line-small`}
     >
         <path
-            d="M186.5 184.042q63 478 427 427"
+            d="M176.5 175.556q80 478 447 447"
             markerEnd="url(#a)"
             transform="rotate(1 399.5 342.706)"
-            strokeWidth={13}
+            strokeWidth={7}
             stroke="hsl(227, 71%, 57%)"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeDasharray="37 22"
+            strokeDasharray="63 11"
         />
         <defs>
             <marker
-                markerWidth={8}
-                markerHeight={8}
-                refX={4}
-                refY={4}
-                viewBox="0 0 8 8"
+                markerWidth={15}
+                markerHeight={15}
+                refX={7.5}
+                refY={7.5}
+                viewBox="0 0 15 15"
                 orient="auto"
                 id="a"
             >
                 <path
                     fill="none"
-                    strokeWidth={1.333}
+                    strokeWidth={2.5}
                     stroke="hsl(227, 71%, 57%)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="m1.333 6 4-2-4-2"
+                    d="M2.5 11.25 10 7.5 2.5 3.75"
                 />
             </marker>
         </defs>

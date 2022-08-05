@@ -60,55 +60,6 @@ const Better = () => {
                 </div>
             </div>
             <LastLine />
-            {/* <div className="better-container">
-                <div className="better-container__element">
-                    <div className="better-feature">
-                        <div className="better-feature_icon"></div>
-                        <h3 className="better-feature_header">
-                            Shortcut to a better productivity
-                        </h3>
-                        <div className="better-feature_text">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing
-                            elit. Animi voluptas error hic enim, impedit omnis
-                            perspiciatis maiores. Soluta distinctio quidem
-                        </div>
-                    </div>
-                    <div className="better-feature">
-                        <div className="better-feature_icon"></div>
-                        <h3 className="better-feature_header">
-                            Rich collection of handy macros
-                        </h3>
-                        <div className="better-feature_text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Iure beatae exercitationem voluptatum fugit,
-                            nihil nesciunt et quo assumenda odio
-                        </div>
-                    </div>
-                </div>
-                <div className="better-container__element">
-                    <div className="better-feature">
-                        <div className="better-feature_icon"></div>
-                        <h3 className="better-feature_header">Easy setup</h3>
-                        <div className="better-feature_text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Nisi, distinctio! Consectetur quia eos ducimus
-                            dolor excepturi tempora illo dolores
-                        </div>
-                    </div>
-                    <div className="better-feature">
-                        <div className="better-feature_icon"></div>
-                        <h3 className="better-feature_header">
-                            Lightweight, secure and fast
-                        </h3>
-                        <div className="better-feature_text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Repudiandae, veritatis facere culpa pariatur
-                            exercitationem sit, accusamus voluptate nihil totam
-                            cumque vel aliquid beatae dolores obcaecati porro
-                        </div>
-                    </div>
-                </div>
-            </div> */}
         </div>
     );
 };

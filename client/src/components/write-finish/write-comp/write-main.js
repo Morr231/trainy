@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, createRef } from "react";
-import JoditEditor from "jodit-react";
 
 import { useLocation } from "react-router-dom";
 
@@ -16,154 +15,156 @@ import achievementsHandler from "../../../helper/achievementsHandler";
 
 import AchieveModal from "../../modals/achieve-modal";
 
-const config = {
-    buttons: ["bold", "italic", "underline"],
-};
+const WriteMain = React.memo(
+    ({ text, setText, randomTopic, topicNumber, setTextId }) => {
+        const dispatch = useDispatch();
+        const location = useLocation();
 
-const WriteMain = ({ topic, prevText }) => {
-    const dispatch = useDispatch();
-    const location = useLocation();
+        let currPath = location.pathname.split("/");
+        currPath = currPath[currPath.length - 1];
 
-    let currPath = location.pathname.split("/");
-    currPath = currPath[currPath.length - 1];
+        const [userInfo, setUserInfo] = useState({});
+        const [achieved, setAchieved] = useState("");
 
-    const [text, setText] = useState("");
-    const [userInfo, setUserInfo] = useState({});
-    const [achieved, setAchieved] = useState("");
+        const ref = createRef(null);
 
-    useEffect(() => {
-        setText(prevText);
-    });
+        const [image, takeScreenshot] = useScreenshot();
+        const getImage = async () => takeScreenshot(ref.current);
 
-    const editor = useRef(null);
-    const ref = createRef(null);
+        const timerTime = useSelector((state) => state.timerTime.value);
 
-    const [image, takeScreenshot] = useScreenshot();
-    const getImage = () => takeScreenshot(ref.current);
+        const essayFinished = useSelector(
+            (state) => state.timerTime.essayFinished
+        );
+        const pomodoroFinished = useSelector(
+            (state) => state.timerTime.pomodoroFinished
+        );
+        const dangerousFinished = useSelector(
+            (state) => state.timerTime.dangerousFinished
+        );
 
-    const timerTime = useSelector((state) => state.timerTime.value);
+        useEffect(() => {
+            if (dangerousFinished) {
+                setText("");
+            }
+        }, [dangerousFinished]);
 
-    const essayFinished = useSelector((state) => state.timerTime.essayFinished);
-    const pomodoroFinished = useSelector(
-        (state) => state.timerTime.pomodoroFinished
-    );
-    const dangerousFinished = useSelector(
-        (state) => state.timerTime.dangerousFinished
-    );
+        useEffect(() => {
+            if (currPath === "10-sec" && text) {
+                dispatch(timerTimeActions.setDangerousUpdated());
+            }
+        }, [text]);
 
-    useEffect(() => {
-        if (dangerousFinished) {
-            setText("");
-        }
-    }, [dangerousFinished]);
+        useEffect(() => {
+            if (!window.localStorage.getItem("userInfo")) {
+                getUserInfo({ setUserInfo: setUserInfo });
+            } else {
+                setUserInfo(
+                    JSON.parse(window.localStorage.getItem("userInfo"))
+                );
+            }
+        }, []);
 
-    useEffect(() => {
-        if (currPath === "10-sec" && text) {
-            dispatch(timerTimeActions.setDangerousUpdated());
-        }
-    }, [text]);
+        useEffect(() => {
+            achievementsHandler({
+                text: text,
+                userInfo: userInfo,
+                setUserInfo: setUserInfo,
+                setAchieved: setAchieved,
+            });
+        }, [text]);
 
-    useEffect(() => {
-        if (!window.localStorage.getItem("userInfo")) {
-            getUserInfo({ setUserInfo: setUserInfo });
-        } else {
-            setUserInfo(JSON.parse(window.localStorage.getItem("userInfo")));
-        }
-    }, []);
+        useEffect(() => {
+            if (image && text) {
+                dispatch(timerTimeActions.changeValue());
+                const formdata = new FormData();
 
-    useEffect(() => {
-        achievementsHandler({
-            text: text,
-            userInfo: userInfo,
-            setUserInfo: setUserInfo,
-            setAchieved: setAchieved,
-        });
-    }, [text]);
+                formdata.append("file", image);
+                formdata.append(
+                    "upload_preset",
+                    process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+                );
+                formdata.append(
+                    "cloud_name",
+                    process.env.REACT_APP_CLOUDINARY_NAME
+                );
 
-    useEffect(() => {
-        if (image && text) {
-            dispatch(timerTimeActions.changeValue());
-            const formdata = new FormData();
+                fetch(process.env.REACT_APP_CLOUDINARY_URL, {
+                    method: "POST",
+                    body: formdata,
+                })
+                    .then((responce) => responce.json())
+                    .then((data) => {
+                        updateText({ text: text, imageUrl: data.url });
 
-            formdata.append("file", image);
-            formdata.append(
-                "upload_preset",
-                process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
-            );
-            formdata.append(
-                "cloud_name",
-                process.env.REACT_APP_CLOUDINARY_NAME
-            );
+                        dispatch(userUpdatedActions.setUserUpdated());
+                    });
+            }
+        }, [image]);
 
-            fetch(process.env.REACT_APP_CLOUDINARY_URL, {
-                method: "POST",
-                body: formdata,
-            })
-                .then((responce) => responce.json())
-                .then((data) => {
-                    updateText({ text: text, imageUrl: data.url });
-
-                    dispatch(userUpdatedActions.setUserUpdated());
-                });
-        }
-    }, [image, timerTime]);
-
-    const getValue = (value) => {
-        setText(value);
-        getImage();
-    };
-
-    const tempValueFN = debounce(getValue, 500);
-
-    const updateText = async ({ text, imageUrl }) => {
-        const textData = {
-            text: text,
-            regime: currPath,
-            topic: topic,
-            date: new Date(),
-            imageUrl: imageUrl,
-            finished: essayFinished,
+        const getValue = (e) => {
+            setText(e.target.value);
+            getImage();
         };
 
-        if (timerTime) {
-            textData.timeSpend = timerTime;
-        }
+        const tempValueFN = debounce(getValue, 500);
 
-        if (essayFinished) {
-            dispatch(timerTimeActions.setEssayFinishedFalse());
-        }
+        const updateText = async ({ text, imageUrl }) => {
+            const textData = {
+                text: text,
+                regime: currPath,
+                topic: randomTopic[topicNumber],
+                date: new Date(),
+                imageUrl: imageUrl,
+                finished: essayFinished,
+            };
 
-        const responce = await fetch(`${process.env.REACT_APP_IP}text/save`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                autorization: getCookie("token"),
-            },
-            body: JSON.stringify(textData),
-        });
+            if (timerTime) {
+                textData.timeSpend = timerTime;
+            }
 
-        const result = await responce.json();
-    };
+            if (essayFinished) {
+                dispatch(timerTimeActions.setEssayFinishedFalse());
+            }
 
-    return (
-        <div className="write-main">
-            {achieved && <AchieveModal name={achieved} />}
-            {pomodoroFinished && <div className="write-cover"></div>}
-            <div className="write-main-container">
-                <div className="write-main__form" ref={ref}>
-                    <JoditEditor
-                        ref={editor}
-                        value={text}
-                        config={config}
-                        tabIndex={1}
-                        onChange={tempValueFN}
-                        height="500px"
-                        spellCheck={1}
-                    />
+            const responce = await fetch(
+                `${process.env.REACT_APP_IP}text/save`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        autorization: getCookie("token"),
+                    },
+                    body: JSON.stringify(textData),
+                }
+            );
+
+            const result = await responce.json();
+
+            if (result.saved) {
+                setTextId(result.textId);
+            }
+        };
+
+        return (
+            <div className="write-main">
+                {achieved && <AchieveModal name={achieved} />}
+                {pomodoroFinished && <div className="write-cover"></div>}
+                <div className="write-main-container">
+                    <div className="write-main__form" ref={ref}>
+                        <textarea
+                            name=""
+                            id=""
+                            cols="30"
+                            rows="20"
+                            className="write-main__form_textarea"
+                            onChange={tempValueFN}
+                        ></textarea>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+);
 
 export default WriteMain;

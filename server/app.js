@@ -19,6 +19,7 @@ const forgotPassword = require("./routes/sendMail//forgotPassword");
 
 const userRouter = require("./routes/userInfo");
 const firstEnterRouter = require("./routes/firstEnter");
+const allStatsRouter = require("./routes/allStats");
 
 const randomRouter = require("./routes/randomTopics/randomTopic");
 const IelstFPRouter = require("./routes/randomTopics/randomIeltsFP");
@@ -46,6 +47,7 @@ const likePostRouter = require("./routes/userFeed/likePost");
 const dislikePostRouter = require("./routes/userFeed/dislikePost");
 const commentPostRouter = require("./routes/userFeed/commentPost");
 const getCommentsPostRouter = require("./routes/userFeed/getComments");
+const getFriendsPostsRouter = require("./routes/userFeed/friendsPosts");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -59,6 +61,7 @@ app.use("/user", userRouter);
 app.use("/user", achievedRouter);
 app.use("/user", firstEnterRouter);
 app.use("/user", getUserRouter);
+app.use("/user", allStatsRouter);
 
 app.use("/settings", settingsRouter);
 
@@ -83,6 +86,7 @@ app.use("/post", likePostRouter);
 app.use("/post", dislikePostRouter);
 app.use("/post", commentPostRouter);
 app.use("/post", getCommentsPostRouter);
+app.use("/post", getFriendsPostsRouter);
 
 mongoose
     .connect(

@@ -112,60 +112,62 @@ const Friends = ({ userInfo, friendsState }) => {
                 </div>
             </form>
 
-            {search ? (
-                <div className="friends-result">
-                    <h3 className="friends-header">Recommendations</h3>
+            <div className="friends-container">
+                {search ? (
+                    <div className="friends-result">
+                        <h3 className="friends-header">Recommendations</h3>
 
-                    {search.map((el, index) => {
+                        {search.map((el, index) => {
+                            return (
+                                <FriendsCard
+                                    key={el["_id"]}
+                                    user={el}
+                                    myId={userInfo["_id"]}
+                                    originalUser={userInfo.username}
+                                    badges="Best, Fastest, Greatest"
+                                    recommendations={true}
+                                />
+                            );
+                        })}
+                    </div>
+                ) : friendsState && friends ? (
+                    <div className="friends-mine">
+                        <h3 className="friends-header">My friends</h3>
+
+                        {friends.length === 0 && (
+                            <div className="friends-description">
+                                Start adding friends
+                            </div>
+                        )}
+
+                        {friends.map((el) => {
+                            return (
+                                <FriendsCard
+                                    key={el["_id"]}
+                                    user={el}
+                                    myId={userInfo["_id"]}
+                                    originalUser={userInfo.username}
+                                    badges="Best, Fastest, Greatest"
+                                />
+                            );
+                        })}
+                    </div>
+                ) : (
+                    requests &&
+                    requests.map((el) => {
                         return (
                             <FriendsCard
                                 key={el["_id"]}
-                                user={el}
                                 myId={userInfo["_id"]}
-                                originalUser={userInfo.username}
+                                user={el}
                                 badges="Best, Fastest, Greatest"
-                                recommendations={true}
+                                originalUser={userInfo.username}
+                                incoming={true}
                             />
                         );
-                    })}
-                </div>
-            ) : friendsState && friends ? (
-                <div className="friends-mine">
-                    <h3 className="friends-header">My friends</h3>
-
-                    {friends.length === 0 && (
-                        <div className="friends-description">
-                            Start adding friends
-                        </div>
-                    )}
-
-                    {friends.map((el) => {
-                        return (
-                            <FriendsCard
-                                key={el["_id"]}
-                                user={el}
-                                myId={userInfo["_id"]}
-                                originalUser={userInfo.username}
-                                badges="Best, Fastest, Greatest"
-                            />
-                        );
-                    })}
-                </div>
-            ) : (
-                requests &&
-                requests.map((el) => {
-                    return (
-                        <FriendsCard
-                            key={el["_id"]}
-                            myId={userInfo["_id"]}
-                            user={el}
-                            badges="Best, Fastest, Greatest"
-                            originalUser={userInfo.username}
-                            incoming={true}
-                        />
-                    );
-                })
-            )}
+                    })
+                )}
+            </div>
         </div>
     );
 };

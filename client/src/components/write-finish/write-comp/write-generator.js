@@ -1,15 +1,25 @@
-const WriteGenerator = ({ randomTopic, setStartWriting }) => {
+const WriteGenerator = ({ topic, setStartWriting, startWriting }) => {
     return (
-        <div className="write-generator">
-            <div className="write-generator-header">Choose your topic</div>
-            <div className="write-generator-main">{randomTopic}</div>
+        <div
+            className="write-generator"
+            style={{
+                margin: "0 auto",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <div className="write-generator-main">{topic}</div>
             <div className="write-generator-buttons">
-                <button
-                    className="write-generator-button generator-button-choose"
-                    onClick={() => setStartWriting(true)}
-                >
-                    Take this topic
-                </button>
+                {!startWriting && (
+                    <button
+                        className="write-generator-button generator-button-choose"
+                        onClick={() => setStartWriting(true)}
+                    >
+                        Start
+                    </button>
+                )}
             </div>
         </div>
     );

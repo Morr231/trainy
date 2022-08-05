@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import { useLocation } from "react-router-dom";
 
@@ -33,13 +33,18 @@ const LoginMain = () => {
 
     return (
         <div className="login-main">
+            <Link to="/">
+                <div className="login-left__container">
+                    <div className="login-left__logo"></div>
+                    <div className="login-left__name">Lorem</div>
+                </div>
+            </Link>
+
             <div className="login-main__container">
                 <h2 className="login-main__header">
                     {currPath === "login" ? "Sign in" : "Sign Up"}
                 </h2>
-                <div className="login-main__cta">
-                    Get started absolutely free
-                </div>
+                <div className="login-main__cta">Start writing essay now</div>
 
                 {currPath === "login" && currPath === "sign-up" && (
                     <div className="login-main__sign_other">

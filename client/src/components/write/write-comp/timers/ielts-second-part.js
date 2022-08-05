@@ -5,10 +5,12 @@ import { timerTimeActions } from "../../../../store/timerTime";
 
 import setHourFormat from "../../../../helper/setHourFormat";
 
-const IeltsSPTimer = ({ stopTimer, setStopTimer }) => {
-    const [intervals, setIntervals] = useState([]);
+const IeltsSPTimer = ({ stopTimer, setStopTimer, countDown, setCountDown }) => {
+    useEffect(() => {
+        setCountDown(40 * 60);
+    }, []);
 
-    const [countDown, setCountDown] = useState(40 * 60);
+    const [intervals, setIntervals] = useState([]);
 
     const dispatch = useDispatch();
     const timerValueChange = useSelector(

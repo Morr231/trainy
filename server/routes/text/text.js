@@ -31,6 +31,8 @@ router.post("/save", (req, res) => {
         }
     }
 
+    wordCount--;
+
     const newText = {
         ...req.body,
         wordCount: wordCount,
@@ -74,7 +76,7 @@ router.post("/save", (req, res) => {
                                 newStats.dailyWordCount;
                             found.statistics.dailyTime = newStats.dailyTime;
 
-                            found.save().then((item) => {
+                            found.statistics.save().then((item) => {
                                 res.json({
                                     saved: true,
                                     textId: savedText["_id"],
@@ -84,15 +86,10 @@ router.post("/save", (req, res) => {
                         });
                     });
                 } else {
-                    console.log(found.texts[foundTextIndex].imageUrl);
-
                     imageUrl = found.texts[foundTextIndex].imageUrl;
 
                     let public_id = imageUrl.split("/");
                     public_id = public_id[public_id.length - 1].split(".")[0];
-
-                    // console.log(newText.imageUrl);
-                    // console.log(public_id);
 
                     cloudinary.v2.uploader.destroy(public_id, (err, result) => {
                         console.log(err, result);
@@ -121,7 +118,7 @@ router.post("/save", (req, res) => {
                             newStats.dailyWordCount;
                         found.statistics.dailyTime = newStats.dailyTime;
 
-                        found.save().then((item) => {
+                        found.statistics.save().then((item) => {
                             res.json({
                                 saved: true,
                                 textId: found.texts[foundTextIndex]["_id"],

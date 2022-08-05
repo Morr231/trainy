@@ -274,7 +274,7 @@ const FeedCard = ({
                 <div className="feed-card-comment__all">
                     {allComments &&
                         allUsers &&
-                        allComments.map((el) => {
+                        [...allComments].reverse().map((el) => {
                             const user = allUsers.filter((user) => {
                                 return user.userId === el.user["_id"];
                             })[0];

@@ -22,6 +22,7 @@ const Write = () => {
     const [textId, setTextId] = useState(null);
 
     const [timer, setTimer] = useState(3);
+    const [text, setText] = useState("");
 
     let timerInterval;
 
@@ -83,7 +84,36 @@ const Write = () => {
 
     return (
         <div className="write">
-            {showAll ? (
+            {startWriting ? (
+                <>
+                    {timer ? (
+                        <>
+                            <div className="write-timer-first">{timer}</div>
+                            <div className="write-cover"></div>
+                        </>
+                    ) : (
+                        <div className="write-upper">
+                            <WriteGenerator
+                                randomTopic={randomTopic}
+                                topicNumber={topicNumber}
+                                setTopicNumber={setTopicNumber}
+                                setShowAll={setShowAll}
+                                setStartWriting={setStartWriting}
+                                startWriting={startWriting}
+                                first={false}
+                            />
+                            <Timer textId={textId} text={text} />
+                        </div>
+                    )}
+                    <WriteMain
+                        setTextId={setTextId}
+                        randomTopic={randomTopic}
+                        topicNumber={topicNumber}
+                        text={text}
+                        setText={setText}
+                    />
+                </>
+            ) : showAll ? (
                 <WriteAll />
             ) : (
                 <WriteGenerator
@@ -93,29 +123,8 @@ const Write = () => {
                     setShowAll={setShowAll}
                     setStartWriting={setStartWriting}
                     startWriting={startWriting}
+                    first={true}
                 />
-            )}
-            {startWriting && (
-                <>
-                    {timer ? (
-                        <>
-                            <div
-                                className="write-timer"
-                                style={{ marginBottom: "3rem", height: "10vh" }}
-                            >
-                                {timer}
-                            </div>
-                            <div className="write-cover"></div>
-                        </>
-                    ) : (
-                        <Timer textId={textId} />
-                    )}
-                    <WriteMain
-                        setTextId={setTextId}
-                        randomTopic={randomTopic}
-                        topicNumber={topicNumber}
-                    />
-                </>
             )}
         </div>
     );

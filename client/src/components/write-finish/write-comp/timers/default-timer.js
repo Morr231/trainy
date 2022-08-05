@@ -5,10 +5,8 @@ import { timerTimeActions } from "../../../../store/timerTime";
 
 import setHourFormat from "../../../../helper/setHourFormat";
 
-const DefaultTimer = ({ stopTimer }) => {
+const DefaultTimer = ({ stopTimer, countDown, setCountDown }) => {
     const [intervals, setIntervals] = useState([]);
-
-    const [countDown, setCountDown] = useState(0);
 
     const dispatch = useDispatch();
     const timerValueChange = useSelector(

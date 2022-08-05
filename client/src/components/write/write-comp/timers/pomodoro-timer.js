@@ -5,10 +5,13 @@ import { timerTimeActions } from "../../../../store/timerTime";
 
 import setHourFormat from "../../../../helper/setHourFormat";
 
-const PomodoroTimer = ({ stopTimer }) => {
+const PomodoroTimer = ({ stopTimer, countDown, setCountDown }) => {
+    useEffect(() => {
+        setCountDown(25 * 60);
+    }, []);
+
     const [intervals, setIntervals] = useState([]);
 
-    const [countDown, setCountDown] = useState(25 * 60);
     const [iteration, setIteration] = useState(0);
 
     const dispatch = useDispatch();

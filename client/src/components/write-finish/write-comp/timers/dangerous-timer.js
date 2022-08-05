@@ -5,10 +5,9 @@ import { timerTimeActions } from "../../../../store/timerTime";
 
 import setHourFormat from "../../../../helper/setHourFormat";
 
-const DangerousTimer = ({ stopTimer }) => {
+const DangerousTimer = ({ stopTimer, countDown, setCountDown }) => {
     const [intervals, setIntervals] = useState([]);
 
-    const [countDown, setCountDown] = useState(0);
     const [endInterval, setEndInterval] = useState(10);
 
     const dispatch = useDispatch();

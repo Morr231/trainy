@@ -37,15 +37,15 @@ const Write = () => {
     return (
         <div className="write">
             <WriteGenerator
-                randomTopic={text.topic}
+                topic={text.topic}
                 setStartWriting={setStartWriting}
             />
 
             {timer ? (
                 <>
                     <div
-                        className="write-timer"
-                        style={{ marginBottom: "3rem", height: "10vh" }}
+                        className="write-timer-first"
+                        style={{ marginTop: "3rem" }}
                     >
                         {timer}
                     </div>

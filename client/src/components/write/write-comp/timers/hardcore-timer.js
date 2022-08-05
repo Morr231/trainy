@@ -5,10 +5,17 @@ import { timerTimeActions } from "../../../../store/timerTime";
 
 import setHourFormat from "../../../../helper/setHourFormat";
 
-const HardcoreTimer = ({ stopTimer, setStopTimer }) => {
-    const [intervals, setIntervals] = useState([]);
+const HardcoreTimer = ({
+    stopTimer,
+    setStopTimer,
+    countDown,
+    setCountDown,
+}) => {
+    useEffect(() => {
+        setCountDown(25 * 60);
+    }, []);
 
-    const [countDown, setCountDown] = useState(30 * 60);
+    const [intervals, setIntervals] = useState([]);
 
     const dispatch = useDispatch();
     const timerValueChange = useSelector(
