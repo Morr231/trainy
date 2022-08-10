@@ -7,7 +7,7 @@ import LoginMain from "./login-comp/login-main";
 const loginSlider = [
     "TRACK YOUR ESSAY",
     "GET STATISTICS",
-    "ACHIVE",
+    "ACHIEVE",
     "ADD FRIENDS",
     "COMMENT ESSAY",
     "SHARE ESSAY",

@@ -181,7 +181,7 @@ const TopicCard = ({ userInfo }) => {
                     <div className="topic-card-top__button">
                         <CtaButton
                             text="Commentator mode"
-                            buttonStyle="solid"
+                            buttonStyle={comment ? "outline" : "solid"}
                             action={handleCommnent}
                         />
                     </div>
