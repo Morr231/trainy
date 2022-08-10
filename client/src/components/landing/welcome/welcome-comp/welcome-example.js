@@ -10,8 +10,15 @@ import {
     faComment,
 } from "@fortawesome/free-solid-svg-icons";
 
+import generate from "./browser-comp/generate.mp4";
+import write from "./browser-comp/write.mp4";
+import share from "./browser-comp/share.mp4";
+import achieve from "./browser-comp/achieve.mp4";
+
 const WelcomeExample = () => {
     const [browserSwitch, setBrowserSwitch] = useState("generate");
+
+    console.log(browserSwitch);
 
     return (
         <div className="welcome-example">
@@ -36,12 +43,12 @@ const WelcomeExample = () => {
                 </div>
                 <div
                     className="welcome-example__switch_item"
-                    onClick={() => setBrowserSwitch("set-goal")}
+                    onClick={() => setBrowserSwitch("achieve")}
                 >
                     <div className="welcome-icon-container">
                         <FontAwesomeIcon icon={faRoute} />
                     </div>
-                    Set goal
+                    Achieve
                 </div>
                 <div
                     className="welcome-example__switch_item"
@@ -53,7 +60,18 @@ const WelcomeExample = () => {
                     Share
                 </div>
             </div>
-            <Browser browserSwitch={browserSwitch} />
+            <Browser
+                browserSwitch={browserSwitch}
+                video={
+                    browserSwitch === "generate"
+                        ? generate
+                        : browserSwitch === "write"
+                        ? write
+                        : browserSwitch === "achieve"
+                        ? achieve
+                        : share
+                }
+            />
         </div>
     );
 };

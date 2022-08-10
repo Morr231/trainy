@@ -5,6 +5,20 @@ import CalendarHeatmap from "react-calendar-heatmap";
 import DashboardCard from "./dashboard-card";
 import getOtherUserInfo from "../../../helper/getOtherUser";
 
+function shiftDate(date, numDays) {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + numDays);
+    return newDate;
+}
+
+function getRange(count) {
+    return Array.from({ length: count }, (_, i) => i);
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const Dashboard = ({ userInfo, setCardDeleted, otherUser }) => {
     // let currPath = location.pathname.split("/");
     // currPath = currPath[currPath.length - 2];
@@ -53,6 +67,13 @@ const Dashboard = ({ userInfo, setCardDeleted, otherUser }) => {
     }
 
     const yLabels = ["Sun", "Mon", "Tue"];
+
+    const randomValues = getRange(250).map((index) => {
+        return {
+            date: shiftDate(new Date(), -index),
+            count: getRandomInt(1, 4),
+        };
+    });
 
     if (!userInfo) {
         return <div>Loading</div>;

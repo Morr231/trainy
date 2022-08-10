@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 
-import Inst from "./inst.png";
-import Linkedin from "./linkedin.png";
+import Inst from "./github.jpg";
+import Linkedin from "./linkedin.jpg";
 
 const Footer = () => {
     const location = useLocation();
@@ -17,8 +17,7 @@ const Footer = () => {
                 <div className="footer-container">
                     <Link to="/">
                         <div className="header-logo">
-                            <div className="header-logo__img"></div>
-                            <div className="header-logo__name">Lorem</div>
+                            <div className="header-logo__name">Trainy</div>
                         </div>
                     </Link>
 
@@ -26,7 +25,7 @@ const Footer = () => {
 
                     <div className="footer-icons">
                         <div className="footer-icon">
-                            <img className="footer-img" src={Inst} />
+                            <img className="footer-img github-img" src={Inst} />
                         </div>
                         <div className="footer-icon">
                             <img className="footer-img" src={Linkedin} />

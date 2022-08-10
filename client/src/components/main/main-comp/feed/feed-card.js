@@ -6,6 +6,8 @@ import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { userUpdatedActions } from "../../../../store/userUpdated";
 
+import { useSelector } from "react-redux";
+
 import DashboardCard from "../../../profile/profile-comp/dashboard-card";
 import FeedCardComments from "./feed-card-comment";
 
@@ -32,8 +34,13 @@ const FeedCard = ({
     const [likePressed, setLikePressed] = useState(false);
     const [dislikePressed, setDislikePressed] = useState(false);
 
+    const [commented, setCommented] = useState(false);
     const [allComments, setAllComments] = useState(null);
     const [allUsers, setAllUsers] = useState(null);
+
+    const userUpdated = useSelector((state) => {
+        return state.userUpdated.updated;
+    });
 
     useEffect(() => {
         if (whoLiked.indexOf(userId) !== -1) {
@@ -44,33 +51,37 @@ const FeedCard = ({
         }
     }, []);
 
-    useEffect(() => {
-        const getComments = async () => {
-            const responce = await fetch(
-                `${process.env.REACT_APP_IP}post/get-comments`,
-                {
-                    method: "POST",
-                    mode: "cors",
-                    credentials: "same-origin",
-                    headers: {
-                        "Content-Type": "application/json",
-                        autorization: getCookie("token"),
-                    },
-                    body: JSON.stringify({
-                        comments,
-                    }),
-                }
-            );
-
-            const data = await responce.json();
-            if (data.found) {
-                setAllComments(data.found);
-                setAllUsers(data.users);
+    const getComments = async () => {
+        const responce = await fetch(
+            `${process.env.REACT_APP_IP}post/get-comments`,
+            {
+                method: "POST",
+                mode: "cors",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    autorization: getCookie("token"),
+                },
+                body: JSON.stringify({
+                    comments,
+                }),
             }
-        };
+        );
+
+        const data = await responce.json();
+        if (data.found) {
+            setAllComments(data.found);
+            setAllUsers(data.users);
+        }
+    };
+
+    useEffect(() => {
+        if (commented) {
+            setCommented(false);
+        }
 
         getComments();
-    }, []);
+    }, [comments, userUpdated]);
 
     const currDate = new Date(date);
 
@@ -154,6 +165,7 @@ const FeedCard = ({
 
         const data = await responce.json();
         dispatch(userUpdatedActions.setUserUpdated());
+        setCommented(true);
     };
 
     const handleComment = async (e) => {
@@ -183,8 +195,6 @@ const FeedCard = ({
         const data = await responce.json();
         dispatch(userUpdatedActions.setUserUpdated());
     };
-
-    console.log(allUsers);
 
     return (
         <div className="feed-card">
@@ -251,7 +261,9 @@ const FeedCard = ({
 
             <div className="feed-card-comment">
                 <div className="feed-card-comment__reply">
-                    <div className="feed-card-comment__reply_img"></div>
+                    <div className="feed-card-img__container">
+                        <img src={img} alt="" className="feed-card-img" />
+                    </div>
 
                     <form
                         className="feed-card-comment__reply_form"
@@ -287,6 +299,7 @@ const FeedCard = ({
                                     text={el.text}
                                     likes={el.likes.likesNumber}
                                     dislikes={el.dislikes.dislikesNumber}
+                                    img={user.imageUrl}
                                 />
                             );
                         })}

@@ -2,11 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 
 import BrowserGenerator from "./browser-comp/browser-generator";
-import Generate from "./1.png";
 
-import video from "./browser-comp/123.mp4";
-
-const Browser = ({ browserSwitch }) => {
+const Browser = ({ browserSwitch, video }) => {
     return (
         <div className="browser-video-container">
             <video src={video} className="browser-video" autoPlay muted></video>

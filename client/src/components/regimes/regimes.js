@@ -6,6 +6,8 @@ import RegimesCard from "./regimes-comp/regimes-card";
 import typewriter from "./regimes-img/typewriter.jpg";
 import tomatoes from "./regimes-img/tomatoes.jpg";
 import towerClock from "./regimes-img/tower-clock.jpg";
+import Ielst from "./regimes-img/ielts.jpg";
+import ten from "./regimes-img/10sec.jpg";
 
 const Regimes = () => {
     return (
@@ -57,7 +59,7 @@ const Regimes = () => {
                         <RegimesCard
                             name="10 sec"
                             description="If you don't write in 10 sec, your text will be deleted"
-                            img={towerClock}
+                            img={ten}
                         />
                     </Link>
                 </div>
@@ -69,7 +71,7 @@ const Regimes = () => {
                         <RegimesCard
                             name="IELTS second part"
                             description="Write essay for IELTS second part topics"
-                            img={towerClock}
+                            img={Ielst}
                         />
                     </Link>
                 </div>

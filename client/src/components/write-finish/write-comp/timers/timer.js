@@ -108,7 +108,7 @@ const Timer = ({ textId, text }) => {
                                     Word Count
                                 </div>
                                 <div className="write-total-number">
-                                    {text.split(" ").length - 1}
+                                    {text.split(" ").length}
                                 </div>
                             </div>
                             <div className="write-wpm">

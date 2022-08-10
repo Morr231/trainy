@@ -1,6 +1,14 @@
 import React from "react";
 
-const FeedCardComments = ({ name, surname, date, text, likes, dislikes }) => {
+const FeedCardComments = ({
+    name,
+    surname,
+    date,
+    text,
+    likes,
+    dislikes,
+    img,
+}) => {
     const currDate = new Date(date);
 
     const minutes = `${Math.floor(currDate.getMinutes() / 10)}${Math.floor(
@@ -17,7 +25,9 @@ const FeedCardComments = ({ name, surname, date, text, likes, dislikes }) => {
     return (
         <div className="feed-card-comment">
             <div className="feed-card-comment__container">
-                <div className="feed-card-comment__img"></div>
+                <div className="feed-card-img__container">
+                    <img src={img} alt="" className="feed-card-img" />
+                </div>
 
                 <div className="feed-card-comment__info_container">
                     <div className="feed-card-comment__info">
